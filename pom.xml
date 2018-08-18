@@ -16,8 +16,8 @@
     </properties>
 
     <modules>
-        <module>Users</module>
-        <module>Clean</module>
-        <module>Prepare</module>
+        <module>users</module>
+        <module>clean</module>
+        <module>prepare</module>
     </modules>
 </project>
