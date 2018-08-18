@@ -1,0 +1,14 @@
+package users.security;
+
+import com.auth0.jwt.interfaces.DecodedJWT;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class AuthenticatorTest {
+    @Test
+    public void testLogin() {
+        String jwt = "eyJraWQiOiJwWmZQemVGXC9cLzZ1bHN3bVFJU2pEQW0wcmhYaUpSWXRHWTI3ZURQdlU3M2s9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJkN2M5NTg5MS00NjEzLTRlMzctOGYzYi1lOGI3YTNlZTdiMTQiLCJhdWQiOiIxZjYzZXIyMDE1NG9xaGxsdXJjYjRxczljbiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJldmVudF9pZCI6IjllYTY5YmZkLWEyODEtMTFlOC04NzliLTk5MzE4OTcyOGU3MiIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTM0NTUzODIzLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9lVTlDbGtuZVgiLCJjb2duaXRvOnVzZXJuYW1lIjoiZDdjOTU4OTEtNDYxMy00ZTM3LThmM2ItZThiN2EzZWU3YjE0IiwiZXhwIjoxNTM0NTU3NDIzLCJpYXQiOjE1MzQ1NTM4MjMsImVtYWlsIjoiaGlkZWx1YnVyZUB0cmF2YWxhMTAuY29tIn0.XwaEgVp5IA3JBMeNo_uCStzp-JucDs6V4q2r4Pw_6RTnNoNNLOQkLm40o43sUO-EWiJvSowXhcUJpdGPKGxlZU_qkKhwb5Ps8U-FVeZMPmeIp-dcd2JaZI6maE-N0O_FE7LhCDTxTLzg6qrD_m5uL4gzFkFKMaL0vOoyCY99o9IsFMLcEEmf13DPjZW2Hrr7yaxeu59OccjAPtWcvCGhFbC_x3qF8wc-2lggmmcP4As-C9Ot16f5pNIOhkd7Syaby7OM2qiuS5v29wQfkG45EzJc7CHE22lau9_skpvYxJE3ZmTlu3bMCNu1T3-aXEqNFJlySX_3gpJDOxRMKY9wwg";
+        DecodedJWT decoded = new Authenticator().authenticate(jwt);
+        Assert.assertNotNull(decoded);
+    }
+}

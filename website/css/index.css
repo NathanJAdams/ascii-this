@@ -1,0 +1,12 @@
+div {
+    padding: 1px;
+    border: 1px solid black;
+}
+
+#menu button {
+    display: block;
+}
+
+#tokens span {
+    display: block;
+}
