@@ -1,40 +1,15 @@
 package users.rest;
 
-import users.domain.Config;
-import users.domain.HostedRepo;
-import users.domain.TokenTransaction;
+import lombok.Getter;
+import users.domain.UserInfo;
 
-import java.util.Collections;
-import java.util.List;
-
+@Getter
 public class UserInfoResponse {
-    public static final UserInfoResponse EMPTY_RESPONSE = new UserInfoResponse(-Integer.MAX_VALUE, Collections.emptyList(), Collections.emptyList(), Config.EMPTY_CONFIG);
+    public static final UserInfoResponse EMPTY_RESPONSE = new UserInfoResponse(new UserInfo());
 
-    private final int tokens;
-    private final List<TokenTransaction> transactions;
-    private final List<HostedRepo> hostedRepos;
-    private final Config config;
+    private final UserInfo userInfo;
 
-    public UserInfoResponse(int tokens, List<TokenTransaction> transactions, List<HostedRepo> hostedRepos, Config config) {
-        this.tokens = tokens;
-        this.transactions = transactions;
-        this.hostedRepos = hostedRepos;
-        this.config = config;
-    }
-
-    public int getTokens() {
-        return tokens;
-    }
-
-    public List<TokenTransaction> getTransactions() {
-        return transactions;
-    }
-
-    public List<HostedRepo> getHostedRepos() {
-        return hostedRepos;
-    }
-
-    public Config getConfig() {
-        return config;
+    public UserInfoResponse(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

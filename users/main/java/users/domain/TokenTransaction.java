@@ -1,11 +1,11 @@
 package users.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
+@Setter
 public class TokenTransaction {
-    private final TransactionType transactionType;
-    private final int tokens;
+    private TransactionType transactionType;
+    private int tokens;
 }

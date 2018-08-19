@@ -1,17 +1,17 @@
 package users.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class HostedRepo {
-    private final String repoHost;
-    private final String user;
-    private final boolean isPaused;
-    private final Config config;
-    private final String cleanedRepoRegex;
-    private final List<CleanedRepo> cleanedRepos;
+    private String host;
+    private String user;
+    private boolean isPaused;
+    private Config config;
+    private String cleanedRepoRegex;
+    private List<CleanedRepo> cleanedRepos;
 }
