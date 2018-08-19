@@ -5,7 +5,7 @@ import users.domain.UserInfo;
 
 @Getter
 public class UserInfoResponse {
-    public static final UserInfoResponse EMPTY_RESPONSE = new UserInfoResponse(new UserInfo());
+    public static final UserInfoResponse EMPTY_RESPONSE = new UserInfoResponse(null);
 
     private final UserInfo userInfo;
 
