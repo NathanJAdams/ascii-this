@@ -16,7 +16,8 @@
     </properties>
 
     <modules>
-        <module>users</module>
+        <module>user-db</module>
+        <module>user-info</module>
         <module>clean</module>
         <module>prepare</module>
     </modules>
