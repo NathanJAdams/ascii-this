@@ -10,8 +10,10 @@ import java.io.File;
 public class PrepareFileStructure implements AutoCloseable {
     private final File rootFolder;
     private final File initiatorFile;
+    private final File configFile;
     private final File sourceFolder;
     private final File sinkFile;
+    private final File tokenFile;
     private final File zippedFile;
 
     @Override

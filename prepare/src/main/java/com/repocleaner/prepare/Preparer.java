@@ -1,36 +1,42 @@
 package com.repocleaner.prepare;
 
-import com.repocleaner.prepare.initiator.Initiator;
+import com.repocleaner.config.Config;
+import com.repocleaner.initiator.Initiator;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
-import com.repocleaner.sourceinfo.Source;
-import com.repocleaner.util.GsonUtil;
-import com.repocleaner.util.IOUtils;
+import com.repocleaner.source.Source;
+import com.repocleaner.util.JsonUtil;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.ZipUtil;
 import com.repocleaner.util.filestructure.FileStructureUtil;
 import com.repocleaner.util.filestructure.PrepareFileStructure;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 public class Preparer {
-    public static void prepare(String requestId, Initiator initiator, Source<?> source) throws RepoCleanerException {
+    public static ApiResponse prepare(String requestId, Initiator initiator, Config config, Source<?> source) throws RepoCleanerException {
         preCheck(initiator);
         try (PrepareFileStructure fileStructure = FileStructureUtil.createPrepareFileStructure(requestId)) {
-            File requestFolder = fileStructure.getRootFolder();
+            File rootFolder = fileStructure.getRootFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
+            File configFile = fileStructure.getConfigFile();
             File sourceFolder = fileStructure.getSourceFolder();
             File sinkFile = fileStructure.getSinkFile();
+            File tokenFile = fileStructure.getTokenFile();
             File zippedFile = fileStructure.getZippedFile();
 
-            saveJson(initiator, initiatorFile);
+            String key = UUID.randomUUID().toString();
+            String token = UUID.randomUUID().toString();
             Object sink = source.saveSourceGetSink(sourceFolder);
-            saveJson(sink, sinkFile);
-            ZipUtil.zip(requestFolder, zippedFile);
-            String randomKeyName = UUID.randomUUID().toString();
-            S3FileUploader.upload(S3Info.PREPARED_BUCKET, randomKeyName, zippedFile);
+
+            JsonUtil.toJsonFile(initiator, initiatorFile);
+            JsonUtil.toJsonFile(config, configFile);
+            JsonUtil.toJsonFile(sink, sinkFile);
+            JsonUtil.toJsonFile(token, tokenFile);
+            ZipUtil.zip(rootFolder, zippedFile);
+            S3FileUploader.upload(S3Info.PREPARED_BUCKET, key, zippedFile);
+            return new ApiResponse(key, token);
         }
     }
 
@@ -40,18 +46,6 @@ public class Preparer {
         }
         if (!initiator.isPossibleToClean()) {
             throw new RepoCleanerException("Initiator vetoed request");
-        }
-    }
-
-    private static <T> void saveJson(T object, File file) throws RepoCleanerException {
-        String json = GsonUtil.toJson(object);
-        if (json == null) {
-            throw new RepoCleanerException("Failed to create json");
-        }
-        try {
-            IOUtils.saveToFile(json, file);
-        } catch (IOException e) {
-            throw new RepoCleanerException("Failed to save json", e);
         }
     }
 }

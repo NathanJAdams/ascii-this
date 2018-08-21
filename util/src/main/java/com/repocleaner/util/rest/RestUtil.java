@@ -1,6 +1,6 @@
 package com.repocleaner.util.rest;
 
-import com.repocleaner.util.GsonUtil;
+import com.repocleaner.util.JsonUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class RestUtil {
     }
 
     private static void sendBody(HttpURLConnection connection, Object object) {
-        String json = GsonUtil.toJson(object);
+        String json = JsonUtil.toJson(object);
         if (json == null) {
             return;
         }
@@ -79,7 +79,7 @@ public class RestUtil {
                 sb.append(line);
             }
             String json = sb.toString();
-            return GsonUtil.fromJsonOrNull(json, responseClass);
+            return JsonUtil.fromJsonOrNull(json, responseClass);
         } catch (IOException e) {
             return null;
         }

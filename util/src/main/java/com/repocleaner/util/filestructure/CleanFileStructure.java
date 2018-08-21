@@ -10,7 +10,9 @@ import java.io.File;
 public class CleanFileStructure implements AutoCloseable {
     private final File rootFolder;
     private final File initiatorFile;
+    private final File configFile;
     private final File sourceFolder;
+    private final File tokenCostFile;
     private final File zippedFile;
 
     @Override

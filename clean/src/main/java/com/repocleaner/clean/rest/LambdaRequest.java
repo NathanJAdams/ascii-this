@@ -1,11 +1,11 @@
 package com.repocleaner.clean.rest;
 
-import com.repocleaner.sourceinfo.Source;
-import com.repocleaner.userinfo.config.UserConfig;
+import com.repocleaner.source.Source;
+import com.repocleaner.config.Config;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class LambdaRequest {
-    private final UserConfig config;
+    private final Config config;
     private final Source<?> source;
 }

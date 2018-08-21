@@ -23,12 +23,12 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>user-info</artifactId>
+            <artifactId>initiator</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>sink-info</artifactId>
+            <artifactId>sink</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

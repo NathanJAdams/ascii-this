@@ -28,15 +28,17 @@
     <modules>
         <!--utils-->
         <module>util</module>
-        <module>user-info</module>
-        <module>sink-info</module>
-        <module>source-info</module>
+        <module>initiator</module>
+        <module>config</module>
+        <module>transaction</module>
+        <module>sink</module>
+        <module>source</module>
         <module>repo-hosts</module>
-        <module>user-db</module>
+        <module>firebase</module>
         <module>s3</module>
 
         <!--website-->
-        <module>get-user-info</module>
+        <module>get-user-config</module>
 
         <!--main lifecycle-->
         <module>prepare</module>

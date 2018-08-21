@@ -1,7 +1,8 @@
 package com.repocleaner.prepare.rest;
 
-import com.repocleaner.prepare.initiator.Initiator;
-import com.repocleaner.sourceinfo.Source;
+import com.repocleaner.config.Config;
+import com.repocleaner.initiator.Initiator;
+import com.repocleaner.source.Source;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,5 +10,6 @@ import lombok.Getter;
 @Getter
 public class LambdaRequest {
     private final Initiator initiator;
+    private final Config config;
     private final Source<?> source;
 }

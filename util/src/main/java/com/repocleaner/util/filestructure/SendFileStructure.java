@@ -12,6 +12,8 @@ public class SendFileStructure implements AutoCloseable {
     private final File initiatorFile;
     private final File sourceFolder;
     private final File sinkFile;
+    private final File tokenFile;
+    private final File tokenCostFile;
     private final File zippedFile;
     private final File tempFile;
 

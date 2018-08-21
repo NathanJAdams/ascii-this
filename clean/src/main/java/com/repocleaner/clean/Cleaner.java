@@ -9,15 +9,16 @@ import com.repocleaner.clean.transform.TransformationCoster;
 import com.repocleaner.clean.transform.Transformer;
 import com.repocleaner.clean.transform.coster.PlainCoster;
 import com.repocleaner.clean.transform.transformers.EOFTransformer;
+import com.repocleaner.config.Config;
+import com.repocleaner.initiator.Initiator;
 import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
-import com.repocleaner.userinfo.config.UserConfig;
 import com.repocleaner.util.GitUtil;
-import com.repocleaner.util.GsonUtil;
-import com.repocleaner.util.IOUtils;
+import com.repocleaner.util.JsonUtil;
 import com.repocleaner.util.RepoCleanerException;
+import com.repocleaner.util.TokenCost;
 import com.repocleaner.util.ZipUtil;
 import com.repocleaner.util.filestructure.CleanFileStructure;
 import com.repocleaner.util.filestructure.FileStructureUtil;
@@ -25,7 +26,6 @@ import org.eclipse.jgit.api.Git;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,38 +38,43 @@ public class Cleaner {
         try (CleanFileStructure fileStructure = FileStructureUtil.createCleanFileStructure(key)) {
             File rootFolder = fileStructure.getRootFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
+            File configFile = fileStructure.getConfigFile();
             File sourceFolder = fileStructure.getSourceFolder();
+            File tokenCostFile = fileStructure.getTokenCostFile();
             File zippedFile = fileStructure.getZippedFile();
 
             S3FileDownloader.download(bucket, key, zippedFile);
             ZipUtil.extract(zippedFile, rootFolder);
-            String initiatorJson = IOUtils.toString(initiatorFile, StandardCharsets.UTF_8);
-            Initiator initiator = GsonUtil.fromJsonOrNull(initiatorJson, Initiator.class);
+            Config config = JsonUtil.fromJsonFileOrNull(configFile, Config.class);
+            Initiator initiator = JsonUtil.fromJsonFileOrNull(initiatorFile, Initiator.class);
 
             Git git = GitUtil.init(sourceFolder);
-
             String cleanBranch = "repo-cleaner-" + "master";// TODO source.createCleanBranchName(git);
-
             GitUtil.checkoutNewBranch(git, cleanBranch);
+            TokenCost tokenCost = clean(sourceFolder, initiator, config);
+            postCheck(tokenCost, initiator);
 
-            int tokenCost = clean(sourceFolder, initiator);
-            if (tokenCost == 0) {
-                throw new RepoCleanerException("No changes made");
-            }
-            if (initiator.countTokens() < tokenCost) {
-                throw new RepoCleanerException("Insufficient tokens");
-            }
+            configFile.delete();
             zippedFile.delete();
+            JsonUtil.toJsonFile(tokenCost, tokenCostFile);
             ZipUtil.zip(rootFolder, zippedFile);
             S3FileUploader.upload(S3Info.CLEANED_BUCKET, key, zippedFile);
-        } catch (IOException e) {
-            throw new RepoCleanerException("Failed to clean repo", e);
         } finally {
             S3FileDeleter.delete(bucket, key);
         }
     }
 
-    private static int clean(File sourceFolder, UserConfig config) throws RepoCleanerException {
+    private static void postCheck(TokenCost tokenCost, Initiator initiator) throws RepoCleanerException {
+        int cost = tokenCost.getTokenCost();
+        if (cost == 0) {
+            throw new RepoCleanerException("No changes made");
+        }
+        if (initiator.getTokens() < cost) {
+            throw new RepoCleanerException("Insufficient tokens");
+        }
+    }
+
+    private static TokenCost clean(File sourceFolder, Initiator initiator, Config config) throws RepoCleanerException {
         GraphsBuilder graphsBuilder = new GraphsBuilder();
         Path sourceFolderPath = Paths.get(sourceFolder.getAbsolutePath());
         try {
@@ -88,19 +93,19 @@ public class Cleaner {
         TransformationCoster coster = new PlainCoster();
         Transformer transformer = new EOFTransformer("// EOF");
         int totalCost = 0;
-        int maxTokens = config.getMaxTokens();
+        int maxTokens = config.getMaxTokensPerClean();
         GraphWriter graphWriter = new GraphWriter();
         for (Graph graph : graphs.values()) {
             Transformation transformation = transformer.createTransformation(graph);
             int cost = coster.calculateTokenCost(transformation);
             int newTotalCost = totalCost + cost;
             if (newTotalCost > maxTokens) {
-                return totalCost;
+                break;
             }
             totalCost = newTotalCost;
             transformation.getCommands().forEach(command -> command.execute(graph));
             graphWriter.write(graph);
         }
-        return totalCost;
+        return new TokenCost(totalCost);
     }
 }
