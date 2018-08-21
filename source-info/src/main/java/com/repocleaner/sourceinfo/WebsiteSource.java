@@ -20,7 +20,7 @@ public class WebsiteSource implements Source<WebSink> {
     private final String branch;
 
     @Override
-    public WebSink saveSourceGetSinkDetails(File sourceFolder) throws RepoCleanerException {
+    public WebSink saveSourceGetSink(File sourceFolder) throws RepoCleanerException {
         RepoHost repoHost = RepoHosts.DEFAULT_INSTANCE.get(host);
         String uri = repoHost.createUrlRepo(user, repo);
         GitUtil.clone(uri, branch, sourceFolder);

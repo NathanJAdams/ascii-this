@@ -5,5 +5,5 @@ import com.repocleaner.util.RepoCleanerException;
 import java.io.File;
 
 public interface Source<T> {
-    T saveSourceGetSinkDetails(File sourceFolder) throws RepoCleanerException;
+    T saveSourceGetSink(File sourceFolder) throws RepoCleanerException;
 }

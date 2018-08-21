@@ -16,7 +16,7 @@ public class ApiSource implements Source<WebSink> {
     private final WebResponseType webResponseType;
 
     @Override
-    public WebSink saveSourceGetSinkDetails(File sourceFolder) throws RepoCleanerException {
+    public WebSink saveSourceGetSink(File sourceFolder) throws RepoCleanerException {
         File zipped = new File(jarLocation);
         ZipUtil.extract(zipped, sourceFolder);
         GitUtil.init(sourceFolder);

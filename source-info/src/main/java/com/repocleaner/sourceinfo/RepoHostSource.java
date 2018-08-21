@@ -21,7 +21,7 @@ public class RepoHostSource implements Source<RepoHostSink> {
     private final String user;
     private final String repo;
 
-    public RepoHostSink saveSourceGetSinkDetails(File sourceFolder) throws RepoCleanerException {
+    public RepoHostSink saveSourceGetSink(File sourceFolder) throws RepoCleanerException {
         String encodedEmail = KeyConverter.toKey(email);
         DatabaseReference userRepoRef = DatabaseReferenceCreator.USERS_REF.child(encodedEmail).child(host).child(user);
         CleanedRepo cleanedRepo = new DbSelector<>(userRepoRef, CleanedRepo.class, repo, false).get();

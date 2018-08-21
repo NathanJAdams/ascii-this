@@ -12,9 +12,9 @@ public class PrepareRepoLambda implements RequestHandler<LambdaRequest, LambdaRe
     public LambdaResponse handleRequest(LambdaRequest request, Context context) {
         String requestId = context.getAwsRequestId();
         Initiator initiator = request.getInitiator();
-        Source source = request.getSource();
+        Source<?> source = request.getSource();
         try {
-            RepoPreparer.storeRequest(requestId, initiator, source);
+            Preparer.prepare(requestId, initiator, source);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
             return LambdaResponse.SERVER_ERROR_RESPONSE;

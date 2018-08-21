@@ -1,64 +1,38 @@
 package com.repocleaner.send;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.repocleaner.sinkinfo.RepoHostSink;
+import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.sinkinfo.Sink;
-import com.repocleaner.sinkinfo.WebSink;
-import com.repocleaner.userinfo.UserInfo;
+import com.repocleaner.util.GsonUtil;
+import com.repocleaner.util.IOUtils;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.RuntimeTypeAdapterFactory;
+import com.repocleaner.util.ZipUtil;
+import com.repocleaner.util.filestructure.FileStructureUtil;
+import com.repocleaner.util.filestructure.SendFileStructure;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class Sender {
-    private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapterFactory(
-                    new RuntimeTypeAdapterFactory<>(Sink.class)
-                            .registerSubtype(RepoHostSink.class, "repo-host")
-                            .registerSubtype(WebSink.class, "web")
-            )
-            .create();
+    public static void send(String bucket, String key) throws RepoCleanerException {
+        try (SendFileStructure fileStructure = FileStructureUtil.createSendFileStructure(key)) {
+            File rootFolder = fileStructure.getRootFolder();
+            File initiatorFile = fileStructure.getInitiatorFile();
+            File sourceFolder = fileStructure.getSourceFolder();
+            File sinkFile = fileStructure.getSinkFile();
+            File zippedFile = fileStructure.getZippedFile();
+            File tempFile = fileStructure.getTempFile();
 
-    public static UserInfo send(File folder) throws RepoCleanerException {
-        Sink sink = getSink(folder);
-        File sourceFolder = new File(folder, "source");
-        File tempFile = createTempFile();
-        sink.sendSource(sourceFolder, tempFile);
-        return getUserInfo(folder);
-    }
-
-    private static Sink getSink(File folder) throws RepoCleanerException {
-        File sinkDetailsFile = new File(folder, "sink.json");
-        if (!sinkDetailsFile.exists()) {
-            throw new RepoCleanerException("No sink details present");
-        }
-        try (FileReader fr = new FileReader(sinkDetailsFile)) {
-            return GSON.fromJson(fr, Sink.class);
+            S3FileDownloader.download(bucket, key, zippedFile);
+            ZipUtil.extract(zippedFile, rootFolder);
+            String sinkJson = IOUtils.toString(sinkFile, StandardCharsets.UTF_8);
+            Sink sink = GsonUtil.fromJsonOrNull(sinkJson, Sink.class);
+            String initiatorJson = IOUtils.toString(initiatorFile, StandardCharsets.UTF_8);
+            Initiator initiator = GsonUtil.fromJsonOrNull(initiatorJson, Initiator.class);
+            sink.sendSource(sourceFolder, tempFile);
+            // TODO charge initiator for token cost
         } catch (IOException e) {
-            throw new RepoCleanerException("Failed to create sink from json", e);
-        }
-    }
-
-    private static UserInfo getUserInfo(File folder) throws RepoCleanerException {
-        File userInfoFile = new File(folder, "user-info.json");
-        if (!userInfoFile.exists()) {
-            throw new RepoCleanerException("No user info details present");
-        }
-        try (FileReader fr = new FileReader(userInfoFile)) {
-            return GSON.fromJson(fr, UserInfo.class);
-        } catch (IOException e) {
-            throw new RepoCleanerException("Failed to create user info from json", e);
-        }
-    }
-
-    private static File createTempFile() throws RepoCleanerException {
-        try {
-            return File.createTempFile("temp", "");
-        } catch (IOException e) {
-            throw new RepoCleanerException("Failed to save cleaned repo to file", e);
+            throw new RepoCleanerException("Failed to send cleaned repo", e);
         }
     }
 }

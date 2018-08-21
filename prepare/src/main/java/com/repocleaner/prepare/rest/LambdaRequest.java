@@ -9,5 +9,5 @@ import lombok.Getter;
 @Getter
 public class LambdaRequest {
     private final Initiator initiator;
-    private final Source source;
+    private final Source<?> source;
 }
