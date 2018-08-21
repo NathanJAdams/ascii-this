@@ -32,12 +32,11 @@ public class FileStructureUtil {
         File rootFolder = new File(TMP_FOLDER, key);
         File initiatorFile = new File(rootFolder, INITIATOR_FILE);
         File sourceFolder = new File(rootFolder, SOURCE_FOLDER);
-        File sinkFile = new File(rootFolder, SINK_FILE);
         File zippedFile = new File(ZIPPED_FOLDER, key);
         if (!sourceFolder.mkdirs()) {
             throw new RepoCleanerException("Failed to create source folder");
         }
-        return new CleanFileStructure(rootFolder, initiatorFile, sourceFolder, sinkFile, zippedFile);
+        return new CleanFileStructure(rootFolder, initiatorFile, sourceFolder, zippedFile);
     }
 
     public static SendFileStructure createSendFileStructure(String key) throws RepoCleanerException {

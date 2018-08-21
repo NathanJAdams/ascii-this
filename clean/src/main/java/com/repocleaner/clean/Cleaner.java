@@ -12,6 +12,7 @@ import com.repocleaner.clean.transform.transformers.EOFTransformer;
 import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.s3.S3FileUploader;
+import com.repocleaner.s3.S3Info;
 import com.repocleaner.userinfo.config.UserConfig;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.GsonUtil;
@@ -38,7 +39,6 @@ public class Cleaner {
             File rootFolder = fileStructure.getRootFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
             File sourceFolder = fileStructure.getSourceFolder();
-            File sinkFile = fileStructure.getSinkFile();
             File zippedFile = fileStructure.getZippedFile();
 
             S3FileDownloader.download(bucket, key, zippedFile);
@@ -46,7 +46,7 @@ public class Cleaner {
             String initiatorJson = IOUtils.toString(initiatorFile, StandardCharsets.UTF_8);
             Initiator initiator = GsonUtil.fromJsonOrNull(initiatorJson, Initiator.class);
 
-            Git git = GitUtil.init(rootFolder);
+            Git git = GitUtil.init(sourceFolder);
 
             String cleanBranch = "repo-cleaner-" + "master";// TODO source.createCleanBranchName(git);
 
@@ -61,7 +61,7 @@ public class Cleaner {
             }
             zippedFile.delete();
             ZipUtil.zip(rootFolder, zippedFile);
-            S3FileUploader.upload(bucket, key, zippedFile);
+            S3FileUploader.upload(S3Info.CLEANED_BUCKET, key, zippedFile);
         } catch (IOException e) {
             throw new RepoCleanerException("Failed to clean repo", e);
         } finally {

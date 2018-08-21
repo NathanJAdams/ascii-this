@@ -1,5 +1,6 @@
 package com.repocleaner.send;
 
+import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.sinkinfo.Sink;
 import com.repocleaner.util.GsonUtil;
@@ -33,6 +34,8 @@ public class Sender {
             // TODO charge initiator for token cost
         } catch (IOException e) {
             throw new RepoCleanerException("Failed to send cleaned repo", e);
+        } finally {
+            S3FileDeleter.delete(bucket, key);
         }
     }
 }
