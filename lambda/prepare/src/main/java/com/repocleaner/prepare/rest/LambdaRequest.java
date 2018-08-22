@@ -11,5 +11,5 @@ import lombok.Getter;
 public class LambdaRequest {
     private final Initiator initiator;
     private final Config config;
-    private final Source<?> source;
+    private final Source source;
 }
