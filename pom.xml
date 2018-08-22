@@ -26,23 +26,8 @@
     </dependencyManagement>
 
     <modules>
-        <!--utils-->
-        <module>util</module>
-        <module>initiator</module>
-        <module>config</module>
-        <module>transaction</module>
-        <module>sink</module>
-        <module>source</module>
-        <module>repo-hosts</module>
-        <module>firebase</module>
-        <module>s3</module>
-
-        <!--website-->
-        <module>get-user-config</module>
-
-        <!--main lifecycle-->
-        <module>prepare</module>
-        <module>clean</module>
-        <module>send</module>
+        <module>utils</module>
+        <module>api</module>
+        <module>lambda</module>
     </modules>
 </project>
