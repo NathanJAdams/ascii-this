@@ -14,7 +14,7 @@ public class FileStructure implements AutoCloseable {
     private final File configFile;
     private final File sourceFile;
     private final File tokenFile;
-    private final File tokenCostFile;
+    private final File cleanResultFile;
     private final File zippedFile;
     private final File tempFile;
 
@@ -25,7 +25,7 @@ public class FileStructure implements AutoCloseable {
         this.configFile = new File(rootFolder, "config");
         this.sourceFile = new File(rootFolder, "source");
         this.tokenFile = new File(rootFolder, "token");
-        this.tokenCostFile = new File(rootFolder, "token-cost");
+        this.cleanResultFile = new File(rootFolder, "token-cost");
         this.zippedFile = new File(TMP_FOLDER, "zipped_" + root);
         this.tempFile = new File(TMP_FOLDER, "temp_" + root);
         codeFolder.mkdirs();

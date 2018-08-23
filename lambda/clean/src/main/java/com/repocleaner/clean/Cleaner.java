@@ -15,10 +15,10 @@ import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
+import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.FileStructure;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.TokenCost;
 import com.repocleaner.util.ZipUtil;
 import com.repocleaner.util.json.JsonUtil;
 import org.eclipse.jgit.api.Git;
@@ -42,7 +42,7 @@ public class Cleaner {
             File codeFolder = fileStructure.getCodeFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
             File configFile = fileStructure.getConfigFile();
-            File tokenCostFile = fileStructure.getTokenCostFile();
+            File tokenCostFile = fileStructure.getCleanResultFile();
             File zippedFile = fileStructure.getZippedFile();
 
             S3FileDownloader.download(bucket, key, zippedFile);
@@ -54,12 +54,12 @@ public class Cleaner {
             Set<String> branchNames = GitUtil.getBranchNames(git);
             String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
             GitUtil.checkoutNewBranch(git, cleanBranch);
-            TokenCost tokenCost = clean(codeFolder, initiator, config);
-            postCheck(tokenCost, initiator);
+            CleanResult cleanResult = clean(codeFolder, initiator, config);
+            postCheck(cleanResult, initiator);
 
             configFile.delete();
             zippedFile.delete();
-            JSON_UTIL.toJsonFile(tokenCost, tokenCostFile);
+            JSON_UTIL.toJsonFile(cleanResult, tokenCostFile);
             ZipUtil.zip(rootFolder, zippedFile);
             S3FileUploader.upload(S3Info.CLEANED_BUCKET, key, zippedFile);
         } finally {
@@ -67,8 +67,8 @@ public class Cleaner {
         }
     }
 
-    private static void postCheck(TokenCost tokenCost, Initiator initiator) throws RepoCleanerException {
-        int cost = tokenCost.getTokenCost();
+    private static void postCheck(CleanResult cleanResult, Initiator initiator) throws RepoCleanerException {
+        int cost = cleanResult.getTokenCost();
         if (cost == 0) {
             throw new RepoCleanerException("No changes made");
         }
@@ -77,7 +77,7 @@ public class Cleaner {
         }
     }
 
-    private static TokenCost clean(File sourceFolder, Initiator initiator, Config config) throws RepoCleanerException {
+    private static CleanResult clean(File sourceFolder, Initiator initiator, Config config) throws RepoCleanerException {
         GraphsBuilder graphsBuilder = new GraphsBuilder();
         Path sourceFolderPath = Paths.get(sourceFolder.getAbsolutePath());
         try {
@@ -96,19 +96,24 @@ public class Cleaner {
         TransformationCoster coster = new PlainCoster();
         Transformer transformer = new EOFTransformer("// EOF");
         int totalCost = 0;
+        StringBuilder description = new StringBuilder();
         int maxTokens = config.getMaxTokensPerClean();
         GraphWriter graphWriter = new GraphWriter();
         for (Graph graph : graphs.values()) {
             Transformation transformation = transformer.createTransformation(graph);
-            int cost = coster.calculateTokenCost(transformation);
-            int newTotalCost = totalCost + cost;
-            if (newTotalCost > maxTokens) {
-                break;
+            if (transformation != null) {
+                int cost = coster.calculateTokenCost(transformation);
+                int newTotalCost = totalCost + cost;
+                if (newTotalCost > maxTokens) {
+                    break;
+                }
+                totalCost = newTotalCost;
+                description.append(transformation.getDescription());
+                description.append('\n');
+                transformation.getCommands().forEach(command -> command.execute(graph));
+                graphWriter.write(graph);
             }
-            totalCost = newTotalCost;
-            transformation.getCommands().forEach(command -> command.execute(graph));
-            graphWriter.write(graph);
         }
-        return new TokenCost(totalCost);
+        return new CleanResult(totalCost, description.toString());
     }
 }

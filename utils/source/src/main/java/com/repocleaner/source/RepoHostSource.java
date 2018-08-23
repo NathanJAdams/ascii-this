@@ -2,6 +2,7 @@ package com.repocleaner.source;
 
 import com.repocleaner.repohosts.RepoHost;
 import com.repocleaner.repohosts.RepoHosts;
+import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
 import lombok.AllArgsConstructor;
@@ -24,11 +25,10 @@ public class RepoHostSource implements Source {
     }
 
     @Override
-    public void sendCleaned(File sourceFolder, File tempFile) throws RepoCleanerException {
+    public void sendCleaned(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
         RepoHost repoHost = RepoHosts.DEFAULT_INSTANCE.get(host);
-        // TODO get description of changes from file from the cleaned stage
         String title = "Cleaned by repocleaner.com";
-        String description = "Cleaned by repocleaner.com";
+        String description = cleanResult.getDescription();
         String cleanedBranch = getBranchName(sourceFolder);
         repoHost.raisePullRequest(user, token, repo, title, description, masterBranch, cleanedBranch);
     }

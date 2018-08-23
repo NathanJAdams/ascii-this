@@ -4,6 +4,7 @@ import com.repocleaner.initiator.Initiator;
 import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.source.Source;
+import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.FileStructure;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.ZipUtil;
@@ -19,9 +20,8 @@ public class Sender {
             File rootFolder = fileStructure.getRootFolder();
             File codeFolder = fileStructure.getCodeFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
-            // TODO
-            File tokenFile = fileStructure.getTokenFile();
-            File tokenCostFile = fileStructure.getTokenCostFile();
+            File sourceFile = fileStructure.getSourceFile();
+            File cleanResultFile = fileStructure.getCleanResultFile();
             File zippedFile = fileStructure.getZippedFile();
             File tempFile = fileStructure.getTempFile();
 
@@ -29,9 +29,10 @@ public class Sender {
             ZipUtil.extract(zippedFile, rootFolder);
 
             Initiator initiator = JSON_UTIL.fromJsonFileOrNull(initiatorFile, Initiator.class);
-            Source source = JSON_UTIL.fromJsonFileOrNull(codeFolder, Source.class);
+            Source source = JSON_UTIL.fromJsonFileOrNull(sourceFile, Source.class);
+            CleanResult cleanResult = JSON_UTIL.fromJsonFileOrNull(cleanResultFile, CleanResult.class);
 
-            source.sendCleaned(codeFolder, tempFile);
+            source.sendCleaned(codeFolder, cleanResult, tempFile);
             // TODO charge initiator for token cost
 
             initiator.notifyAvailable(key);

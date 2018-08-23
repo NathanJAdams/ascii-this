@@ -23,13 +23,15 @@ public class TransformStrategy {
         for (int i = 0; i < transformers.size(); i++) {
             Transformer transformer = transformers.get(i);
             Transformation transformation = transformer.createTransformation(graph);
-            int tokenCost = coster.calculateTokenCost(transformation);
-            int newTokenCost = currentTokenCost + tokenCost;
-            if (totalTokens >= newTokenCost) {
-                currentTokenCost += tokenCost;
-                transformation.getCommands()
-                        .forEach(command -> command.execute(graph));
-                i = transformer.getSuccessStrategy().calculateNextIndex(i, transformers.size());
+            if (transformation != null) {
+                int tokenCost = coster.calculateTokenCost(transformation);
+                int newTokenCost = currentTokenCost + tokenCost;
+                if (totalTokens >= newTokenCost) {
+                    currentTokenCost += tokenCost;
+                    transformation.getCommands()
+                            .forEach(command -> command.execute(graph));
+                    i = transformer.getSuccessStrategy().calculateNextIndex(i, transformers.size());
+                }
             }
         }
         return currentTokenCost;

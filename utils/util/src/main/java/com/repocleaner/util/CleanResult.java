@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class TokenCost {
+public class CleanResult {
     private final int tokenCost;
+    private final String description;
 }
