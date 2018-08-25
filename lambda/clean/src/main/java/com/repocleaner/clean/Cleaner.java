@@ -90,7 +90,7 @@ public class Cleaner {
                 graphsBuilder.addFile(fileName);
             }
         } catch (IOException e) {
-            throw new RepoCleanerException("Failed to com.repocleaner.clean repository", e);
+            throw new RepoCleanerException("Failed to clean repository", e);
         }
         Map<Language, Graph> graphs = graphsBuilder.build();
         TransformationCoster coster = new PlainCoster();

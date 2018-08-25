@@ -1,6 +1,6 @@
 package com.repocleaner.getuserconfig.rest;
 
-import com.repocleaner.config.UserConfig;
+import com.repocleaner.config.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,5 +9,5 @@ import lombok.Getter;
 public class UserConfigResponse {
     public static final UserConfigResponse EMPTY_RESPONSE = new UserConfigResponse(null);
 
-    private final UserConfig userConfig;
+    private final Config config;
 }

@@ -11,6 +11,8 @@
 
     <modules>
         <module>config</module>
+        <module>user</module>
+        <module>token</module>
         <module>firebase</module>
         <module>initiator</module>
         <module>s3</module>
@@ -18,5 +20,6 @@
         <module>source</module>
         <module>transaction</module>
         <module>util</module>
+        <module>test</module>
     </modules>
 </project>
