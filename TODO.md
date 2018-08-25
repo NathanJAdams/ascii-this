@@ -1,33 +1,42 @@
-MoSCoW		Time
+<b>Must haves
 
-						Transformations
-1. M			3d				Initial simple transformations
-2. S			3d				Minimal code changes
-3. W			2w each			More languages
-
-
-						Webhooks
-1. S			1d				Add on registration
-2. C			1h				Integrate merge/reject with tokens
-
-
-						Front end
-1. W			1h				Show how to add access token
-2. W			2d				Show example transformations in PR
+| Time  | Theme             | Description |
+|:------|:------------------|:------------|
+| 2h    | Front end         | Add/Remove personal access token
+| 4h    | Database          | Encrypt personal access tokens
+| 2h    | Front end         | Add/Remove hosted account
+| 1h    | Front end         | Add/Remove usage token
+| 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
+| 4w    | Transformations   | Add more transformations
 
 
-						Configuration
-1. S			1d				Default config
-2. W			1d				Folder overrides json/yaml
-3. W			1h				Branch regex/used
-4. W			1d				Transformation types
-5. W			4h				PR groupings, by transformation/effect/file
-6. W			1h				Preferred PR size
+<b>Should haves
+
+| Time  | Theme             | Description |
+|:------|:------------------|:------------|
+| 3d    | Front end         | Add credits
+| 1d    | Config            | Default config
+| 1h    | Config            | Branch regex/used
+| 1d    | Config            | Transformation types
+| 2d    | Front end         | Change config
+| 1h    | Front end         | Show how to add personal access token
+| 2h    | Transformations   | Use config to control transformations
+| 3d    | Transformations   | Minimal code changes
+| 4w    | Transformations   | Javascript
+| 4w    | Transformations   | Python
 
 
-						Tokens
-1. W			1w				Payments
+<b>Could haves
+
+| Time  | Theme             | Description |
+|:------|:------------------|:------------|
+| 2d    | Front end         | Show example transformations in PR
+| 4h    | Config            | PR groupings, by transformation/effect/file/size
 
 
-						Machine learning
-1. W			2w				Alter default config
+<b>Would haves if time
+
+| Time  | Theme             | Description |
+|:------|:------------------|:------------|
+| 1d    | Config            | Folder overrides json/yaml
+| 8w    | Machine learning  | Alters default config, suggests new transformations

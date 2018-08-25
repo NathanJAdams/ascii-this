@@ -42,7 +42,7 @@ public class Cleaner {
             File codeFolder = fileStructure.getCodeFolder();
             File initiatorFile = fileStructure.getInitiatorFile();
             File configFile = fileStructure.getConfigFile();
-            File tokenCostFile = fileStructure.getCleanResultFile();
+            File cleanResultFile = fileStructure.getCleanResultFile();
             File zippedFile = fileStructure.getZippedFile();
 
             S3FileDownloader.download(bucket, key, zippedFile);
@@ -59,7 +59,7 @@ public class Cleaner {
 
             configFile.delete();
             zippedFile.delete();
-            JSON_UTIL.toJsonFile(cleanResult, tokenCostFile);
+            JSON_UTIL.toJsonFile(cleanResult, cleanResultFile);
             ZipUtil.zip(rootFolder, zippedFile);
             S3FileUploader.upload(S3Info.CLEANED_BUCKET, key, zippedFile);
         } finally {
@@ -68,12 +68,12 @@ public class Cleaner {
     }
 
     private static void postCheck(CleanResult cleanResult, Initiator initiator) throws RepoCleanerException {
-        int cost = cleanResult.getTokenCost();
-        if (cost == 0) {
+        int creditCost = cleanResult.getCreditCost();
+        if (creditCost == 0) {
             throw new RepoCleanerException("No changes made");
         }
-        if (initiator.getTokens() < cost) {
-            throw new RepoCleanerException("Insufficient tokens");
+        if (initiator.getCredits() < creditCost) {
+            throw new RepoCleanerException("Insufficient credits");
         }
     }
 

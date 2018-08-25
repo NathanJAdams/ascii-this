@@ -42,7 +42,7 @@ public class Preparer {
     }
 
     private static void preCheck(Initiator initiator) throws RepoCleanerException {
-        if (initiator.getTokens() <= 0) {
+        if (initiator.getCredits() <= 0) {
             throw new RepoCleanerException("No tokens remaining");
         }
         if (!initiator.isPossibleToClean()) {

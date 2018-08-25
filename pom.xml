@@ -26,7 +26,12 @@
     </dependencyManagement>
 
     <modules>
-        <module>utils</module>
+        <module>util</module>
+        <module>user-data</module>
+        <module>user</module>
+        <module>initiator</module>
+        <module>source</module>
+        <module>external</module>
         <module>api</module>
         <module>lambda</module>
     </modules>
