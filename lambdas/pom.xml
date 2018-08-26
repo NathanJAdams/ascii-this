@@ -11,6 +11,9 @@
 
     <modules>
         <module>lambda-add-hosted-account</module>
+        <module>lambda-add-personal-access-token</module>
+        <module>lambda-remove-hosted-account</module>
+        <module>lambda-remove-personal-access-token</module>
         <module>lambda-get-user-config</module>
         <module>lambda-clean</module>
         <module>lambda-prepare</module>

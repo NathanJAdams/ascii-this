@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 @AllArgsConstructor
-public class DbSelector<T> {
+public class DbGetter<T> {
     private final DatabaseReference dbRef;
     private final Class<T> valueClass;
 

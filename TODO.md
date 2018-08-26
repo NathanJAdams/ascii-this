@@ -7,6 +7,7 @@
 | 2h    | Front end         | Add/Remove personal access token
 | 4h    | Database          | Encrypt personal access tokens
 | 1h    | Front end         | Add/Remove usage token
+| 1h    | API/Lambda        | Add/Remove usage token
 | 4w    | Transformations   | Add more transformations
 
 
