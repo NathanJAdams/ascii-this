@@ -5,9 +5,8 @@
 | 2h    | Front end         | Add/Remove hosted account
 | 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
 | 2h    | Front end         | Add/Remove personal access token
+| 3d    | Front end         | Add credits
 | 4h    | Database          | Encrypt personal access tokens
-| 1h    | Front end         | Add/Remove usage token
-| 1h    | API/Lambda        | Add/Remove usage token
 | 4w    | Transformations   | Add more transformations
 
 
@@ -15,10 +14,11 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
-| 3d    | Front end         | Add credits
 | 1d    | Config            | Default config
 | 1h    | Config            | Branch regex/used
 | 1d    | Config            | Transformation types
+| 1h    | API/Lambda        | Add/Remove usage token
+| 1h    | Front end         | Add/Remove usage token
 | 2d    | Front end         | Change config
 | 1h    | Front end         | Show how to add personal access token
 | 2h    | Transformations   | Use config to control transformations
