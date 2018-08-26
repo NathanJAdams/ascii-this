@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>cognito</module>
         <module>firebase</module>
         <module>s3</module>
         <module>repo-host</module>

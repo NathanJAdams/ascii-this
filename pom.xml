@@ -33,6 +33,6 @@
         <module>source</module>
         <module>external</module>
         <module>api</module>
-        <module>lambda</module>
+        <module>lambdas</module>
     </modules>
 </project>

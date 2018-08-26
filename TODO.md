@@ -2,11 +2,11 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
+| 2h    | Front end         | Add/Remove hosted account
+| 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
 | 2h    | Front end         | Add/Remove personal access token
 | 4h    | Database          | Encrypt personal access tokens
-| 2h    | Front end         | Add/Remove hosted account
 | 1h    | Front end         | Add/Remove usage token
-| 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
 | 4w    | Transformations   | Add more transformations
 
 

@@ -5,12 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.repocleaner</groupId>
-    <artifactId>user-data</artifactId>
+    <artifactId>lambdas</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>config</module>
-        <module>transaction</module>
+        <module>lambda-add-hosted-account</module>
+        <module>lambda-get-user-config</module>
+        <module>lambda-clean</module>
+        <module>lambda-prepare</module>
+        <module>lambda-send</module>
     </modules>
 </project>
