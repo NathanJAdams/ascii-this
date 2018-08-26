@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @AllArgsConstructor
 @Getter
@@ -14,5 +16,5 @@ public class User {
     private final String email;
     private final Config config;
     private final List<CreditsTransaction> transactions;
-    private final List<HostedAccount> hostedAccounts;
+    private final Map<String, HostedAccount> hostedAccounts;
 }

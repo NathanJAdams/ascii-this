@@ -1,4 +1,4 @@
-package com.repocleaner.prepare;
+package com.repocleaner.lambdaprepare;
 
 import com.repocleaner.config.Config;
 import com.repocleaner.initiator.Initiator;
@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class LambdaRequest {
+public class PrepareLambdaRequest {
     private final Initiator initiator;
     private final Config config;
     private final Source source;

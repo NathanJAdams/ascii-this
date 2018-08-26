@@ -15,7 +15,9 @@ public class DatabaseReferenceCreator {
     private static final String DATABASE_URL = System.getenv("db_url");
     private static final String SERVICE_ACCOUNT_SECRET_NAME = System.getenv("service_account_key");
     private static final DatabaseReference DB_CONNECTION = createDatabaseConnection();
-    public static final DatabaseReference USERS_REF = DatabaseReferenceCreator.getDbConnection().child("users");
+    public static final DatabaseReference USERS_REF = (DB_CONNECTION == null)
+            ? null
+            : DB_CONNECTION.child("users");
 
     public static DatabaseReference getDbConnection() {
         return DB_CONNECTION;

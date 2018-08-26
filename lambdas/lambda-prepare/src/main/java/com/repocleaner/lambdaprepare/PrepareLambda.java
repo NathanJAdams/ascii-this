@@ -6,13 +6,11 @@ import com.repocleaner.config.Config;
 import com.repocleaner.initiator.Initiator;
 import com.repocleaner.prepare.ApiResponse;
 import com.repocleaner.prepare.Preparer;
-import com.repocleaner.prepare.LambdaRequest;
-import com.repocleaner.prepare.LambdaResponse;
 import com.repocleaner.source.Source;
 import com.repocleaner.util.RepoCleanerException;
 
-public class PrepareRepoLambda implements RequestHandler<LambdaRequest, LambdaResponse> {
-    public LambdaResponse handleRequest(LambdaRequest request, Context context) {
+public class PrepareLambda implements RequestHandler<PrepareLambdaRequest, PrepareLambdaResponse> {
+    public PrepareLambdaResponse handleRequest(PrepareLambdaRequest request, Context context) {
         String requestId = context.getAwsRequestId();
         Initiator initiator = request.getInitiator();
         Config config = request.getConfig();
@@ -22,10 +20,10 @@ public class PrepareRepoLambda implements RequestHandler<LambdaRequest, LambdaRe
             if (!initiator.requiresApiResponse()) {
                 apiResponse = null;
             }
-            return new LambdaResponse(true, "ok", apiResponse);
+            return new PrepareLambdaResponse(true, "ok", apiResponse);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
-            return LambdaResponse.SERVER_ERROR_RESPONSE;
+            return PrepareLambdaResponse.SERVER_ERROR_RESPONSE;
         }
     }
 }

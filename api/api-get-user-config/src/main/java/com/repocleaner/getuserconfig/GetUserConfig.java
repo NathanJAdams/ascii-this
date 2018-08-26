@@ -1,16 +1,18 @@
 package com.repocleaner.getuserconfig;
 
+import com.google.firebase.database.DatabaseReference;
 import com.repocleaner.cognito.CognitoValidator;
 import com.repocleaner.config.Config;
 import com.repocleaner.firebase.DatabaseReferenceCreator;
 import com.repocleaner.firebase.DbSelector;
+import com.repocleaner.firebase.KeyConverter;
+import com.repocleaner.util.RepoCleanerException;
 
 public class GetUserConfig {
-    public static Config getUserConfig(String jwt) {
+    public static Config getUserConfig(String jwt) throws RepoCleanerException {
         String email = CognitoValidator.getValidEmail(jwt);
-        if (email == null) {
-            return null;
-        }
-        return new DbSelector<>(DatabaseReferenceCreator.USERS_REF, Config.class, email, true).get();
+        String emailKey = KeyConverter.toKey(email);
+        DatabaseReference userDbRef = DatabaseReferenceCreator.USERS_REF.child(emailKey);
+        return new DbSelector<>(userDbRef, Config.class).get();
     }
 }

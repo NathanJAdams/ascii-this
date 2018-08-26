@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UserConfigResponse {
-    public static final UserConfigResponse EMPTY_RESPONSE = new UserConfigResponse(null);
+public class GetUserConfigLambdaResponse {
+    public static final GetUserConfigLambdaResponse EMPTY_RESPONSE = new GetUserConfigLambdaResponse(null);
 
     private final Config config;
 }

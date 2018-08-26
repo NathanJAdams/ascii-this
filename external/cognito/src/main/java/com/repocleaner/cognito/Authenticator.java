@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.repocleaner.util.RepoCleanerException;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -15,12 +16,9 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 
 public class Authenticator {
-    public DecodedJWT authenticate(String jwt) {
+    public DecodedJWT authenticate(String jwt) throws RepoCleanerException {
         DecodedJWT decoded = JWT.decode(jwt);
         Algorithm algorithm = createAlgorithm(decoded);
-        if (algorithm == null) {
-            return null;
-        }
         JWTVerifier verifier = JWT.require(algorithm)
                 .withAudience(CognitoInfo.CLIENT_ID)
                 .acceptLeeway(100)
@@ -28,17 +26,13 @@ public class Authenticator {
         try {
             return verifier.verify(jwt);
         } catch (JWTVerificationException e) {
-            e.printStackTrace();
-            return null;
+            throw new RepoCleanerException("Not authenticated", e);
         }
     }
 
-    private Algorithm createAlgorithm(DecodedJWT decoded) {
+    private Algorithm createAlgorithm(DecodedJWT decoded) throws RepoCleanerException {
         String keyId = decoded.getKeyId();
         PublicKey key = CognitoInfo.getKey(keyId);
-        if (key == null) {
-            return null;
-        }
         BigInteger modulus = toBigInt(key.getN());
         BigInteger exponent = toBigInt(key.getE());
 
@@ -48,8 +42,7 @@ public class Authenticator {
             RSAPublicKey publicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
             return Algorithm.RSA256(publicKey, null);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
+            throw new RepoCleanerException("Not authenticated", e);
         }
     }
 

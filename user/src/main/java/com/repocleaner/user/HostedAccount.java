@@ -1,12 +1,14 @@
 package com.repocleaner.user;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Map;
 
+@AllArgsConstructor
+@Getter
 public class HostedAccount {
-    private String host;
-    private String account;
-    private List<String> usageTokens;
-    private String repoRegex;
-    private Map<String, String> repoMasterBranches;
+    private final Map<String, Boolean> usageTokens;
+    private final String repoRegex;
+    private final Map<String, String> repoMasterBranches;
 }

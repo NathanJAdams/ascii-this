@@ -41,7 +41,7 @@
                     <transformers>
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>com.repocleaner.lambdaclean.CleanRepoLambda</mainClass>
+                            <mainClass>com.repocleaner.lambdaclean.CleanLambda</mainClass>
                         </transformer>
                     </transformers>
                     <createDependencyReducedPom>false</createDependencyReducedPom>

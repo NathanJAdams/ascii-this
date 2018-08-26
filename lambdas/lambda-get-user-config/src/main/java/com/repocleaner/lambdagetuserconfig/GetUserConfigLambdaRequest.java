@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UserConfigRequest {
+public class GetUserConfigLambdaRequest {
     private final String jwt;
 }
