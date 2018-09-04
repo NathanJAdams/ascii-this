@@ -1,6 +1,6 @@
 package com.repocleaner.repohost;
 
-public class BitBucketRepoHost extends RepoHost {
+public class BitBucketRepoHost extends RepoHostBase {
     public BitBucketRepoHost() {
         super(
                 "BitBucket",

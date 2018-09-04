@@ -1,4 +1,4 @@
-// Generated from C:/Users/Nathan/IdeaProjects/RepoCleanerCore/src/main/java/cleaner/antlr/java\Java.g4 by ANTLR 4.7
+// Generated from C:/Users/Nathan/IdeaProjects/repoCleaner/api/api-clean/src/main/java/com/repocleaner/clean/antlr/java\Java.g4 by ANTLR 4.7
 package com.repocleaner.clean.antlr.java.gen;
 
 import org.antlr.v4.runtime.ParserRuleContext;

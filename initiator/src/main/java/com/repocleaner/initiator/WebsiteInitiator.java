@@ -1,8 +1,10 @@
 package com.repocleaner.initiator;
 
+import com.repocleaner.model.initiator.Initiator;
+
 public class WebsiteInitiator implements Initiator {
     @Override
-    public int getCredits() {
+    public long getCredits() {
         return 1000000000;
     }
 
@@ -17,6 +19,7 @@ public class WebsiteInitiator implements Initiator {
     }
 
     @Override
-    public void notifyAvailable(String key) {
+    public String getNotificationEndpoint() {
+        return null;
     }
 }

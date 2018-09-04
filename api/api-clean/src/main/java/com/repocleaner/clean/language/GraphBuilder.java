@@ -1,18 +1,18 @@
 package com.repocleaner.clean.language;
 
-import com.repocleaner.util.RepoCleanerException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.RuleNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import com.repocleaner.clean.antlr.HiddenTokensListener;
 import com.repocleaner.clean.graph.Edge;
 import com.repocleaner.clean.graph.EdgeType;
 import com.repocleaner.clean.graph.Graph;
 import com.repocleaner.clean.graph.PropertyKeys;
 import com.repocleaner.clean.graph.Vertex;
+import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.StringUtil;
+import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.RuleNode;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.File;
 import java.util.HashMap;

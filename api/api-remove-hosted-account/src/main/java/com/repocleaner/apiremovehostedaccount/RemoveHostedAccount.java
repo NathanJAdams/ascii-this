@@ -13,7 +13,11 @@ public class RemoveHostedAccount {
         String email = CognitoValidator.getValidEmail(jwt);
         String emailKey = KeyConverter.toKey(email);
         String hostAccountKey = KeyCombiner.combine(host, account);
-        DatabaseReference hostAccountDbRef = DatabaseReferenceCreator.USERS_REF.child(emailKey).child("hostedAccounts").child(hostAccountKey);
+        DatabaseReference hostAccountDbRef = DatabaseReferenceCreator.DB_CONNECTION
+                .child("users")
+                .child(emailKey)
+                .child("hostedAccounts")
+                .child(hostAccountKey);
         return new DbRemover<>(hostAccountDbRef).remove();
     }
 }

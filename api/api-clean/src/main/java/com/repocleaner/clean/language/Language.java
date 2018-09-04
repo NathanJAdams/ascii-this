@@ -12,9 +12,6 @@ import java.util.Map;
 public enum Language {
     Java(new JavaParsedFileCreator(), new JavaContextualiser(), "java");
     private static final Map<String, Language> EXTENSION_LANGUAGES = new HashMap<>();
-    private final ParsedFileCreator parsedFileCreator;
-    private final Contextualiser contextualiser;
-    private final List<String> extensions;
 
     static {
         for (Language language : values()) {
@@ -23,6 +20,10 @@ public enum Language {
             }
         }
     }
+
+    private final ParsedFileCreator parsedFileCreator;
+    private final Contextualiser contextualiser;
+    private final List<String> extensions;
 
     Language(ParsedFileCreator parsedFileCreator, Contextualiser contextualiser, String... extensions) {
         this.parsedFileCreator = parsedFileCreator;

@@ -9,6 +9,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 public class S3Info {
+    public static final String REGION = "eu-west-1";
+
+    public static final String LAMBDA_PREPARE_NAME = "prepare";
+
     public static final String PREPARED_BUCKET = "prepared.repocleaner.com";
     public static final String CLEANED_BUCKET = "cleaned.repocleaner.com";
     public static final String HELD_BUCKET = "held.repocleaner.com";

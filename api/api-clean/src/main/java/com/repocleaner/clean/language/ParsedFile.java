@@ -1,7 +1,7 @@
 package com.repocleaner.clean.language;
 
-import org.antlr.v4.runtime.tree.ParseTree;
 import com.repocleaner.clean.antlr.HiddenTokensListener;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ParsedFile {
     private final ParseTree parseTree;

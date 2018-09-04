@@ -1,12 +1,13 @@
 package com.repocleaner.initiator;
 
+import com.repocleaner.model.initiator.Initiator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
 public class CronInitiator implements Initiator {
-    private final int credits;
+    private final long credits;
 
     @Override
     public boolean isPossibleToClean() {
@@ -20,6 +21,7 @@ public class CronInitiator implements Initiator {
     }
 
     @Override
-    public void notifyAvailable(String key) {
+    public String getNotificationEndpoint() {
+        return null;
     }
 }

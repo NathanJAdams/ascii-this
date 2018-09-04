@@ -2,11 +2,13 @@ package com.repocleaner.lambdaprepare;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.repocleaner.config.Config;
-import com.repocleaner.initiator.Initiator;
-import com.repocleaner.prepare.ApiResponse;
+import com.repocleaner.model.api.ApiResponse;
+import com.repocleaner.io.PrepareLambdaRequest;
+import com.repocleaner.io.PrepareLambdaResponse;
+import com.repocleaner.model.config.Config;
+import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.source.Source;
 import com.repocleaner.prepare.Preparer;
-import com.repocleaner.source.Source;
 import com.repocleaner.util.RepoCleanerException;
 
 public class PrepareLambda implements RequestHandler<PrepareLambdaRequest, PrepareLambdaResponse> {

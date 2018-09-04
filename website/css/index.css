@@ -1,4 +1,4 @@
-div {
+* {
     padding: 1px;
     border: 1px solid black;
 }
@@ -7,6 +7,6 @@ div {
     display: block;
 }
 
-#tokens span {
+#credits span {
     display: block;
 }

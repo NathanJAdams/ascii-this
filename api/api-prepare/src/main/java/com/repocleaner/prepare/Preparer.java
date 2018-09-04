@@ -1,10 +1,11 @@
 package com.repocleaner.prepare;
 
-import com.repocleaner.config.Config;
-import com.repocleaner.initiator.Initiator;
+import com.repocleaner.model.api.ApiResponse;
+import com.repocleaner.model.config.Config;
+import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.source.Source;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
-import com.repocleaner.source.Source;
 import com.repocleaner.util.FileStructure;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.ZipUtil;

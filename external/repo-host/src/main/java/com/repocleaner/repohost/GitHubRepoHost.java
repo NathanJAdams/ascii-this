@@ -1,6 +1,6 @@
 package com.repocleaner.repohost;
 
-public class GitHubRepoHost extends RepoHost {
+public class GitHubRepoHost extends RepoHostBase {
     public GitHubRepoHost() {
         super(
                 "GitHub",

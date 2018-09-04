@@ -1,14 +1,13 @@
 package com.repocleaner.initiator;
 
-import com.repocleaner.util.rest.RestRequest;
-import com.repocleaner.util.rest.RestUtil;
+import com.repocleaner.model.initiator.Initiator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
 public class ApiInitiator implements Initiator {
-    private final int credits;
+    private final long credits;
     private final String notificationEndpoint;
 
     @Override
@@ -22,11 +21,7 @@ public class ApiInitiator implements Initiator {
     }
 
     @Override
-    public void notifyAvailable(String key) {
-        if (notificationEndpoint != null) {
-            CleanedNotification notification = new CleanedNotification(key);
-            RestRequest<Void> request = RestRequest.POST(notificationEndpoint, notification, Void.class);
-            RestUtil.getResponse(request);
-        }
+    public String getNotificationEndpoint() {
+        return notificationEndpoint;
     }
 }

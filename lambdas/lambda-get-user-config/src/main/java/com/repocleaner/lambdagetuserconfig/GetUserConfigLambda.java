@@ -2,8 +2,10 @@ package com.repocleaner.lambdagetuserconfig;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.repocleaner.config.Config;
+import com.repocleaner.model.config.Config;
 import com.repocleaner.getuserconfig.GetUserConfig;
+import com.repocleaner.io.GetUserConfigLambdaRequest;
+import com.repocleaner.io.GetUserConfigLambdaResponse;
 import com.repocleaner.util.RepoCleanerException;
 
 public class GetUserConfigLambda implements RequestHandler<GetUserConfigLambdaRequest, GetUserConfigLambdaResponse> {

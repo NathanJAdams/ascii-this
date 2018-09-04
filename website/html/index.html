@@ -58,48 +58,41 @@
         <!--<button id="logout-global-initiate" data-bind="click: logoutAllDevices">Log out of all devices</button>-->
     </div>
     <div id="menu" data-bind="with: menu">
-        <button>Tokens</button>
+        <button>Credits</button>
         <button>Repos</button>
         <button>Config</button>
     </div>
-    <div id="tokens" data-bind="with: tokens">
-        <span id="tokens-title" data-bind="text: tokensTitle"></span>
-        <div data-bind="foreach: tokenTransactions">
+    <div id="credits" data-bind="with: credits">
+        <span id="credits-title" data-bind="text: creditsTitle"></span>
+        <div data-bind="foreach: creditTransactions">
             <span data-bind="text: description"></span>
             <a data-bind="visible: isDebit, attr: { href: commit, title: description }">Commit</a>
         </div>
     </div>
     <div id="repos" data-bind="with: repos">
         <div data-bind="foreach: repos">
-        <span data-bind="text: repoAddress"></span>
-        <button>Remove</button>
+            <span data-bind="text: repoAddress"></span>
+            <button>Remove</button>
         </div>
         <div id="repo-add">
-        <button>Add</button>
-
-        <span id="accountText" data-bind="text: enterAccountNameText"></span>
-        <div class="input-group">
-        <div class="input-group-prepend">
-        <span id="basic-addon3" class="input-group-text" data-bind="text: repoHostUrlRoot"></span>
-        </div>
-        <input id="basic-url" type="text" class="form-control" aria-describedby="basic-addon3"
-        data-bind="textInput: user, style: { 'background-color':  validityColor }">
-        </div>
-
-        <span>Click on your repository host</span>
-        <div data-bind="foreach: repoHosts">
-        <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.setRepoHost"></button>
-        </div>
-        <span>Click to test a repository</span>
-        <div data-bind="foreach: repos">
-        <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.testRepo"></button>
-        </div>
-
-        <span>Click to test a branch</span>
-        <div data-bind="foreach: branches">
-        <button class="btn btn-primary" type="button"
-        data-bind="text: refName, click: $root.testBranch"></button>
-        </div>
+            <button>Add a hosted account</button>
+            <div data-bind="foreach: repoHosts">
+                <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.setRepoHost"></button>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="basic-addon3" class="input-group-text" data-bind="text: repoHostUrlRoot"></span>
+                </div>
+                <input id="basic-url" type="text" class="form-control" aria-describedby="basic-addon3"
+                       data-bind="textInput: userName, style: { 'background-color':  validityColor }">
+            </div>
+            <div data-bind="foreach: repos">
+                <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.testRepo"></button>
+            </div>
+            <div data-bind="foreach: branches">
+                <button class="btn btn-primary" type="button"
+                        data-bind="text: refName, click: $root.testBranch"></button>
+            </div>
         </div>
     </div>
     <div id="config">
@@ -120,11 +113,11 @@
     <script src="../js/model/branch-model.js"></script>
     <script src="../js/model/repo-host-model.js"></script>
     <script src="../js/model/repo-model.js"></script>
-    <script src="../js/model/token-transaction-model.js"></script>
+    <script src="../js/model/credit-transaction-model.js"></script>
     <script src="../js/model/user-model.js"></script>
     <!--view models-->
     <script src="../js/viewmodel/repos-view-model.js"></script>
-    <script src="../js/viewmodel/tokens-view-model.js"></script>
+    <script src="../js/viewmodel/credits-view-model.js"></script>
     <script src="../js/viewmodel/logout-view-model.js"></script>
     <script src="../js/viewmodel/login-view-model.js"></script>
     <script src="../js/viewmodel/signup-view-model.js"></script>

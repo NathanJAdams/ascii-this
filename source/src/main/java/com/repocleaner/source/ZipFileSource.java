@@ -1,5 +1,6 @@
 package com.repocleaner.source;
 
+import com.repocleaner.model.source.Source;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
 import com.repocleaner.util.CleanResult;

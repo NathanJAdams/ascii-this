@@ -12,19 +12,18 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class DatabaseReferenceCreator {
-    private static final String DATABASE_URL = System.getenv("db_url");
-    private static final String SERVICE_ACCOUNT_SECRET_NAME = System.getenv("service_account_key");
-    private static final DatabaseReference DB_CONNECTION = createDatabaseConnection();
-    public static final DatabaseReference USERS_REF = (DB_CONNECTION == null)
-            ? null
-            : DB_CONNECTION.child("users");
+    public static final DatabaseReference DB_CONNECTION = createDatabaseConnection();
 
-    public static DatabaseReference getDbConnection() {
-        return DB_CONNECTION;
+    static {
+        if (DB_CONNECTION == null) {
+            System.out.println("Cannot connect to database");
+        }
     }
 
     private static DatabaseReference createDatabaseConnection() {
-        String secret = SecretRetriever.getSecretAsString(SERVICE_ACCOUNT_SECRET_NAME);
+        String databaseUrl = System.getenv("db_url");
+        String serviceAccountSecretName = System.getenv("service_account_key");
+        String secret = SecretRetriever.getSecretAsString(serviceAccountSecretName);
         if (secret == null) {
             System.out.println("Null service account");
             return null;
@@ -34,7 +33,7 @@ public class DatabaseReferenceCreator {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(credentials)
-                    .setDatabaseUrl(DATABASE_URL)
+                    .setDatabaseUrl(databaseUrl)
                     .build();
             FirebaseApp app = FirebaseApp.initializeApp(options);
             FirebaseDatabase database = FirebaseDatabase.getInstance(app);

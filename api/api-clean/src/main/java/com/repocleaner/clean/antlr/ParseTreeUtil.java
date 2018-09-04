@@ -1,7 +1,7 @@
 package com.repocleaner.clean.antlr;
 
-import org.antlr.v4.runtime.tree.ParseTree;
 import com.repocleaner.util.StreamUtil;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.Iterator;
 import java.util.function.Function;

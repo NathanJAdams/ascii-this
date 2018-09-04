@@ -13,7 +13,12 @@ public class AddPersonalAccessToken {
         String email = CognitoValidator.getValidEmail(jwt);
         String emailKey = KeyConverter.toKey(email);
         String hostAccountKey = KeyCombiner.combine(host, account);
-        DatabaseReference personalAccessTokenDbRef = DatabaseReferenceCreator.USERS_REF.child(emailKey).child("hostedAccounts").child(hostAccountKey).child(personalAccessToken);
+        DatabaseReference personalAccessTokenDbRef = DatabaseReferenceCreator.DB_CONNECTION
+                .child("users")
+                .child(emailKey)
+                .child("hostedAccounts")
+                .child(hostAccountKey)
+                .child(personalAccessToken);
         // TODO encrypt
         return new DbSetter<>(personalAccessTokenDbRef, true).set();
     }

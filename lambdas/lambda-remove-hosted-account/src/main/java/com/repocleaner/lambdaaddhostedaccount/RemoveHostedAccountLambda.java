@@ -3,6 +3,8 @@ package com.repocleaner.lambdaaddhostedaccount;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.repocleaner.apiremovehostedaccount.RemoveHostedAccount;
+import com.repocleaner.io.RemoveHostedAccountLambdaRequest;
+import com.repocleaner.io.RemoveHostedAccountLambdaResponse;
 import com.repocleaner.util.RepoCleanerException;
 
 public class RemoveHostedAccountLambda implements RequestHandler<RemoveHostedAccountLambdaRequest, RemoveHostedAccountLambdaResponse> {

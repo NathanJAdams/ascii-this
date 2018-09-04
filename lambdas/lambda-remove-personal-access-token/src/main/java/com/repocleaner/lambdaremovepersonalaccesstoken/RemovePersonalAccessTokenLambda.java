@@ -3,6 +3,8 @@ package com.repocleaner.lambdaremovepersonalaccesstoken;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.repocleaner.apiremovepersonalaccesstoken.RemovePersonalAccessToken;
+import com.repocleaner.io.RemovePersonalAccessTokenLambdaRequest;
+import com.repocleaner.io.RemovePersonalAccessTokenLambdaResponse;
 import com.repocleaner.util.RepoCleanerException;
 
 public class RemovePersonalAccessTokenLambda implements RequestHandler<RemovePersonalAccessTokenLambdaRequest, RemovePersonalAccessTokenLambdaResponse> {

@@ -4,17 +4,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.repocleaner.cognito.CognitoValidator;
 import com.repocleaner.firebase.DatabaseReferenceCreator;
 import com.repocleaner.firebase.DbSetter;
-import com.repocleaner.firebase.KeyCombiner;
-import com.repocleaner.firebase.KeyConverter;
-import com.repocleaner.user.HostedAccount;
+import com.repocleaner.model.user.HostedAccount;
 import com.repocleaner.util.RepoCleanerException;
 
+import java.util.Objects;
+
 public class AddHostedAccount {
-    public static boolean addHostedAccount(String jwt, String host, String account, HostedAccount hostedAccount) throws RepoCleanerException {
+    public static boolean addHostedAccount(String jwt, HostedAccount hostedAccount) throws RepoCleanerException {
         String email = CognitoValidator.getValidEmail(jwt);
-        String emailKey = KeyConverter.toKey(email);
-        String hostAccountKey = KeyCombiner.combine(host, account);
-        DatabaseReference hostAccountDbRef = DatabaseReferenceCreator.USERS_REF.child(emailKey).child("hostedAccounts").child(hostAccountKey);
+        if (!Objects.equals(email, hostedAccount.getHostedKey().getUserEmail())) {
+            return false;
+        }
+        DatabaseReference hostAccountDbRef = DatabaseReferenceCreator.DB_CONNECTION
+                .child("hostedAccounts");
         return new DbSetter<>(hostAccountDbRef, hostedAccount).set();
     }
 }

@@ -1,5 +1,6 @@
 package com.repocleaner.clean.language;
 
+import com.repocleaner.clean.antlr.HiddenTokensListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -7,7 +8,6 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import com.repocleaner.clean.antlr.HiddenTokensListener;
 
 import java.io.IOException;
 import java.util.function.Function;
