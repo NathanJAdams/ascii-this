@@ -15,7 +15,6 @@ import com.repocleaner.io.PrepareLambdaRequest;
 import com.repocleaner.model.config.Config;
 import com.repocleaner.model.initiator.Initiator;
 import com.repocleaner.model.source.Source;
-import com.repocleaner.model.user.HostedKey;
 import com.repocleaner.model.user.HostedRepo;
 import com.repocleaner.model.user.User;
 import com.repocleaner.s3.S3Info;
@@ -39,16 +38,15 @@ public class CronApi {
     }
 
     private static void startCleanJob(HostedRepo hostedRepo) {
-        HostedKey hostedKey = hostedRepo.getHostedKey();
-        User user = getUser(hostedKey.getUserEmail());
+        User user = getUser(hostedRepo.getUserEmail());
         long credits = user.getCredits();
         if (credits <= 0) {
             return;
         }
         Initiator initiator = new CronInitiator(credits);
         Config config = user.getConfig();
-        String host = hostedKey.getHost();
-        String userName = hostedKey.getUserName();
+        String host = hostedRepo.getHost();
+        String userName = hostedRepo.getUserName();
         String repo = hostedRepo.getRepo();
         String masterBranch = hostedRepo.getMasterBranch();
         String token = null; // TODO hostedKey.getUserName();

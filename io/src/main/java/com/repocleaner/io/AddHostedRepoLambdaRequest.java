@@ -1,16 +1,15 @@
-package com.repocleaner.model.user;
+package com.repocleaner.io;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class HostedRepo {
+public class AddHostedRepoLambdaRequest {
+    private final String jwt;
     private final String userEmail;
     private final String host;
     private final String userName;
     private final String repo;
     private final String masterBranch;
-    private final boolean isActive;
-    private final String nextCleanDateTimeHex;
 }

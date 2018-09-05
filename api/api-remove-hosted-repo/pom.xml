@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.repocleaner</groupId>
-    <artifactId>lambdas</artifactId>
+    <artifactId>api-remove-hosted-repo</artifactId>
     <version>0.0.1</version>
-    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,15 +14,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <modules>
-        <module>lambda-add-hosted-repo</module>
-        <module>lambda-add-personal-access-token</module>
-        <module>lambda-remove-hosted-repo</module>
-        <module>lambda-remove-personal-access-token</module>
-        <module>lambda-get-user-config</module>
-        <module>lambda-cron</module>
-        <module>lambda-clean</module>
-        <module>lambda-prepare</module>
-        <module>lambda-send</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>cognito</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
 </project>
