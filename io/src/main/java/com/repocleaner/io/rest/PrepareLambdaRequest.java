@@ -1,4 +1,4 @@
-package com.repocleaner.io;
+package com.repocleaner.io.rest;
 
 import com.repocleaner.model.initiator.Initiator;
 import com.repocleaner.model.source.Source;

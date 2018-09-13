@@ -6,6 +6,7 @@ import com.repocleaner.firebase.DatabaseReferenceCreator;
 import com.repocleaner.firebase.DbGetter;
 import com.repocleaner.firebase.QueryGetter;
 import com.repocleaner.initiator.CronInitiator;
+import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.model.initiator.Initiator;
 import com.repocleaner.model.source.Source;
 import com.repocleaner.model.user.Config;
@@ -15,6 +16,7 @@ import com.repocleaner.model.user.User;
 import com.repocleaner.s3.S3FileUploader;
 import com.repocleaner.s3.S3Info;
 import com.repocleaner.source.RepoHostSource;
+import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.FileStructure;
 import com.repocleaner.util.LocalDateTimeUtil;
 import com.repocleaner.util.RepoCleanerException;
@@ -27,7 +29,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CronApi {
-    private static final JsonUtil JSON_UTIL = new JsonUtil();
+    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SourceGsonCustomiser());
 
     public static void main(String[] args) {
         CronApi.startCleanJobs();

@@ -1,13 +1,12 @@
-package com.repocleaner.io;
+package com.repocleaner.io.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RemovePersonalAccessTokenLambdaRequest {
+public class RemoveHostedRepoLambdaRequest {
     private final String jwt;
     private final String host;
     private final String account;
-    private final String token;
 }

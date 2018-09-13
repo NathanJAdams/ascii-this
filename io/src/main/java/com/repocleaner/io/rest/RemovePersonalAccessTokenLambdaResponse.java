@@ -1,4 +1,4 @@
-package com.repocleaner.io;
+package com.repocleaner.io.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
