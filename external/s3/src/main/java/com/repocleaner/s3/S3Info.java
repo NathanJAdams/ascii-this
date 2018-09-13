@@ -1,5 +1,6 @@
 package com.repocleaner.s3;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -13,13 +14,14 @@ public class S3Info {
 
     public static final String LAMBDA_PREPARE_NAME = "prepare";
 
+    public static final String WAITING_BUCKET = "waiting.repocleaner.com";
     public static final String PREPARED_BUCKET = "prepared.repocleaner.com";
     public static final String CLEANED_BUCKET = "cleaned.repocleaner.com";
     public static final String HELD_BUCKET = "held.repocleaner.com";
 
     public static final AmazonS3 CLIENT = AmazonS3ClientBuilder.standard()
-            .withCredentials(new ProfileCredentialsProvider())
-            .withRegion("eu-west-1")
+            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+            .withRegion(REGION)
             .build();
 
     public static String getDecodedKey(String key) throws RepoCleanerException {

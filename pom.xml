@@ -29,7 +29,6 @@
         <module>util</module>
         <module>model</module>
 
-        <module>config</module>
         <module>initiator</module>
         <module>source</module>
         <module>transaction</module>

@@ -1,17 +1,22 @@
 package com.repocleaner.model.user;
 
-import com.repocleaner.model.config.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Map;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
+@ToString
 public class User {
-    private final String email;
-    private final Config config;
-    private final int credits;
-    private final Map<String, HostedAccounts> hostedAccounts;
-    private final Map<String, UsageToken> namedUsageTokens;
+    private boolean active;
+    private int credits;
+    private int maxCreditsPerClean;
+    private Map<String, HostedAccount> accounts;
+    private Map<String, UsageToken> usageTokens;
 }

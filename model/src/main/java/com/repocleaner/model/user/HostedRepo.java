@@ -2,15 +2,23 @@ package com.repocleaner.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
+@ToString
 public class HostedRepo {
-    private final String userEmail;
-    private final String host;
-    private final String userName;
-    private final String repo;
-    private final String masterBranch;
-    private final boolean isActive;
-    private final String nextCleanDateTimeHex;
+    private String userId;
+    private String accountId;
+    private boolean isActive;
+    private String lastCleanedTimeHex;
+    private String nextCleanTimeHex;
+    private String masterBranch;
+    private String repoName;
+    private Timing timing;
+    private Config config;
 }

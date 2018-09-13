@@ -6,8 +6,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -16,20 +16,31 @@ public class QueryGetter<T> {
     private final Query query;
     private final Class<T> valueClass;
 
-    public List<T> get() {
+    public Map<String, T> get() {
         if (query == null) {
             return null;
         }
-        AtomicReference<List<T>> valueRef = new AtomicReference<>();
+        AtomicReference<Map<String, T>> valueRef = new AtomicReference<>();
         CountDownLatch latch = new CountDownLatch(1);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<T> result = new ArrayList<>();
+                // keep insertion order
+                Map<String, T> result = new LinkedHashMap<>();
+                System.out.println("loop child snapshots");
+                System.out.println("children: " + dataSnapshot.getChildrenCount());
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    T value = child.getValue(valueClass);
-                    result.add(value);
+                    String key = child.getKey();
+                    System.out.println("Key: " + key);
+                    try {
+                        T value = child.getValue(valueClass);
+                        System.out.println("Value: " + value);
+                        result.put(key, value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                System.out.println("looped child snapshots");
                 valueRef.set(result);
                 latch.countDown();
             }

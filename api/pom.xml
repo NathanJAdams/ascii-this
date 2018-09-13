@@ -16,11 +16,6 @@
     </properties>
 
     <modules>
-        <module>api-add-hosted-repo</module>
-        <module>api-add-personal-access-token</module>
-        <module>api-remove-hosted-repo</module>
-        <module>api-remove-personal-access-token</module>
-        <module>api-get-user-config</module>
         <module>api-cron</module>
         <module>api-clean</module>
         <module>api-prepare</module>

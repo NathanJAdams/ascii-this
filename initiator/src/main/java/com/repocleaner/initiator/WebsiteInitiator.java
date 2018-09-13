@@ -4,8 +4,8 @@ import com.repocleaner.model.initiator.Initiator;
 
 public class WebsiteInitiator implements Initiator {
     @Override
-    public long getCredits() {
-        return 1000000000;
+    public long getMaxCredits() {
+        return 999999999999999999L;
     }
 
     @Override

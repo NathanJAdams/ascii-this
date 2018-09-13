@@ -1,6 +1,6 @@
 package com.repocleaner.io;
 
-import com.repocleaner.model.config.Config;
+import com.repocleaner.model.user.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

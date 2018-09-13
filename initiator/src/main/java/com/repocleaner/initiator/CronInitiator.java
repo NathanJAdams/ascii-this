@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class CronInitiator implements Initiator {
-    private final long credits;
+    private final long maxCredits;
 
     @Override
     public boolean isPossibleToClean() {

@@ -9,8 +9,8 @@ import com.repocleaner.clean.transform.TransformationCoster;
 import com.repocleaner.clean.transform.Transformer;
 import com.repocleaner.clean.transform.coster.PlainCoster;
 import com.repocleaner.clean.transform.transformers.EOFTransformer;
-import com.repocleaner.model.config.Config;
 import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.user.Config;
 import com.repocleaner.s3.S3FileDeleter;
 import com.repocleaner.s3.S3FileDownloader;
 import com.repocleaner.s3.S3FileUploader;
@@ -72,7 +72,7 @@ public class Cleaner {
         if (creditCost == 0) {
             throw new RepoCleanerException("No changes made");
         }
-        if (initiator.getCredits() < creditCost) {
+        if (initiator.getMaxCredits() < creditCost) {
             throw new RepoCleanerException("Insufficient credits");
         }
     }
@@ -97,14 +97,14 @@ public class Cleaner {
         Transformer transformer = new EOFTransformer("// EOF");
         int totalCost = 0;
         StringBuilder description = new StringBuilder();
-        int maxTokens = config.getMaxTokensPerClean();
+        long maxCredits = initiator.getMaxCredits();
         GraphWriter graphWriter = new GraphWriter();
         for (Graph graph : graphs.values()) {
             Transformation transformation = transformer.createTransformation(graph);
             if (transformation != null) {
                 int cost = coster.calculateTokenCost(transformation);
                 int newTotalCost = totalCost + cost;
-                if (newTotalCost > maxTokens) {
+                if (newTotalCost > maxCredits) {
                     break;
                 }
                 totalCost = newTotalCost;

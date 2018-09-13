@@ -5,11 +5,8 @@ import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
-import com.amazonaws.services.secretsmanager.model.InvalidRequestException;
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
 
 import java.nio.ByteBuffer;
-import java.security.InvalidParameterException;
 
 public class SecretRetriever {
     private static final String ENDPOINT = "secretsmanager.eu-west-1.amazonaws.com";
@@ -29,17 +26,12 @@ public class SecretRetriever {
                 : result.getSecretBinary();
     }
 
-    private static GetSecretValueResult getSecret(String secretName) {
+    public static GetSecretValueResult getSecret(String secretName) {
         AwsClientBuilder.EndpointConfiguration config = new AwsClientBuilder.EndpointConfiguration(ENDPOINT, REGION);
         AWSSecretsManagerClientBuilder clientBuilder = AWSSecretsManagerClientBuilder.standard();
         clientBuilder.setEndpointConfiguration(config);
         AWSSecretsManager client = clientBuilder.build();
-        GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest().withSecretId(secretName);
-        try {
-            return client.getSecretValue(getSecretValueRequest);
-        } catch (ResourceNotFoundException | InvalidRequestException | InvalidParameterException e) {
-            e.printStackTrace();
-            return null;
-        }
+        GetSecretValueRequest request = new GetSecretValueRequest().withSecretId(secretName);
+        return client.getSecretValue(request);
     }
 }

@@ -1,7 +1,7 @@
 package com.repocleaner.prepare;
 
 import com.repocleaner.model.api.ApiResponse;
-import com.repocleaner.model.config.Config;
+import com.repocleaner.model.user.Config;
 import com.repocleaner.model.initiator.Initiator;
 import com.repocleaner.model.source.Source;
 import com.repocleaner.s3.S3FileUploader;
@@ -43,7 +43,7 @@ public class Preparer {
     }
 
     private static void preCheck(Initiator initiator) throws RepoCleanerException {
-        if (initiator.getCredits() <= 0) {
+        if (initiator.getMaxCredits() <= 0) {
             throw new RepoCleanerException("No tokens remaining");
         }
         if (!initiator.isPossibleToClean()) {

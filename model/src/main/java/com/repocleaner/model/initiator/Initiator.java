@@ -1,7 +1,7 @@
 package com.repocleaner.model.initiator;
 
 public interface Initiator {
-    long getCredits();
+    long getMaxCredits();
 
     boolean isPossibleToClean();
 

@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ApiInitiator implements Initiator {
-    private final long credits;
+    private final long maxCredits;
     private final String notificationEndpoint;
 
     @Override

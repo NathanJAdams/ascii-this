@@ -28,10 +28,8 @@ public class ZipUtil {
             ZipParameters parameters = new ZipParameters();
             parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
             parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-            zipFile.addFile(folder, parameters);
             zipFile.createZipFileFromFolder(folder, parameters, false, -1);
-        } catch (
-                ZipException e) {
+        } catch (ZipException e) {
             throw new RepoCleanerException("Failed to create zip file", e);
         }
     }

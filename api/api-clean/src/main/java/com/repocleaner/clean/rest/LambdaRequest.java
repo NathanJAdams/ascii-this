@@ -1,6 +1,6 @@
 package com.repocleaner.clean.rest;
 
-import com.repocleaner.model.config.Config;
+import com.repocleaner.model.user.Config;
 import com.repocleaner.model.source.Source;
 import lombok.AllArgsConstructor;
 

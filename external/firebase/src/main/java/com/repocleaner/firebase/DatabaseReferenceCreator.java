@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -21,15 +22,12 @@ public class DatabaseReferenceCreator {
     }
 
     private static DatabaseReference createDatabaseConnection() {
-        String databaseUrl = System.getenv("db_url");
+        String databaseUrl = System.getenv("database_url");
         String serviceAccountSecretName = System.getenv("service_account_key");
         String secret = SecretRetriever.getSecretAsString(serviceAccountSecretName);
-        if (secret == null) {
-            System.out.println("Null service account");
-            return null;
-        }
         InputStream serviceAccount = toInputStream(secret);
         try {
+//        try (FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Nathan\\Desktop\\RepoCleaner\\repocleaner-db-service-account.json")) {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(credentials)

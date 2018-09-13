@@ -2,10 +2,18 @@ package com.repocleaner.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
+@ToString
 public class HostedAccount {
-    private final String repoRegex;
-    private final String personalAccessToken;
+    private String host;
+    private String userName;
+    private String repoRegex;
+    private String personalAccessToken;
 }
