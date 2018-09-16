@@ -1,15 +1,15 @@
 package com.repocleaner.io.rest;
 
-import com.repocleaner.model.api.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
 public class PrepareLambdaResponse {
-    public static final PrepareLambdaResponse SERVER_ERROR_RESPONSE = new PrepareLambdaResponse(false, "Server Error", null);
+    public static final PrepareLambdaResponse SERVER_ERROR_RESPONSE = new PrepareLambdaResponse(false, "Server Error", null, null);
 
     private final boolean success;
     private final String message;
-    private final ApiResponse apiResponse;
+    private final String id;
+    private final String token;
 }

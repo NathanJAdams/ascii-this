@@ -35,6 +35,14 @@ public class GitUtil {
         }
     }
 
+    public static Git open(File folder) throws RepoCleanerException {
+        try {
+            return Git.open(folder);
+        } catch (IOException e) {
+            throw new RepoCleanerException("Failed to open folder", e);
+        }
+    }
+
     public static Git clone(String uri, String branch, File downloadFolder) throws RepoCleanerException {
         try {
             return Git.cloneRepository()

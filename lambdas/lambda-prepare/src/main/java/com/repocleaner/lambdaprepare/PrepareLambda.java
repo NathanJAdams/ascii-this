@@ -2,30 +2,20 @@ package com.repocleaner.lambdaprepare;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.repocleaner.io.rest.PrepareLambdaRequest;
-import com.repocleaner.io.rest.PrepareLambdaResponse;
-import com.repocleaner.model.api.ApiResponse;
-import com.repocleaner.model.initiator.Initiator;
-import com.repocleaner.model.source.Source;
-import com.repocleaner.model.user.Config;
+import com.amazonaws.services.lambda.runtime.events.S3Event;
+import com.repocleaner.io.external.PrepareIO;
 import com.repocleaner.prepare.Preparer;
+import com.repocleaner.s3.S3PrepareIO;
 import com.repocleaner.util.RepoCleanerException;
 
-public class PrepareLambda implements RequestHandler<PrepareLambdaRequest, PrepareLambdaResponse> {
-    public PrepareLambdaResponse handleRequest(PrepareLambdaRequest request, Context context) {
-        String requestId = context.getAwsRequestId();
-        Initiator initiator = request.getInitiator();
-        Config config = request.getConfig();
-        Source source = request.getSource();
+public class PrepareLambda implements RequestHandler<S3Event, Void> {
+    public Void handleRequest(S3Event event, Context context) {
         try {
-            ApiResponse apiResponse = Preparer.prepare(requestId, initiator, config, source);
-            if (!initiator.requiresApiResponse()) {
-                apiResponse = null;
-            }
-            return new PrepareLambdaResponse(true, "ok", apiResponse);
+            PrepareIO prepareIO = new S3PrepareIO(event);
+            Preparer.prepare(prepareIO);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
-            return PrepareLambdaResponse.SERVER_ERROR_RESPONSE;
         }
+        return null;
     }
 }

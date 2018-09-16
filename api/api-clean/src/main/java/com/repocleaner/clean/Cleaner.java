@@ -9,17 +9,14 @@ import com.repocleaner.clean.transform.TransformationCoster;
 import com.repocleaner.clean.transform.Transformer;
 import com.repocleaner.clean.transform.coster.PlainCoster;
 import com.repocleaner.clean.transform.transformers.EOFTransformer;
+import com.repocleaner.initiator.InitiatorGsonCustomiser;
+import com.repocleaner.io.external.CleanIO;
 import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.receive.LifecycleRequest;
 import com.repocleaner.model.user.Config;
-import com.repocleaner.s3.S3FileDeleter;
-import com.repocleaner.s3.S3FileDownloader;
-import com.repocleaner.s3.S3FileUploader;
-import com.repocleaner.s3.S3Info;
 import com.repocleaner.util.CleanResult;
-import com.repocleaner.util.FileStructure;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.ZipUtil;
 import com.repocleaner.util.json.JsonUtil;
 import org.eclipse.jgit.api.Git;
 
@@ -34,37 +31,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cleaner {
-    private static final JsonUtil JSON_UTIL = new JsonUtil();
+    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser());
 
-    public static void clean(String bucket, String key) throws RepoCleanerException {
-        try (FileStructure fileStructure = new FileStructure(key)) {
-            File rootFolder = fileStructure.getRootFolder();
-            File codeFolder = fileStructure.getCodeFolder();
-            File initiatorFile = fileStructure.getInitiatorFile();
-            File configFile = fileStructure.getConfigFile();
-            File cleanResultFile = fileStructure.getCleanResultFile();
-            File zippedFile = fileStructure.getZippedFile();
-
-            S3FileDownloader.download(bucket, key, zippedFile);
-            ZipUtil.extract(zippedFile, rootFolder);
-            Config config = JSON_UTIL.fromJsonFileOrNull(configFile, Config.class);
-            Initiator initiator = JSON_UTIL.fromJsonFileOrNull(initiatorFile, Initiator.class);
-
-            Git git = GitUtil.init(codeFolder);
-            Set<String> branchNames = GitUtil.getBranchNames(git);
-            String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
-            GitUtil.checkoutNewBranch(git, cleanBranch);
-            CleanResult cleanResult = clean(codeFolder, initiator, config);
-            postCheck(cleanResult, initiator);
-
-            configFile.delete();
-            zippedFile.delete();
-            JSON_UTIL.toJsonFile(cleanResult, cleanResultFile);
-            ZipUtil.zip(rootFolder, zippedFile);
-            S3FileUploader.upload(S3Info.CLEANED_BUCKET, key, zippedFile);
-        } finally {
-            S3FileDeleter.delete(bucket, key);
-        }
+    public static void clean(CleanIO cleanIO) throws RepoCleanerException {
+        LifecycleRequest lifecycleRequest = cleanIO.getLifecycleRequest(JSON_UTIL);
+        Initiator initiator = lifecycleRequest.getInitiator();
+        Config config = lifecycleRequest.getConfig();
+        File codeFolder = cleanIO.getCodeFolder();
+        Git git = GitUtil.open(codeFolder);
+        Set<String> branchNames = GitUtil.getBranchNames(git);
+        String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
+        GitUtil.checkoutNewBranch(git, cleanBranch);
+        CleanResult cleanResult = clean(codeFolder, initiator, config);
+        postCheck(cleanResult, initiator);
+        cleanIO.cleaned(cleanResult, JSON_UTIL);
     }
 
     private static void postCheck(CleanResult cleanResult, Initiator initiator) throws RepoCleanerException {

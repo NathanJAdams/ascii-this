@@ -1,7 +1,7 @@
 package com.repocleaner.source;
 
 import com.repocleaner.model.source.Source;
-import com.repocleaner.s3.S3FileUploader;
+import com.repocleaner.s3.S3FileActions;
 import com.repocleaner.s3.S3Info;
 import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
@@ -26,6 +26,6 @@ public class ZipFileSource implements Source {
     @Override
     public void sendCleaned(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
         zipResponseType.saveTo(sourceFolder, tempFile);
-        S3FileUploader.upload(S3Info.HELD_BUCKET, location, tempFile);
+        S3FileActions.upload(S3Info.HELD_BUCKET, location, tempFile);
     }
 }
