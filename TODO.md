@@ -2,6 +2,8 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
+| 1d    | Lambda            | Prove full lifecycle works
+| 1h    | Lambda            | Change private key
 | 2h    | Front end         | Add/Remove hosted account
 | 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
 | 2h    | Front end         | Add/Remove personal access token
