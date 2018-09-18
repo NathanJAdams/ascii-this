@@ -15,10 +15,9 @@ public class S3SendIO extends S3LifecycleIO implements SendIO {
 
     @Override
     public void send(JsonUtil jsonUtil) throws RepoCleanerException {
-        S3FileStructure fileStructure = getFileStructure();
-        File codeFolder = fileStructure.getCodeFolder();
-        CleanResult cleanResult = fileStructure.getCleanResult(jsonUtil);
-        File tempFolder = fileStructure.getTempFolder();
+        File codeFolder = getCodeFolder();
+        CleanResult cleanResult = getFileStructure().getCleanResult(jsonUtil);
+        File tempFolder = getFileStructure().getTempFolder();
         getLifecycleRequest(jsonUtil).getSource().sendCleaned(codeFolder, cleanResult, tempFolder);
     }
 }

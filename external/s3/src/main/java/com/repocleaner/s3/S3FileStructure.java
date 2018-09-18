@@ -12,6 +12,11 @@ import java.io.File;
 @RequiredArgsConstructor
 public class S3FileStructure implements AutoCloseable {
     private static final File TMP_FOLDER = new File("/tmp");
+    private static final String ROOT_PREFIX="root_";
+    private static final String TEMP_PREFIX="temp_";
+    private static final String LIFECYCLE_REQUEST="lifecycle-request";
+    private static final String CLEAN_RESULT="clean-result";
+    private static final String TOKEN="token";
 
     private final String key;
 
@@ -59,42 +64,42 @@ public class S3FileStructure implements AutoCloseable {
 
     public File getTempFolder() {
         if (tempFolder == null) {
-            tempFolder = new File(TMP_FOLDER, "temp_" + key);
+            tempFolder = new File(TMP_FOLDER, TEMP_PREFIX + key);
         }
         return tempFolder;
     }
 
     public LifecycleRequest getLifecycleRequest(JsonUtil jsonUtil) throws RepoCleanerException {
         if (lifecycleRequest == null) {
-            lifecycleRequest = get(LifecycleRequest.class, jsonUtil, "lifecycle-request");
+            lifecycleRequest = get(LifecycleRequest.class, jsonUtil, LIFECYCLE_REQUEST);
         }
         return lifecycleRequest;
     }
 
     public void setLifecycleRequest(LifecycleRequest lifecycleRequest, JsonUtil jsonUtil) throws RepoCleanerException {
-        set(lifecycleRequest, jsonUtil, "lifecycle-request");
+        set(lifecycleRequest, jsonUtil, LIFECYCLE_REQUEST);
     }
 
     public String getToken(JsonUtil jsonUtil) throws RepoCleanerException {
         if (token == null) {
-            token = get(String.class, jsonUtil, "token");
+            token = get(String.class, jsonUtil, TOKEN);
         }
         return token;
     }
 
     public void setToken(String token, JsonUtil jsonUtil) throws RepoCleanerException {
-        set(token, jsonUtil, "token");
+        set(token, jsonUtil, TOKEN);
     }
 
     public CleanResult getCleanResult(JsonUtil jsonUtil) throws RepoCleanerException {
         if (cleanResult == null) {
-            cleanResult = get(CleanResult.class, jsonUtil, "clean-result");
+            cleanResult = get(CleanResult.class, jsonUtil, CLEAN_RESULT);
         }
         return cleanResult;
     }
 
     public void setCleanResult(CleanResult cleanResult, JsonUtil jsonUtil) throws RepoCleanerException {
-        set(cleanResult, jsonUtil, "clean-result");
+        set(cleanResult, jsonUtil, CLEAN_RESULT);
     }
 
     private <T> T get(Class<T> tClass, JsonUtil jsonUtil, String name) throws RepoCleanerException {
@@ -109,6 +114,7 @@ public class S3FileStructure implements AutoCloseable {
         if (isZipped()) {
             throw new RepoCleanerException("Already zipped");
         }
+        ensureRootFolder();
         File file = new File(rootFolder, name);
         jsonUtil.toJsonFile(t, file);
     }
@@ -123,7 +129,8 @@ public class S3FileStructure implements AutoCloseable {
 
     private void ensureRootFolder() {
         if (rootFolder == null) {
-            rootFolder = new File(TMP_FOLDER, "root_" + key);
+            rootFolder = new File(TMP_FOLDER, ROOT_PREFIX + key);
+            rootFolder.mkdir();
         }
     }
 

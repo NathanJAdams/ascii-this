@@ -11,6 +11,6 @@ public class SourceGsonCustomiser implements GsonCustomiser {
         RuntimeTypeAdapterFactory<Source> factory = new RuntimeTypeAdapterFactory<>(Source.class);
         factory.registerSubtype(RepoHostSource.class, "repo-host");
         factory.registerSubtype(ZipFileSource.class, "zip-file");
-        builder.registerTypeAdapter(Source.class, factory);
+        builder.registerTypeAdapterFactory(factory);
     }
 }

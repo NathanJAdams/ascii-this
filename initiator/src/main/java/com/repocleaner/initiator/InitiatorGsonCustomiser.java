@@ -12,6 +12,6 @@ public class InitiatorGsonCustomiser implements GsonCustomiser {
         factory.registerSubtype(ApiInitiator.class, "api");
         factory.registerSubtype(CronInitiator.class, "cron");
         factory.registerSubtype(WebsiteInitiator.class, "web");
-        builder.registerTypeAdapter(Initiator.class, factory);
+        builder.registerTypeAdapterFactory(factory);
     }
 }
