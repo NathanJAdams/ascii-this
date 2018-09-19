@@ -6,6 +6,7 @@ import com.repocleaner.repohost.RepoHosts;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
 import lombok.AllArgsConstructor;
+import org.eclipse.jgit.api.Git;
 
 import java.io.File;
 
@@ -20,6 +21,7 @@ public class RepoHostSource implements Source {
     public void download(File sourceFolder) throws RepoCleanerException {
         RepoHostBase repoHost = RepoHosts.DEFAULT_INSTANCE.get(host);
         String uri = repoHost.createUrlRepo(user, repo);
-        GitUtil.clone(uri, masterBranch, sourceFolder);
+        try (Git git = GitUtil.clone(uri, masterBranch, sourceFolder)) {
+        }
     }
 }

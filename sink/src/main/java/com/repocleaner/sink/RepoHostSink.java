@@ -36,7 +36,8 @@ public class RepoHostSink implements Sink {
     }
 
     private String getBranchName(File sourceFolder) throws RepoCleanerException {
-        Git git = GitUtil.init(sourceFolder);
-        return GitUtil.getBranchName(git);
+        try (Git git = GitUtil.open(sourceFolder)) {
+            return GitUtil.getBranchName(git);
+        }
     }
 }

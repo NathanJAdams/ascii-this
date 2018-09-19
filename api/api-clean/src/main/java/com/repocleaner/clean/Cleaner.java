@@ -11,9 +11,9 @@ import com.repocleaner.clean.transform.coster.PlainCoster;
 import com.repocleaner.clean.transform.transformers.EOFTransformer;
 import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.io.external.CleanIO;
+import com.repocleaner.model.Config;
 import com.repocleaner.model.Initiator;
 import com.repocleaner.model.LifecycleRequest;
-import com.repocleaner.model.Config;
 import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
@@ -39,10 +39,11 @@ public class Cleaner {
         Initiator initiator = lifecycleRequest.getInitiator();
         Config config = lifecycleRequest.getConfig();
         File codeFolder = cleanIO.getCodeFolder();
-        Git git = GitUtil.open(codeFolder);
-        Set<String> branchNames = GitUtil.getBranchNames(git);
-        String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
-        GitUtil.checkoutNewBranch(git, cleanBranch);
+        try (Git git = GitUtil.open(codeFolder)) {
+            Set<String> branchNames = GitUtil.getBranchNames(git);
+            String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
+            GitUtil.checkoutNewBranch(git, cleanBranch);
+        }
         CleanResult cleanResult = clean(codeFolder, initiator, config);
         postCheck(cleanResult, initiator);
         cleanIO.cleaned(cleanResult, JSON_UTIL);
