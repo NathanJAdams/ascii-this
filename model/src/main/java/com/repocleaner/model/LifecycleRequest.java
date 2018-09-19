@@ -1,8 +1,5 @@
-package com.repocleaner.model.receive;
+package com.repocleaner.model;
 
-import com.repocleaner.model.initiator.Initiator;
-import com.repocleaner.model.source.Source;
-import com.repocleaner.model.user.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +17,5 @@ public class LifecycleRequest {
     private Initiator initiator;
     private Config config;
     private Source source;
+    private Sink sink;
 }

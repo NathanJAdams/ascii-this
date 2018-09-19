@@ -1,7 +1,7 @@
 package com.repocleaner.transaction;
 
-import com.repocleaner.model.transaction.CreditsTransaction;
-import com.repocleaner.model.transaction.TransactionType;
+import com.repocleaner.model.CreditsTransaction;
+import com.repocleaner.model.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

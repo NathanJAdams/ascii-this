@@ -31,6 +31,7 @@
 
         <module>initiator</module>
         <module>source</module>
+        <module>sink</module>
         <module>transaction</module>
 
         <module>io</module>

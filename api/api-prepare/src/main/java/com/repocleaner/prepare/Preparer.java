@@ -13,7 +13,7 @@ public class Preparer {
 
     public static void prepare(PrepareIO prepareIO) throws RepoCleanerException {
         File codeFolder = prepareIO.getCodeFolder();
-        prepareIO.getLifecycleRequest(JSON_UTIL).getSource().saveSource(codeFolder);
+        prepareIO.getLifecycleRequest(JSON_UTIL).getSource().download(codeFolder);
         prepareIO.prepared();
     }
 }

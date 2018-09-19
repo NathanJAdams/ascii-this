@@ -1,7 +1,7 @@
 package com.repocleaner.s3;
 
 import com.repocleaner.io.external.CronIO;
-import com.repocleaner.model.receive.LifecycleRequest;
+import com.repocleaner.model.LifecycleRequest;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.json.JsonUtil;
 

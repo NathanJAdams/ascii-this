@@ -1,4 +1,4 @@
-package com.repocleaner.model.transaction;
+package com.repocleaner.model;
 
 public interface CreditsTransaction {
     String getUserEmail();

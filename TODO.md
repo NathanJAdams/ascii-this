@@ -2,13 +2,12 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
-| 1d    | Lambda            | Prove full lifecycle works
+| 4h    | Database          | Encrypt personal access tokens
 | 1h    | Lambda            | Change private key
 | 2h    | Front end         | Add/Remove hosted account
 | 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
 | 2h    | Front end         | Add/Remove personal access token
 | 3d    | Front end         | Add credits
-| 4h    | Database          | Encrypt personal access tokens
 | 4w    | Transformations   | Add more transformations
 
 

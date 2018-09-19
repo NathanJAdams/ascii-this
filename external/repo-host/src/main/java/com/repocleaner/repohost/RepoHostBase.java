@@ -1,7 +1,7 @@
 package com.repocleaner.repohost;
 
-import com.repocleaner.model.send.RaisePullRequestBody;
-import com.repocleaner.model.repohost.RepoHost;
+import com.repocleaner.model.RaisePullRequestBody;
+import com.repocleaner.model.RepoHost;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

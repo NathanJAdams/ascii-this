@@ -4,13 +4,15 @@ import com.repocleaner.initiator.CronInitiator;
 import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.io.external.CronIO;
 import com.repocleaner.io.external.UserIO;
-import com.repocleaner.model.initiator.Initiator;
-import com.repocleaner.model.receive.LifecycleRequest;
-import com.repocleaner.model.source.Source;
-import com.repocleaner.model.user.Config;
-import com.repocleaner.model.user.HostedAccount;
-import com.repocleaner.model.user.HostedRepo;
-import com.repocleaner.model.user.User;
+import com.repocleaner.model.Config;
+import com.repocleaner.model.HostedAccount;
+import com.repocleaner.model.HostedRepo;
+import com.repocleaner.model.Initiator;
+import com.repocleaner.model.LifecycleRequest;
+import com.repocleaner.model.Sink;
+import com.repocleaner.model.Source;
+import com.repocleaner.model.User;
+import com.repocleaner.sink.RepoHostSink;
 import com.repocleaner.source.RepoHostSource;
 import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.RepoCleanerException;
@@ -53,8 +55,9 @@ public class CronApi {
         String accountId = hostedRepo.getAccountId();
         HostedAccount hostedAccount = user.getAccounts().get(accountId);
         Source source = createSource(hostedAccount, hostedRepo);
+        Sink sink = createSink(hostedAccount, hostedRepo);
         Config config = hostedRepo.getConfig();
-        return new LifecycleRequest(id, token, initiator, config, source);
+        return new LifecycleRequest(id, token, initiator, config, source, sink);
     }
 
     private static Initiator createInitiator(User user) {
@@ -69,7 +72,15 @@ public class CronApi {
         String userName = hostedAccount.getUserName();
         String repoName = hostedRepo.getRepoName();
         String masterBranch = hostedRepo.getMasterBranch();
+        return new RepoHostSource(host, userName, repoName, masterBranch);
+    }
+
+    private static Sink createSink(HostedAccount hostedAccount, HostedRepo hostedRepo) {
+        String host = hostedAccount.getHost();
+        String userName = hostedAccount.getUserName();
+        String repoName = hostedRepo.getRepoName();
+        String masterBranch = hostedRepo.getMasterBranch();
         String personalAccessToken = hostedAccount.getPersonalAccessToken();
-        return new RepoHostSource(host, userName, repoName, masterBranch, personalAccessToken);
+        return new RepoHostSink(host, userName, repoName, masterBranch, personalAccessToken);
     }
 }

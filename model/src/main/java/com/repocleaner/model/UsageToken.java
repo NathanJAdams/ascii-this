@@ -1,4 +1,4 @@
-package com.repocleaner.model.api;
+package com.repocleaner.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ApiResponse {
-    private String key;
-    private String token;
+public class UsageToken {
+    private String hash;
+    private String expiryTimeHex;
 }

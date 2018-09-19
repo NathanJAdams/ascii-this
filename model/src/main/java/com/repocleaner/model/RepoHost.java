@@ -1,4 +1,4 @@
-package com.repocleaner.model.repohost;
+package com.repocleaner.model;
 
 public interface RepoHost {
     String REPO_CLEANER_AUTHOR = "repocleaner.com";

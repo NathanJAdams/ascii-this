@@ -1,4 +1,4 @@
-package com.repocleaner.source;
+package com.repocleaner.sink;
 
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;

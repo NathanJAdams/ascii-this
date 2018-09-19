@@ -1,4 +1,4 @@
-package com.repocleaner.model.user;
+package com.repocleaner.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UsageToken {
-    private String hash;
-    private String expiryTimeHex;
+public class HostedAccount {
+    private String host;
+    private String userName;
+    private String repoRegex;
+    private String personalAccessToken;
 }

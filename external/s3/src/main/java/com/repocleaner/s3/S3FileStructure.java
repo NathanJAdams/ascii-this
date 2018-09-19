@@ -1,6 +1,6 @@
 package com.repocleaner.s3;
 
-import com.repocleaner.model.receive.LifecycleRequest;
+import com.repocleaner.model.LifecycleRequest;
 import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.ZipUtil;

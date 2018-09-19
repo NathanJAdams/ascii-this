@@ -1,4 +1,4 @@
-package com.repocleaner.model.initiator;
+package com.repocleaner.model;
 
 public interface Initiator {
     default boolean isValid() {

@@ -1,7 +1,7 @@
 package com.repocleaner.io.external;
 
-import com.repocleaner.model.user.HostedRepo;
-import com.repocleaner.model.user.User;
+import com.repocleaner.model.HostedRepo;
+import com.repocleaner.model.User;
 
 import java.time.LocalDateTime;
 import java.util.Map;

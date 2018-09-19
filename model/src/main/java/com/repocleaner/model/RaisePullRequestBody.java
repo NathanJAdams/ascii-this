@@ -1,4 +1,4 @@
-package com.repocleaner.model.send;
+package com.repocleaner.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

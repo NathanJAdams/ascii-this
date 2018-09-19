@@ -1,6 +1,6 @@
 package com.repocleaner.initiator;
 
-import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.Initiator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

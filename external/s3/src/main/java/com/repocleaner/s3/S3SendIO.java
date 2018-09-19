@@ -18,6 +18,6 @@ public class S3SendIO extends S3LifecycleIO implements SendIO {
         File codeFolder = getCodeFolder();
         CleanResult cleanResult = getFileStructure().getCleanResult(jsonUtil);
         File tempFolder = getFileStructure().getTempFolder();
-        getLifecycleRequest(jsonUtil).getSource().sendCleaned(codeFolder, cleanResult, tempFolder);
+        getLifecycleRequest(jsonUtil).getSink().upload(codeFolder, cleanResult, tempFolder);
     }
 }

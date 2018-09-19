@@ -1,7 +1,7 @@
 package com.repocleaner.initiator;
 
 import com.google.gson.GsonBuilder;
-import com.repocleaner.model.initiator.Initiator;
+import com.repocleaner.model.Initiator;
 import com.repocleaner.util.json.GsonCustomiser;
 import com.repocleaner.util.json.RuntimeTypeAdapterFactory;
 
