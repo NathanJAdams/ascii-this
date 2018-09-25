@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repo Cleaner</title>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+<div id="landing" data-bind="with: landing">
+    <div id="signup" data-bind="with: signup">
+        <div data-bind="visible: !isSignedUp()">
+            <div>
+                <label for="signup-email">Email</label>
+                <input id="signup-email" type="email" data-bind="value: email">
+            </div>
+            <div>
+                <label for="signup-password">Password</label>
+                <input id="signup-password" type="password" data-bind="value: password"/>
+                <div id="signup-password-valid" class="fas fa-check"></div>
+                <div id="signup-password-invalid" class="fas fa-times"></div>
+            </div>
+            <div>
+                <label for="signup-password-confirm">Confirm password</label>
+                <input id="signup-password-confirm" type="password" data-bind="value: confirmedPassword"/>
+                <div id="signup-password-confirm-valid" class="fas fa-check"></div>
+                <div id="signup-password-confirm-invalid" class="fas fa-times"></div>
+            </div>
+            <div>
+                <button id="signup-initiate" data-bind="click: signup">Sign up</button>
+            </div>
+        </div>
+    </div>
+    <div id="login" data-bind="with: login">
+        <div data-bind="visible: !isLoggedIn()">
+            <div>
+                <label for="login-email">Email</label>
+                <input id="login-email" type="email" data-bind="value: email"/>
+            </div>
+            <div>
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" data-bind="value: password"/>
+            </div>
+            <div>
+                <button id="login-initiate" data-bind="click: login">Log in</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="account" data-bind="with: account">
+    <!--data-bind="visible: isLoggedIn()" style="display:none"-->
+    <div id="logout" data-bind="with: logout">
+        <button id="logout-initiate" data-bind="click: logout">Log out</button>
+        <!--<button id="logout-global-initiate" data-bind="click: logoutAllDevices">Log out of all devices</button>-->
+    </div>
+    <div id="menu" data-bind="with: menu">
+        <button>Credits</button>
+        <button>Repos</button>
+        <button>Config</button>
+    </div>
+    <div id="credits" data-bind="with: credits">
+        <span id="credits-title" data-bind="text: creditsTitle"></span>
+        <div data-bind="foreach: creditTransactions">
+            <span data-bind="text: description"></span>
+            <a data-bind="visible: isDebit, attr: { href: commit, title: description }">Commit</a>
+        </div>
+    </div>
+    <div id="repos" data-bind="with: repos">
+        <div data-bind="foreach: repos">
+            <span data-bind="text: repoAddress"></span>
+            <button>Remove</button>
+        </div>
+        <div id="repo-add">
+            <button>Add a hosted account</button>
+            <div data-bind="foreach: repoHosts">
+                <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.setRepoHost"></button>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="basic-addon3" class="input-group-text" data-bind="text: repoHostUrlRoot"></span>
+                </div>
+                <input id="basic-url" type="text" class="form-control" aria-describedby="basic-addon3"
+                       data-bind="textInput: userName, style: { 'background-color':  validityColor }">
+            </div>
+            <div data-bind="foreach: repos">
+                <button class="btn btn-primary" type="button" data-bind="text: name, click: $root.testRepo"></button>
+            </div>
+            <div data-bind="foreach: branches">
+                <button class="btn btn-primary" type="button"
+                        data-bind="text: refName, click: $root.testBranch"></button>
+            </div>
+        </div>
+    </div>
+    <div id="config">
+
+    </div>
+    <!--</div>-->
+</div>
+<div id="scripts">
+    <!--libs web-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            crossorigin="anonymous"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.211.1.min.js"></script>
+    <!--libs local-->
+    <script src="../js/lib/aws-cognito-identity.js"></script>
+    <!--models-->
+    <script src="../js/model/branch-model.js"></script>
+    <script src="../js/model/repo-host-model.js"></script>
+    <script src="../js/model/repo-model.js"></script>
+    <script src="../js/model/credit-transaction-model.js"></script>
+    <script src="../js/model/user-model.js"></script>
+    <!--view models-->
+    <script src="../js/viewmodel/repos-view-model.js"></script>
+    <script src="../js/viewmodel/credits-view-model.js"></script>
+    <script src="../js/viewmodel/logout-view-model.js"></script>
+    <script src="../js/viewmodel/login-view-model.js"></script>
+    <script src="../js/viewmodel/signup-view-model.js"></script>
+    <script src="../js/viewmodel/account-view-model.js"></script>
+    <script src="../js/viewmodel/landing-view-model.js"></script>
+    <script src="../js/viewmodel/index-view-model.js"></script>
+    <!--binders-->
+    <script src="../js/binder/index-binder.js"></script>
+</div>
+</body>
+</html>

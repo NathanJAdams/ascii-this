@@ -20,5 +20,6 @@
         <module>lambda-clean</module>
         <module>lambda-prepare</module>
         <module>lambda-send</module>
+        <module>lambda-set-repo-token</module>
     </modules>
 </project>

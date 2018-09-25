@@ -10,4 +10,6 @@ public interface UserIO {
     User getUser(String userId);
 
     Map<String, HostedRepo> getHostedReposToClean(LocalDateTime end, int max);
+
+    boolean setEncodedToken(String userId, String encodedToken);
 }

@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.repocleaner</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>api-repo-token</artifactId>
     <version>0.0.1</version>
-    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,11 +14,16 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <modules>
-        <module>api-cron</module>
-        <module>api-clean</module>
-        <module>api-prepare</module>
-        <module>api-repo-token</module>
-        <module>api-send</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>io</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
 </project>

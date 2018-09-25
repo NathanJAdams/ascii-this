@@ -29,4 +29,13 @@ public class FirebaseUserIO implements UserIO {
                 .limitToFirst(max);
         return new QueryGetter<>(query, HostedRepo.class).get();
     }
+
+    @Override
+    public boolean setEncodedToken(String userId, String encodedToken) {
+        DatabaseReference userTokenRef = DatabaseReferenceCreator.DB_CONNECTION
+                .child("users")
+                .child(userId)
+                .child("token");
+        return new DbSetter<>(userTokenRef, encodedToken).set();
+    }
 }
