@@ -6,14 +6,22 @@ import com.repocleaner.io.external.UserIO;
 import com.repocleaner.model.HostedRepo;
 import com.repocleaner.model.User;
 import com.repocleaner.util.LocalDateTimeUtil;
+import com.repocleaner.util.RepoCleanerException;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
 public class FirebaseUserIO implements UserIO {
+    private final DatabaseReference databaseReference;
+
+    public FirebaseUserIO(byte[] serviceAccountKeyContents) throws RepoCleanerException {
+        this.databaseReference = new DatabaseReferenceCreator(serviceAccountKeyContents)
+                .getDatabaseReference();
+    }
+
     @Override
     public User getUser(String userId) {
-        DatabaseReference userRef = DatabaseReferenceCreator.DB_CONNECTION
+        DatabaseReference userRef = databaseReference
                 .child("users")
                 .child(userId);
         return new DbGetter<>(userRef, User.class).get();
@@ -22,20 +30,23 @@ public class FirebaseUserIO implements UserIO {
     @Override
     public Map<String, HostedRepo> getHostedReposToClean(LocalDateTime end, int max) {
         String maxTimeHex = LocalDateTimeUtil.toHex(end);
-        DatabaseReference reposRef = DatabaseReferenceCreator.DB_CONNECTION
+        DatabaseReference reposRef = databaseReference
                 .child("repos");
-        Query query = reposRef.orderByChild("nextCleanTimeHex")
+        Query query = reposRef
+                .orderByChild("nextCleanTimeHex")
                 .endAt(maxTimeHex)
                 .limitToFirst(max);
-        return new QueryGetter<>(query, HostedRepo.class).get();
+        return new QueryGetter<>(query, HostedRepo.class)
+                .get();
     }
 
     @Override
     public boolean setEncodedToken(String userId, String encodedToken) {
-        DatabaseReference userTokenRef = DatabaseReferenceCreator.DB_CONNECTION
+        DatabaseReference userTokenRef = databaseReference
                 .child("users")
                 .child(userId)
                 .child("token");
-        return new DbSetter<>(userTokenRef, encodedToken).set();
+        return new DbSetter<>(userTokenRef, encodedToken)
+                .set();
     }
 }

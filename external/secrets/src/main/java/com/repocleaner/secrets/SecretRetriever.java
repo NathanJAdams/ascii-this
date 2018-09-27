@@ -1,16 +1,15 @@
-package com.repocleaner.firebase;
+package com.repocleaner.secrets;
 
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
+import com.repocleaner.util.Constants;
 
 import java.nio.ByteBuffer;
 
 public class SecretRetriever {
-    private static final String ENDPOINT = "secretsmanager.eu-west-1.amazonaws.com";
-    private static final String REGION = "eu-west-1";
 
     public static String getSecretAsString(String secretName) {
         GetSecretValueResult result = getSecret(secretName);
@@ -26,8 +25,8 @@ public class SecretRetriever {
                 : result.getSecretBinary();
     }
 
-    public static GetSecretValueResult getSecret(String secretName) {
-        AwsClientBuilder.EndpointConfiguration config = new AwsClientBuilder.EndpointConfiguration(ENDPOINT, REGION);
+    private static GetSecretValueResult getSecret(String secretName) {
+        AwsClientBuilder.EndpointConfiguration config = new AwsClientBuilder.EndpointConfiguration(Constants.SECRETS_MANAGER_ENDPOINT, Constants.AWS_REGION);
         AWSSecretsManagerClientBuilder clientBuilder = AWSSecretsManagerClientBuilder.standard();
         clientBuilder.setEndpointConfiguration(config);
         AWSSecretsManager client = clientBuilder.build();

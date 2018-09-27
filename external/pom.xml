@@ -20,5 +20,6 @@
         <module>firebase</module>
         <module>repo-host</module>
         <module>s3</module>
+        <module>secrets</module>
     </modules>
 </project>

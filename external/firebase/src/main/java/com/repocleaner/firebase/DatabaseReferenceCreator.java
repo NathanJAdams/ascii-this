@@ -5,45 +5,35 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.repocleaner.util.Constants;
+import com.repocleaner.util.RepoCleanerException;
+import lombok.Getter;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class DatabaseReferenceCreator {
-    public static final DatabaseReference DB_CONNECTION = createDatabaseConnection();
+    @Getter
+    private final DatabaseReference databaseReference;
 
-    static {
-        if (DB_CONNECTION == null) {
-            System.out.println("Cannot connect to database");
-        }
+    public DatabaseReferenceCreator(byte[] serviceAccountKeyContents) throws RepoCleanerException {
+        this.databaseReference = createDatabaseConnection(serviceAccountKeyContents);
     }
 
-    private static DatabaseReference createDatabaseConnection() {
-        String databaseUrl = System.getenv("database_url");
-        String serviceAccountSecretName = System.getenv("service_account_key");
-        String secret = SecretRetriever.getSecretAsString(serviceAccountSecretName);
-        InputStream serviceAccount = toInputStream(secret);
+    private static DatabaseReference createDatabaseConnection(byte[] serviceAccountKeyContents) throws RepoCleanerException {
+        InputStream serviceAccount = new ByteArrayInputStream(serviceAccountKeyContents);
         try {
-//        try (FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Nathan\\Desktop\\RepoCleaner\\repocleaner-db-service-account.json")) {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(credentials)
-                    .setDatabaseUrl(databaseUrl)
+                    .setDatabaseUrl(Constants.FIREBASE_DATABASE_URL)
                     .build();
             FirebaseApp app = FirebaseApp.initializeApp(options);
             FirebaseDatabase database = FirebaseDatabase.getInstance(app);
             return database.getReference();
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RepoCleanerException("Failed to create db reference", e);
         }
-    }
-
-    private static InputStream toInputStream(String string) {
-        byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-        return new ByteArrayInputStream(bytes);
     }
 }
