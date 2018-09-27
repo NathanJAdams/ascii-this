@@ -4,6 +4,7 @@ import com.repocleaner.model.RepoHost;
 import com.repocleaner.model.Sink;
 import com.repocleaner.repohost.RepoHostBase;
 import com.repocleaner.repohost.RepoHosts;
+import com.repocleaner.repotoken.RepoToken;
 import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
@@ -16,11 +17,13 @@ import java.io.File;
 
 @AllArgsConstructor
 public class RepoHostSink implements Sink {
+    private static final RepoToken REPO_TOKEN = new RepoToken();
+
     private final String host;
     private final String user;
     private final String repo;
     private final String masterBranch;
-    private final String token;
+    private final String encryptedToken;
 
     @Override
     public void upload(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
@@ -29,6 +32,7 @@ public class RepoHostSink implements Sink {
         String description = cleanResult.getDescription();
         String cleanedBranch = getBranchName(sourceFolder);
         String url = repoHost.createApiUrlRaisePullRequest(user, repo);
+        String token = REPO_TOKEN.decryptToken(encryptedToken);
         Object pullRequestBody = repoHost.createPullRequestBody(user, token, repo, title, description, cleanedBranch, masterBranch);
         RestRequest<String> request = RestRequest.POST(url, pullRequestBody, String.class)
                 .withBasicAuth(RepoHost.REPO_CLEANER_AUTHOR, token);

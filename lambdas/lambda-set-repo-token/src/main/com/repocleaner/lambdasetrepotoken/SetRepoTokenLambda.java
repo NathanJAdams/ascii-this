@@ -14,21 +14,18 @@ import com.repocleaner.util.RepoCleanerException;
 import java.nio.charset.StandardCharsets;
 
 public class SetRepoTokenLambda implements RequestHandler<SetRepoTokenLambdaRequest, SetRepoTokenLambdaResponse> {
-    private static final RepoToken REPO_TOKEN;
+    private static final RepoToken REPO_TOKEN = new RepoToken();
     private static final UserIO USER_IO;
 
     static {
-        RepoToken repoToken = null;
         UserIO userIO = null;
         try {
             String serviceAccountKey = SecretRetriever.getSecretAsString(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
             byte[] serviceAccountKeyContents = serviceAccountKey.getBytes(StandardCharsets.UTF_8);
-            repoToken = new RepoToken();
             userIO = new FirebaseUserIO(serviceAccountKeyContents);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
         }
-        REPO_TOKEN = repoToken;
         USER_IO = userIO;
     }
 

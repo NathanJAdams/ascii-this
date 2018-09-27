@@ -32,15 +32,15 @@ public class CronApi {
     }
 
     private static void startCleanJob(UserIO userIO, CronIO cronIO, HostedRepo hostedRepo) {
-        LifecycleRequest lifecycleRequest = createLifecycleRequest(userIO, hostedRepo);
         try {
+            LifecycleRequest lifecycleRequest = createLifecycleRequest(userIO, hostedRepo);
             cronIO.waiting(lifecycleRequest, JSON_UTIL);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
         }
     }
 
-    private static LifecycleRequest createLifecycleRequest(UserIO userIO, HostedRepo hostedRepo) {
+    private static LifecycleRequest createLifecycleRequest(UserIO userIO, HostedRepo hostedRepo) throws RepoCleanerException {
         String userId = hostedRepo.getUserId();
         User user = userIO.getUser(userId);
         if (!user.isValid()) {
@@ -51,13 +51,12 @@ public class CronApi {
             return null;
         }
         String id = UUID.randomUUID().toString();
-        String token = null;
-        String accountId = hostedRepo.getAccountId();
-        HostedAccount hostedAccount = user.getAccounts().get(accountId);
+        HostedAccount hostedAccount = user.getAccounts().get(hostedRepo.getAccountId());
+        String encryptedToken = hostedAccount.getEncryptedToken();
         Source source = createSource(hostedAccount, hostedRepo);
         Sink sink = createSink(hostedAccount, hostedRepo);
         Config config = hostedRepo.getConfig();
-        return new LifecycleRequest(id, token, initiator, config, source, sink);
+        return new LifecycleRequest(id, encryptedToken, initiator, config, source, sink);
     }
 
     private static Initiator createInitiator(User user) {
@@ -80,7 +79,7 @@ public class CronApi {
         String userName = hostedAccount.getUserName();
         String repoName = hostedRepo.getRepoName();
         String masterBranch = hostedRepo.getMasterBranch();
-        String personalAccessToken = hostedAccount.getPersonalAccessToken();
+        String personalAccessToken = hostedAccount.getEncryptedToken();
         return new RepoHostSink(host, userName, repoName, masterBranch, personalAccessToken);
     }
 }

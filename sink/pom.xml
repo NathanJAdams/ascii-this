@@ -32,6 +32,16 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
+            <artifactId>api-repo-token</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>firebase</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
             <artifactId>s3</artifactId>
             <version>0.0.1</version>
         </dependency>

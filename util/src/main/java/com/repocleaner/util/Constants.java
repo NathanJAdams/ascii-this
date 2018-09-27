@@ -15,8 +15,7 @@ public class Constants {
     public static final String COGNITO_PUBLIC_KEYS_ADDRESS = "https://cognito-idp." + Constants.AWS_REGION + ".amazonaws.com/" + COGNITO_USER_POOL_ID + "/.well-known/jwks.json";
 
     public static final String SECRET_ID_SERVICE_ACCOUNT_KEY = "prod/firebase/serviceAccountKey";
-    public static final String SECRET_ID_REPO_TOKEN_PUBLIC_KEY = "prod/firebase/repoTokenPublicKey";
-    public static final String SECRET_ID_REPO_TOKEN_PRIVATE_KEY = "prod/firebase/repoTokenPrivateKey";
+    public static final String SECRET_ID_REPO_TOKEN_KEY = "prod/firebase/repoTokenKey";
 
     public static final String SECRETS_MANAGER_ENDPOINT = "secretsmanager.eu-west-1.amazonaws.com";
 
