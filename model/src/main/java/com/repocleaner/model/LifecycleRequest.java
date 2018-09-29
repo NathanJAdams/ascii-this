@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class LifecycleRequest {
     private String id;
-    private String token;
+    private String encryptedToken;
     private Initiator initiator;
     private Config config;
     private Source source;

@@ -15,5 +15,5 @@ public class HostedAccount {
     private String host;
     private String userName;
     private String repoRegex;
-    private String personalAccessToken;
+    private String encryptedToken;
 }

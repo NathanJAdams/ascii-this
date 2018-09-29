@@ -1,5 +1,7 @@
 package com.repocleaner.util.rest;
 
+import com.repocleaner.util.Constants;
+import com.repocleaner.util.HystrixCommander;
 import com.repocleaner.util.json.JsonUtil;
 
 import java.io.BufferedReader;
@@ -8,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -16,7 +17,10 @@ public class RestUtil {
     private static final JsonUtil JSON_UTIL = new JsonUtil();
 
     public static <T> RestResponse<T> getResponse(RestRequest<T> request) {
-        HttpURLConnection connection = createConnection(request.getUrl(), request.getHttpMethod().name());
+        String url = request.getUrl();
+        String method = request.getHttpMethod().name();
+        OpenConnectionCommand command = new OpenConnectionCommand(url, method);
+        HttpURLConnection connection = HystrixCommander.run(Constants.HYSTRIX_GROUP_OPEN_CONNECTION, command::open);
         if (connection == null) {
             return null;
         }
@@ -28,18 +32,6 @@ public class RestUtil {
         int status = getStatus(connection);
         T response = getResponse(connection, request.getResponseClass());
         return new RestResponse<>(status, response);
-    }
-
-    private static HttpURLConnection createConnection(String url, String method) {
-        try {
-            URL urlObj = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-            connection.setRequestMethod(method);
-            return connection;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private static void setHeaders(HttpURLConnection connection, Map<String, String> headers) {

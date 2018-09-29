@@ -1,6 +1,7 @@
 package com.repocleaner.cognito;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class Authoriser {
         if ((audience == null) || audience.isEmpty()) {
             throw new RepoCleanerException("Not authorised");
         }
-        if (!audience.contains(CognitoInfo.CLIENT_ID)) {
+        if (!audience.contains(Constants.COGNITO_CLIENT_ID)) {
             throw new RepoCleanerException("Not authorised");
         }
     }

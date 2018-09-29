@@ -11,22 +11,38 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class FirebaseUserIO implements UserIO {
+    private final DatabaseReference databaseReference;
+
+    public FirebaseUserIO(byte[] serviceAccountKeyContents) {
+        this.databaseReference = FirebaseCommander.create(serviceAccountKeyContents);
+    }
+
     @Override
     public User getUser(String userId) {
-        DatabaseReference userRef = DatabaseReferenceCreator.DB_CONNECTION
+        DatabaseReference userRef = databaseReference
                 .child("users")
                 .child(userId);
-        return new DbGetter<>(userRef, User.class).get();
+        return FirebaseCommander.getValue(userRef, User.class);
     }
 
     @Override
     public Map<String, HostedRepo> getHostedReposToClean(LocalDateTime end, int max) {
         String maxTimeHex = LocalDateTimeUtil.toHex(end);
-        DatabaseReference reposRef = DatabaseReferenceCreator.DB_CONNECTION
+        DatabaseReference reposRef = databaseReference
                 .child("repos");
-        Query query = reposRef.orderByChild("nextCleanTimeHex")
+        Query query = reposRef
+                .orderByChild("nextCleanTimeHex")
                 .endAt(maxTimeHex)
                 .limitToFirst(max);
-        return new QueryGetter<>(query, HostedRepo.class).get();
+        return FirebaseCommander.query(query, HostedRepo.class);
+    }
+
+    @Override
+    public boolean setEncodedToken(String userId, String encodedToken) {
+        DatabaseReference userTokenRef = databaseReference
+                .child("users")
+                .child(userId)
+                .child("token");
+        return FirebaseCommander.set(userTokenRef, encodedToken);
     }
 }

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 
 import java.math.BigInteger;
@@ -20,7 +21,7 @@ public class Authenticator {
         DecodedJWT decoded = JWT.decode(jwt);
         Algorithm algorithm = createAlgorithm(decoded);
         JWTVerifier verifier = JWT.require(algorithm)
-                .withAudience(CognitoInfo.CLIENT_ID)
+                .withAudience(Constants.COGNITO_CLIENT_ID)
                 .acceptLeeway(100)
                 .build();
         try {

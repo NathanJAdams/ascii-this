@@ -19,6 +19,7 @@
         <module>api-cron</module>
         <module>api-clean</module>
         <module>api-prepare</module>
+        <module>api-repo-token</module>
         <module>api-send</module>
     </modules>
 </project>

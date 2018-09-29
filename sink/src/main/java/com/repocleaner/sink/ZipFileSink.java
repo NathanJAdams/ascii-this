@@ -1,9 +1,9 @@
 package com.repocleaner.sink;
 
 import com.repocleaner.model.Sink;
-import com.repocleaner.s3.S3FileActions;
-import com.repocleaner.s3.S3Info;
+import com.repocleaner.s3.S3Commander;
 import com.repocleaner.util.CleanResult;
+import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 import lombok.AllArgsConstructor;
 
@@ -17,6 +17,6 @@ public class ZipFileSink implements Sink {
     @Override
     public void upload(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
         zipResponseType.saveTo(sourceFolder, tempFile);
-        S3FileActions.upload(S3Info.HELD_BUCKET, location, tempFile);
+        S3Commander.upload(Constants.BUCKET_HELD, location, tempFile);
     }
 }

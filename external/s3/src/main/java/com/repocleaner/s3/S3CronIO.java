@@ -2,6 +2,7 @@ package com.repocleaner.s3;
 
 import com.repocleaner.io.external.CronIO;
 import com.repocleaner.model.LifecycleRequest;
+import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.json.JsonUtil;
 
@@ -13,6 +14,6 @@ public class S3CronIO implements CronIO {
         String id = UUID.randomUUID().toString();
         S3FileStructure fileStructure = new S3FileStructure(id);
         fileStructure.setLifecycleRequest(lifecycleRequest, jsonUtil);
-        fileStructure.upload(S3Info.WAITING_BUCKET);
+        fileStructure.upload(Constants.BUCKET_WAITING);
     }
 }
