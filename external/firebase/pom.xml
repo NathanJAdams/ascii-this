@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
+            <artifactId>util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
             <artifactId>io</artifactId>
             <version>0.0.1</version>
         </dependency>

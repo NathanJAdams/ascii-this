@@ -6,26 +6,13 @@ import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
 import com.repocleaner.util.Constants;
+import lombok.AllArgsConstructor;
 
-import java.nio.ByteBuffer;
+@AllArgsConstructor
+public class GetSecretCommand {
+    private final String secretName;
 
-public class SecretRetriever {
-
-    public static String getSecretAsString(String secretName) {
-        GetSecretValueResult result = getSecret(secretName);
-        return (result == null)
-                ? null
-                : result.getSecretString();
-    }
-
-    public static ByteBuffer getSecretAsBytes(String secretName) {
-        GetSecretValueResult result = getSecret(secretName);
-        return (result == null)
-                ? null
-                : result.getSecretBinary();
-    }
-
-    private static GetSecretValueResult getSecret(String secretName) {
+    public GetSecretValueResult getSecret() {
         AwsClientBuilder.EndpointConfiguration config = new AwsClientBuilder.EndpointConfiguration(Constants.SECRETS_MANAGER_ENDPOINT, Constants.AWS_REGION);
         AWSSecretsManagerClientBuilder clientBuilder = AWSSecretsManagerClientBuilder.standard();
         clientBuilder.setEndpointConfiguration(config);

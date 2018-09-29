@@ -7,7 +7,7 @@ import com.repocleaner.io.external.UserIO;
 import com.repocleaner.io.rest.SetRepoTokenLambdaRequest;
 import com.repocleaner.io.rest.SetRepoTokenLambdaResponse;
 import com.repocleaner.repotoken.RepoToken;
-import com.repocleaner.secrets.SecretRetriever;
+import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 
@@ -18,15 +18,9 @@ public class SetRepoTokenLambda implements RequestHandler<SetRepoTokenLambdaRequ
     private static final UserIO USER_IO;
 
     static {
-        UserIO userIO = null;
-        try {
-            String serviceAccountKey = SecretRetriever.getSecretAsString(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
-            byte[] serviceAccountKeyContents = serviceAccountKey.getBytes(StandardCharsets.UTF_8);
-            userIO = new FirebaseUserIO(serviceAccountKeyContents);
-        } catch (RepoCleanerException e) {
-            e.printStackTrace();
-        }
-        USER_IO = userIO;
+        String serviceAccountKey = SecretCommander.getSecretAsString(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
+        byte[] serviceAccountKeyContents = serviceAccountKey.getBytes(StandardCharsets.UTF_8);
+        USER_IO = new FirebaseUserIO(serviceAccountKeyContents);
     }
 
     @Override

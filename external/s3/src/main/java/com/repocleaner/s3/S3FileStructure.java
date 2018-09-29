@@ -12,11 +12,11 @@ import java.io.File;
 @RequiredArgsConstructor
 public class S3FileStructure implements AutoCloseable {
     private static final File TMP_FOLDER = new File("/tmp");
-    private static final String ROOT_PREFIX="root_";
-    private static final String TEMP_PREFIX="temp_";
-    private static final String LIFECYCLE_REQUEST="lifecycle-request";
-    private static final String CLEAN_RESULT="clean-result";
-    private static final String TOKEN="token";
+    private static final String ROOT_PREFIX = "root_";
+    private static final String TEMP_PREFIX = "temp_";
+    private static final String LIFECYCLE_REQUEST = "lifecycle-request";
+    private static final String CLEAN_RESULT = "clean-result";
+    private static final String TOKEN = "token";
 
     private final String key;
 
@@ -37,9 +37,9 @@ public class S3FileStructure implements AutoCloseable {
         }
         ensureRootFolder();
         zippedInputFolder = new File(TMP_FOLDER, "zippedInput_" + bucket + "_" + key);
-        S3FileActions.download(bucket, key, zippedInputFolder);
+        S3Commander.download(bucket, key, zippedInputFolder);
         ZipUtil.extract(zippedInputFolder, rootFolder);
-        S3FileActions.delete(bucket, key);
+        S3Commander.delete(bucket, key);
         zippedInputFolder.delete();
     }
 
@@ -50,7 +50,7 @@ public class S3FileStructure implements AutoCloseable {
         ensureRootFolder();
         zippedOutputFolder = new File(TMP_FOLDER, "zippedOutput_" + bucket + "_" + key);
         ZipUtil.zip(rootFolder, zippedOutputFolder);
-        S3FileActions.upload(bucket, key, zippedOutputFolder);
+        S3Commander.upload(bucket, key, zippedOutputFolder);
         zippedOutputFolder.delete();
     }
 

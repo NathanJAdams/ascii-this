@@ -6,7 +6,6 @@ import com.repocleaner.io.external.UserIO;
 import com.repocleaner.model.HostedRepo;
 import com.repocleaner.model.User;
 import com.repocleaner.util.LocalDateTimeUtil;
-import com.repocleaner.util.RepoCleanerException;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -14,9 +13,8 @@ import java.util.Map;
 public class FirebaseUserIO implements UserIO {
     private final DatabaseReference databaseReference;
 
-    public FirebaseUserIO(byte[] serviceAccountKeyContents) throws RepoCleanerException {
-        this.databaseReference = new DatabaseReferenceCreator(serviceAccountKeyContents)
-                .getDatabaseReference();
+    public FirebaseUserIO(byte[] serviceAccountKeyContents) {
+        this.databaseReference = FirebaseCommander.create(serviceAccountKeyContents);
     }
 
     @Override
@@ -24,7 +22,7 @@ public class FirebaseUserIO implements UserIO {
         DatabaseReference userRef = databaseReference
                 .child("users")
                 .child(userId);
-        return new DbGetter<>(userRef, User.class).get();
+        return FirebaseCommander.getValue(userRef, User.class);
     }
 
     @Override
@@ -36,8 +34,7 @@ public class FirebaseUserIO implements UserIO {
                 .orderByChild("nextCleanTimeHex")
                 .endAt(maxTimeHex)
                 .limitToFirst(max);
-        return new QueryGetter<>(query, HostedRepo.class)
-                .get();
+        return FirebaseCommander.query(query, HostedRepo.class);
     }
 
     @Override
@@ -46,7 +43,6 @@ public class FirebaseUserIO implements UserIO {
                 .child("users")
                 .child(userId)
                 .child("token");
-        return new DbSetter<>(userTokenRef, encodedToken)
-                .set();
+        return FirebaseCommander.set(userTokenRef, encodedToken);
     }
 }

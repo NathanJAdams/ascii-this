@@ -1,7 +1,7 @@
 package com.repocleaner.repotoken;
 
 import com.repocleaner.io.external.UserIO;
-import com.repocleaner.secrets.SecretRetriever;
+import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.encrypt.AESEncryptor;
@@ -14,7 +14,7 @@ public class RepoToken {
     private static final Encryptor ENCRYPTOR;
 
     static {
-        String secretKeyString = SecretRetriever.getSecretAsString(Constants.SECRET_ID_REPO_TOKEN_KEY);
+        String secretKeyString = SecretCommander.getSecretAsString(Constants.SECRET_ID_REPO_TOKEN_KEY);
         byte[] secretKeyContents = Base64.getDecoder().decode(secretKeyString);
         Encryptor encryptor = null;
         try {

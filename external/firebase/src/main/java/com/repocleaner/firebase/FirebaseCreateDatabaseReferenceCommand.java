@@ -7,21 +7,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DatabaseReferenceCreator {
-    @Getter
-    private final DatabaseReference databaseReference;
+@AllArgsConstructor
+public class FirebaseCreateDatabaseReferenceCommand {
+    private final byte[] serviceAccountKeyContents;
 
-    public DatabaseReferenceCreator(byte[] serviceAccountKeyContents) throws RepoCleanerException {
-        this.databaseReference = createDatabaseConnection(serviceAccountKeyContents);
-    }
-
-    private static DatabaseReference createDatabaseConnection(byte[] serviceAccountKeyContents) throws RepoCleanerException {
+    public DatabaseReference createDatabaseConnection() throws RepoCleanerException {
         InputStream serviceAccount = new ByteArrayInputStream(serviceAccountKeyContents);
         try {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
@@ -33,7 +29,7 @@ public class DatabaseReferenceCreator {
             FirebaseDatabase database = FirebaseDatabase.getInstance(app);
             return database.getReference();
         } catch (IOException e) {
-            throw new RepoCleanerException("Failed to create db reference", e);
+            throw new RepoCleanerException("Failed to create firebase reference", e);
         }
     }
 }
