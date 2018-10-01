@@ -4,56 +4,46 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.repocleaner</groupId>
-    <artifactId>api-cron</artifactId>
-    <version>0.0.1</version>
+    <parent>
+        <groupId>com.repocleaner</groupId>
+        <artifactId>api</artifactId>
+        <version>0.0.1</version>
+    </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+    <artifactId>api-cron</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>util</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>source</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>sink</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>io</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>initiator</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>s3</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>firebase</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-lambda</artifactId>
-            <version>1.11.400</version>
         </dependency>
     </dependencies>
 </project>

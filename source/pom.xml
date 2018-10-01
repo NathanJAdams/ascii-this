@@ -4,41 +4,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.repocleaner</groupId>
-    <artifactId>source</artifactId>
-    <version>0.0.1</version>
+    <parent>
+        <groupId>com.repocleaner</groupId>
+        <artifactId>repo-cleaner</artifactId>
+        <version>0.0.1</version>
+    </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+    <artifactId>source</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>util</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>model</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>repo-host</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>s3</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
         </dependency>
     </dependencies>
 </project>

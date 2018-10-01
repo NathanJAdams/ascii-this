@@ -14,7 +14,7 @@ public class RepoToken {
     private static final Encryptor ENCRYPTOR;
 
     static {
-        String secretKeyString = SecretCommander.getSecretAsString(Constants.SECRET_ID_REPO_TOKEN_KEY);
+        String secretKeyString = SecretCommander.getParameter(Constants.SECRET_ID_REPO_TOKEN_KEY);
         byte[] secretKeyContents = Base64.getDecoder().decode(secretKeyString);
         Encryptor encryptor = null;
         try {
