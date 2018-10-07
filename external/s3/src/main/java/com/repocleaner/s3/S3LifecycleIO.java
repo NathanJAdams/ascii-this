@@ -34,4 +34,11 @@ public abstract class S3LifecycleIO implements LifecycleIO {
             this.fileStructure = S3EventUnwrapper.download(event);
         }
     }
+
+    @Override
+    public void close() {
+        if (fileStructure != null) {
+            fileStructure.close();
+        }
+    }
 }

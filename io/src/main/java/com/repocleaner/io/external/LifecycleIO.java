@@ -6,7 +6,7 @@ import com.repocleaner.util.json.JsonUtil;
 
 import java.io.File;
 
-public interface LifecycleIO {
+public interface LifecycleIO extends AutoCloseable {
     File getCodeFolder() throws RepoCleanerException;
 
     LifecycleRequest getLifecycleRequest(JsonUtil jsonUtil) throws RepoCleanerException;

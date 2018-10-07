@@ -35,7 +35,6 @@ public class IOUtils {
         while ((nRead = is.read(data, 0, data.length)) != -1) {
             buffer.write(data, 0, nRead);
         }
-        buffer.flush();
         byte[] bytes = buffer.toByteArray();
         return new String(bytes, charset);
     }

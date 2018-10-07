@@ -18,8 +18,8 @@
     </properties>
 
     <modules>
-        <module>lambda-cron</module>
         <module>lambda-clean</module>
+        <module>lambda-cron</module>
         <module>lambda-prepare</module>
         <module>lambda-send</module>
         <module>lambda-set-repo-token</module>

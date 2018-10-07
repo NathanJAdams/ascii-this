@@ -13,6 +13,7 @@ import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
 import com.repocleaner.model.User;
 import com.repocleaner.sink.RepoHostSink;
+import com.repocleaner.sink.SinkGsonCustomiser;
 import com.repocleaner.source.RepoHostSource;
 import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.RepoCleanerException;
@@ -23,12 +24,16 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CronApi {
-    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SourceGsonCustomiser());
+    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SinkGsonCustomiser(), new SourceGsonCustomiser());
 
     public static void startCleanJobs(UserIO userIO, CronIO cronIO) {
-        Map<String, HostedRepo> hostedRepos = userIO.getHostedReposToClean(LocalDateTime.now(), 100);
-        hostedRepos.values()
-                .forEach(hostedRepo -> startCleanJob(userIO, cronIO, hostedRepo));
+        try {
+            Map<String, HostedRepo> hostedRepos = userIO.getHostedReposToClean(LocalDateTime.now(), 100);
+            hostedRepos.values()
+                    .forEach(hostedRepo -> startCleanJob(userIO, cronIO, hostedRepo));
+        } catch (RepoCleanerException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void startCleanJob(UserIO userIO, CronIO cronIO, HostedRepo hostedRepo) {
@@ -44,11 +49,11 @@ public class CronApi {
         String userId = hostedRepo.getUserId();
         User user = userIO.getUser(userId);
         if (!user.isValid()) {
-            return null;
+            throw new RepoCleanerException("invalid user");
         }
         Initiator initiator = createInitiator(user);
         if (!initiator.isValid()) {
-            return null;
+            throw new RepoCleanerException("invalid initiator");
         }
         String id = UUID.randomUUID().toString();
         HostedAccount hostedAccount = user.getAccounts().get(hostedRepo.getAccountId());

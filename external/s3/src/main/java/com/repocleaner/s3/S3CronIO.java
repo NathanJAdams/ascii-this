@@ -12,8 +12,9 @@ public class S3CronIO implements CronIO {
     @Override
     public void waiting(LifecycleRequest lifecycleRequest, JsonUtil jsonUtil) throws RepoCleanerException {
         String id = UUID.randomUUID().toString();
-        S3FileStructure fileStructure = new S3FileStructure(id);
-        fileStructure.setLifecycleRequest(lifecycleRequest, jsonUtil);
-        fileStructure.upload(Constants.BUCKET_WAITING);
+        try (S3FileStructure fileStructure = new S3FileStructure(id)) {
+            fileStructure.setLifecycleRequest(lifecycleRequest, jsonUtil);
+            fileStructure.upload(Constants.BUCKET_WAITING);
+        }
     }
 }

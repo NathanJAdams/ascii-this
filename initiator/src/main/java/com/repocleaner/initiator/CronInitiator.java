@@ -12,7 +12,7 @@ public class CronInitiator implements Initiator {
     @Override
     public boolean isPossibleToClean() {
         // TODO return NOT (does the repo-cleaner branch exist and is it mergeable and has not been committed)
-        return false;
+        return true;
     }
 
     @Override

@@ -10,17 +10,22 @@ import com.repocleaner.io.external.UserIO;
 import com.repocleaner.s3.S3CronIO;
 import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
-
-import java.nio.charset.StandardCharsets;
+import com.repocleaner.util.RepoCleanerException;
 
 public class CronLambda implements RequestHandler<S3Event, Void> {
     private static final UserIO USER_IO;
-    private static final CronIO CRON_IO = new S3CronIO();
+    private static final CronIO CRON_IO;
 
     static {
-        String serviceAccountKey = SecretCommander.getSecretAsString(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
-        byte[] serviceAccountKeyContents = serviceAccountKey.getBytes(StandardCharsets.UTF_8);
-        USER_IO = new FirebaseUserIO(serviceAccountKeyContents);
+        String serviceAccountKey = SecretCommander.getParameter(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
+        UserIO userIO = null;
+        try {
+            userIO = FirebaseUserIO.fromJson(serviceAccountKey);
+        } catch (RepoCleanerException e) {
+            e.printStackTrace();
+        }
+        USER_IO = userIO;
+        CRON_IO = new S3CronIO();
     }
 
     @Override

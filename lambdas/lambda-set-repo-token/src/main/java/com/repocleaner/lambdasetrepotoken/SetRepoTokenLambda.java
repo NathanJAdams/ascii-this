@@ -11,16 +11,19 @@ import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 
-import java.nio.charset.StandardCharsets;
-
 public class SetRepoTokenLambda implements RequestHandler<SetRepoTokenLambdaRequest, SetRepoTokenLambdaResponse> {
     private static final RepoToken REPO_TOKEN = new RepoToken();
     private static final UserIO USER_IO;
 
     static {
-        String serviceAccountKey = SecretCommander.getSecretAsString(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
-        byte[] serviceAccountKeyContents = serviceAccountKey.getBytes(StandardCharsets.UTF_8);
-        USER_IO = new FirebaseUserIO(serviceAccountKeyContents);
+        String serviceAccountKey = SecretCommander.getParameter(Constants.SECRET_ID_SERVICE_ACCOUNT_KEY);
+        UserIO userIO = null;
+        try {
+            userIO = FirebaseUserIO.fromJson(serviceAccountKey);
+        } catch (RepoCleanerException e) {
+            e.printStackTrace();
+        }
+        USER_IO = userIO;
     }
 
     @Override

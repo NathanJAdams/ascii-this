@@ -14,6 +14,7 @@ import com.repocleaner.io.external.CleanIO;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.Initiator;
 import com.repocleaner.model.LifecycleRequest;
+import com.repocleaner.sink.SinkGsonCustomiser;
 import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
@@ -32,7 +33,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cleaner {
-    private static final JsonUtil JSON_UTIL = new JsonUtil(new SourceGsonCustomiser(), new InitiatorGsonCustomiser());
+    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SinkGsonCustomiser(), new SourceGsonCustomiser());
 
     public static void clean(CleanIO cleanIO) throws RepoCleanerException {
         LifecycleRequest lifecycleRequest = cleanIO.getLifecycleRequest(JSON_UTIL);

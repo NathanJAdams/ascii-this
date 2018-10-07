@@ -14,13 +14,15 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class AESEncryptor implements Encryptor {
+    private static final int SECRET_KEY_LENGTH = 128 / 8;
+    private static final int IV_LENGTH = 12;
     private static final String ALGORITHM = "AES/GCM/NoPadding";
 
     private final SecretKey secretKey;
 
     public AESEncryptor(byte[] secretKeyContents) throws RepoCleanerException {
-        if (secretKeyContents.length != 32) {
-            throw new RepoCleanerException("Key is not 32 bytes long");
+        if (secretKeyContents.length != SECRET_KEY_LENGTH) {
+            throw new RepoCleanerException("Key must be " + SECRET_KEY_LENGTH + " bytes long");
         }
         this.secretKey = new SecretKeySpec(secretKeyContents, "AES");
     }
@@ -31,10 +33,13 @@ public class AESEncryptor implements Encryptor {
             Cipher cipher = createCipher();
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] iv = cipher.getIV();
+            if (iv.length != IV_LENGTH) {
+                throw new RepoCleanerException("Failed to initialise encryption");
+            }
             byte[] encrypted = cipher.doFinal(data);
-            byte[] combined = new byte[12 + data.length + 16];
-            System.arraycopy(iv, 0, combined, 0, 12);
-            System.arraycopy(encrypted, 0, combined, 12, encrypted.length);
+            byte[] combined = new byte[IV_LENGTH + encrypted.length];
+            System.arraycopy(iv, 0, combined, 0, IV_LENGTH);
+            System.arraycopy(encrypted, 0, combined, IV_LENGTH, encrypted.length);
             return combined;
         } catch (InvalidKeyException
                 | IllegalBlockSizeException
@@ -45,14 +50,14 @@ public class AESEncryptor implements Encryptor {
 
     @Override
     public byte[] decrypt(byte[] encrypted) throws RepoCleanerException {
-        if (encrypted.length < 12 + 16) {
+        if (encrypted.length < IV_LENGTH) {
             throw new RepoCleanerException("Encrypted data is too short");
         }
         try {
             Cipher cipher = createCipher();
-            GCMParameterSpec params = new GCMParameterSpec(128, encrypted, 0, 12);
+            GCMParameterSpec params = new GCMParameterSpec(128, encrypted, 0, IV_LENGTH);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, params);
-            return cipher.doFinal(encrypted, 12, encrypted.length - 12);
+            return cipher.doFinal(encrypted, IV_LENGTH, encrypted.length - IV_LENGTH);
         } catch (InvalidKeyException
                 | InvalidAlgorithmParameterException
                 | IllegalBlockSizeException

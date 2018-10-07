@@ -18,10 +18,6 @@
             <artifactId>org.eclipse.jgit</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>net.lingala.zip4j</groupId>
             <artifactId>zip4j</artifactId>
         </dependency>

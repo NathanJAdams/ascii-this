@@ -5,6 +5,7 @@ import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement
 import com.amazonaws.services.simplesystemsmanagement.model.GetParameterRequest;
 import com.amazonaws.services.simplesystemsmanagement.model.GetParameterResult;
 import com.amazonaws.services.simplesystemsmanagement.model.Parameter;
+import com.repocleaner.util.Constants;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -12,11 +13,13 @@ public class GetParameterCommand {
     private final String parameterName;
 
     public String getParameter() {
-        AWSSimpleSystemsManagement client = AWSSimpleSystemsManagementClientBuilder.defaultClient();
+        AWSSimpleSystemsManagement ssm = AWSSimpleSystemsManagementClientBuilder.standard()
+                .withRegion(Constants.AWS_REGION)
+                .build();
         GetParameterRequest request = new GetParameterRequest();
-        request.setName(parameterName);
+        request.withName(parameterName);
         request.setWithDecryption(true);
-        GetParameterResult result = client.getParameter(request);
+        GetParameterResult result = ssm.getParameter(request);
         Parameter parameter = result.getParameter();
         return parameter.getValue();
     }

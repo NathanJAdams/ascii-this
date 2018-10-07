@@ -20,19 +20,19 @@ public class JsonUtil {
         this.gson = builder.create();
     }
 
-    public String toJson(Object object) {
+    public String toJson(Object object) throws RepoCleanerException {
         try {
             return gson.toJson(object);
         } catch (JsonSyntaxException e) {
-            return null;
+            throw new RepoCleanerException("Failed to parse json", e);
         }
     }
 
-    public <T> T fromJsonOrNull(String json, Class<T> tClass) {
+    public <T> T fromJsonOrNull(String json, Class<T> tClass) throws RepoCleanerException {
         try {
             return gson.fromJson(json, tClass);
         } catch (JsonSyntaxException e) {
-            return null;
+            throw new RepoCleanerException("Failed to parse json", e);
         }
     }
 
