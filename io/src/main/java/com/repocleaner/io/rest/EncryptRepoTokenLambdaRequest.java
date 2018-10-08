@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class SetRepoTokenLambdaRequest {
-    private final String userId;
+public class EncryptRepoTokenLambdaRequest {
     private final String token;
 }

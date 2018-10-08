@@ -27,7 +27,7 @@ public class Authenticator {
         try {
             return verifier.verify(jwt);
         } catch (JWTVerificationException e) {
-            throw new RepoCleanerException("Not authenticated", e);
+            return null;
         }
     }
 

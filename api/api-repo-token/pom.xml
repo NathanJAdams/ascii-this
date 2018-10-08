@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>util</artifactId>
+            <artifactId>cognito</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
@@ -24,6 +24,10 @@
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>secrets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>util</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

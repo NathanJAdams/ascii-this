@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class SetRepoTokenLambdaResponse {
-    public static final SetRepoTokenLambdaResponse SUCCESS = new SetRepoTokenLambdaResponse(true, null);
-
+public class EncryptRepoTokenLambdaResponse {
     private final boolean success;
+    private final String encryptedToken;
     private final String error;
 }

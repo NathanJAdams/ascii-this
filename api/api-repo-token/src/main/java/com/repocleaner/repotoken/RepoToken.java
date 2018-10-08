@@ -1,6 +1,5 @@
 package com.repocleaner.repotoken;
 
-import com.repocleaner.io.external.UserIO;
 import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
@@ -27,8 +26,7 @@ public class RepoToken {
         return ENCRYPTOR.decrypt(encryptedToken);
     }
 
-    public boolean encryptToken(UserIO userIO, String userId, String token) throws RepoCleanerException {
-        String encryptedToken = ENCRYPTOR.encrypt(token);
-        return userIO.setEncodedToken(userId, encryptedToken);
+    public String encryptToken(String token) throws RepoCleanerException {
+        return ENCRYPTOR.encrypt(token);
     }
 }

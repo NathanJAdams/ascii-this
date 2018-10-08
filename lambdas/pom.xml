@@ -22,7 +22,7 @@
         <module>lambda-cron</module>
         <module>lambda-prepare</module>
         <module>lambda-send</module>
-        <module>lambda-set-repo-token</module>
+        <module>lambda-encrypt-repo-token</module>
     </modules>
 
     <build>

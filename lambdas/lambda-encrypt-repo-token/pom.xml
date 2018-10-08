@@ -10,10 +10,10 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>lambda-set-repo-token</artifactId>
+    <artifactId>lambda-encrypt-repo-token</artifactId>
 
     <properties>
-        <main.class>com.repocleaner.lambdasetrepotoken.SetRepoTokenLambda</main.class>
+        <main.class>com.repocleaner.lambdaencryptrepotoken.EncryptRepoTokenLambda</main.class>
     </properties>
 
     <dependencies>
