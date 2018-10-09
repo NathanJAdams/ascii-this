@@ -6,7 +6,7 @@ public class SecretGenerator {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     public static void main(String[] args) {
-        String key = generateSymmetricKey(16);
+        String key = generateSymmetricKey(32);
         System.out.println(key);
     }
 

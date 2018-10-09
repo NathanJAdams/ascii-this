@@ -14,8 +14,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class AESEncryptor implements Encryptor {
-    private static final int SECRET_KEY_LENGTH = 128 / 8;
+    private static final int SECRET_KEY_BITS = 256;
+    private static final int SECRET_KEY_LENGTH = SECRET_KEY_BITS / 8;
     private static final int IV_LENGTH = 12;
+    private static final int AUTHENTICATION_TAG_BITS = 128;
     private static final String ALGORITHM = "AES/GCM/NoPadding";
 
     private final SecretKey secretKey;
@@ -55,7 +57,7 @@ public class AESEncryptor implements Encryptor {
         }
         try {
             Cipher cipher = createCipher();
-            GCMParameterSpec params = new GCMParameterSpec(128, encrypted, 0, IV_LENGTH);
+            GCMParameterSpec params = new GCMParameterSpec(AUTHENTICATION_TAG_BITS, encrypted, 0, IV_LENGTH);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, params);
             return cipher.doFinal(encrypted, IV_LENGTH, encrypted.length - IV_LENGTH);
         } catch (InvalidKeyException

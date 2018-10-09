@@ -25,7 +25,7 @@ public class AESEncryptorTest {
     }
 
     private byte[] createBytes() {
-        byte[] bytes = new byte[16];
+        byte[] bytes = new byte[32];
         secureRandom.nextBytes(bytes);
         return bytes;
     }

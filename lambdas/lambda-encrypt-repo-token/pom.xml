@@ -27,10 +27,6 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>firebase</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
             <artifactId>secrets</artifactId>
         </dependency>
         <dependency>
