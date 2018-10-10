@@ -43,13 +43,4 @@ public class FirebaseUserIO implements UserIO {
                 .limitToFirst(max);
         return FirebaseCommander.query(query, HostedRepo.class);
     }
-
-    @Override
-    public boolean setEncodedToken(String userId, String encodedToken) throws RepoCleanerException {
-        DatabaseReference userTokenRef = databaseReference
-                .child("users")
-                .child(userId)
-                .child("token");
-        return FirebaseCommander.set(userTokenRef, encodedToken);
-    }
 }

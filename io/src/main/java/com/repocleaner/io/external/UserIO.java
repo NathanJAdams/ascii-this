@@ -11,6 +11,4 @@ public interface UserIO {
     User getUser(String userId) throws RepoCleanerException;
 
     Map<String, HostedRepo> getHostedReposToClean(LocalDateTime end, int max) throws RepoCleanerException;
-
-    boolean setEncodedToken(String userId, String encodedToken) throws RepoCleanerException;
 }

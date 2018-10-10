@@ -1,5 +1,6 @@
 package com.repocleaner.model;
 
+import com.repocleaner.model.transform.SplitType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
