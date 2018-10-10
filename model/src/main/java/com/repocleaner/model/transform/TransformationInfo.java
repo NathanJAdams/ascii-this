@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public abstract class TransformerInfo {
+public abstract class TransformationInfo {
     private final RiskType riskType;
     private final EffectType effectType;
 }
