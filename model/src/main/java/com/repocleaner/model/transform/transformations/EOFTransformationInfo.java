@@ -4,14 +4,13 @@ import com.repocleaner.model.transform.EffectType;
 import com.repocleaner.model.transform.RiskType;
 import com.repocleaner.model.transform.TransformationInfo;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class EOFTransformationInfo extends TransformationInfo {
-    private String eof;
+    private final String eof;
 
-    public EOFTransformationInfo() {
-        super(RiskType.None, EffectType.Comment);
+    public EOFTransformationInfo(int priority, String eof) {
+        super(RiskType.None, EffectType.Comment, priority);
+        this.eof = eof;
     }
 }

@@ -6,7 +6,6 @@ import com.repocleaner.model.transform.RiskType;
 import com.repocleaner.model.transform.TransformationInfo;
 import com.repocleaner.util.IOUtils;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +14,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-@Setter
 public class LicenseTransformationInfo extends TransformationInfo {
     private static final Map<LicenseType, String> LICENSE_TYPE_STRING_MAP = new HashMap<>();
 
-    private String license;
+    private final String license;
 
-    public LicenseTransformationInfo() {
-        super(RiskType.None, EffectType.Comment);
+    public LicenseTransformationInfo(int priority, LicenseType licenseType) {
+        super(RiskType.None, EffectType.Comment, priority);
+        this.license = getLicense(licenseType);
     }
 
-    public void setLicenseType(LicenseType licenseType) {
+    private static String getLicense(LicenseType licenseType) {
         String license = LICENSE_TYPE_STRING_MAP.get(licenseType);
         if (license == null) {
             String fileName = licenseType.name() + "License.txt";
@@ -36,6 +35,6 @@ public class LicenseTransformationInfo extends TransformationInfo {
                 e.printStackTrace();
             }
         }
-        this.license = license;
+        return license;
     }
 }

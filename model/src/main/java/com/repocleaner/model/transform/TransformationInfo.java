@@ -8,4 +8,5 @@ import lombok.Getter;
 public abstract class TransformationInfo {
     private final RiskType riskType;
     private final EffectType effectType;
+    private final int priority;
 }
