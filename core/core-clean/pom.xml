@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>com.repocleaner</groupId>
-        <artifactId>api</artifactId>
+        <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api-clean</artifactId>
+    <artifactId>core-clean</artifactId>
 
     <dependencies>
         <dependency>

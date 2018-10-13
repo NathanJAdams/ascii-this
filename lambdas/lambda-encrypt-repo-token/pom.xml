@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>api-repo-token</artifactId>
+            <artifactId>core-repo-token</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>

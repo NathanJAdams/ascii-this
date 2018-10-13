@@ -6,16 +6,16 @@
 
     <parent>
         <groupId>com.repocleaner</groupId>
-        <artifactId>api</artifactId>
+        <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api-repo-token</artifactId>
+    <artifactId>core-prepare</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>cognito</artifactId>
+            <artifactId>util</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
@@ -23,19 +23,19 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>secrets</artifactId>
+            <artifactId>initiator</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>util</artifactId>
+            <artifactId>s3</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>source</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>sink</artifactId>
         </dependency>
     </dependencies>
 </project>

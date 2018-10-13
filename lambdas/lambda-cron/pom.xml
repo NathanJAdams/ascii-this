@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>api-cron</artifactId>
+            <artifactId>core-cron</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>

@@ -10,14 +10,14 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api</artifactId>
+    <artifactId>core</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>api-clean</module>
-        <module>api-cron</module>
-        <module>api-prepare</module>
-        <module>api-repo-token</module>
-        <module>api-send</module>
+        <module>core-clean</module>
+        <module>core-cron</module>
+        <module>core-prepare</module>
+        <module>core-repo-token</module>
+        <module>core-send</module>
     </modules>
 </project>

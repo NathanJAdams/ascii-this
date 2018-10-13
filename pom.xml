@@ -29,7 +29,7 @@
 
         <module>io</module>
         <module>external</module>
-        <module>api</module>
+        <module>core</module>
         <module>lambdas</module>
     </modules>
 
@@ -129,27 +129,27 @@
             <!--api-->
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>api-clean</artifactId>
+                <artifactId>core-clean</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>api-cron</artifactId>
+                <artifactId>core-cron</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>api-prepare</artifactId>
+                <artifactId>core-prepare</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>api-repo-token</artifactId>
+                <artifactId>core-repo-token</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>api-send</artifactId>
+                <artifactId>core-send</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <!--external-->

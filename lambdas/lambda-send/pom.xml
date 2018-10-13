@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>api-send</artifactId>
+            <artifactId>core-send</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -6,16 +6,24 @@
 
     <parent>
         <groupId>com.repocleaner</groupId>
-        <artifactId>api</artifactId>
+        <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api-send</artifactId>
+    <artifactId>core-cron</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
+            <artifactId>firebase</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
             <artifactId>initiator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>io</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
@@ -23,11 +31,11 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>source</artifactId>
+            <artifactId>sink</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>sink</artifactId>
+            <artifactId>source</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
@@ -35,19 +43,7 @@
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-lambda-java-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-lambda-java-events</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
+            <artifactId>aws-java-sdk-lambda</artifactId>
         </dependency>
     </dependencies>
 </project>

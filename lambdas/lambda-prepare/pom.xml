@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>api-prepare</artifactId>
+            <artifactId>core-prepare</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>

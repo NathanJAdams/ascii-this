@@ -6,21 +6,13 @@
 
     <parent>
         <groupId>com.repocleaner</groupId>
-        <artifactId>api</artifactId>
+        <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api-prepare</artifactId>
+    <artifactId>core-send</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>io</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>initiator</artifactId>
@@ -36,6 +28,26 @@
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>sink</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-events</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 </project>

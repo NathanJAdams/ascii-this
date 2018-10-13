@@ -6,20 +6,16 @@
 
     <parent>
         <groupId>com.repocleaner</groupId>
-        <artifactId>api</artifactId>
+        <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>api-cron</artifactId>
+    <artifactId>core-repo-token</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>firebase</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>initiator</artifactId>
+            <artifactId>cognito</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
@@ -27,23 +23,19 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>s3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>sink</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>source</artifactId>
+            <artifactId>secrets</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>util</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-lambda</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
         </dependency>
     </dependencies>
 </project>
