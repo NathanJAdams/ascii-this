@@ -19,10 +19,11 @@
 
     <modules>
         <module>lambda-clean</module>
-        <module>lambda-cron</module>
-        <module>lambda-prepare</module>
-        <module>lambda-send</module>
         <module>lambda-encrypt-repo-token</module>
+        <module>lambda-prepare</module>
+        <module>lambda-schedule-api</module>
+        <module>lambda-schedule-cron</module>
+        <module>lambda-send</module>
     </modules>
 
     <build>

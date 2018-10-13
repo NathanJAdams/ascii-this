@@ -14,4 +14,6 @@ import lombok.ToString;
 public class UsageToken {
     private String hash;
     private String expiryTimeHex;
+    private String notificationEndPoint;
+    private Config config;
 }

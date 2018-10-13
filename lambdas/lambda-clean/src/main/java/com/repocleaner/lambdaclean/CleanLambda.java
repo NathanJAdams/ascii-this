@@ -3,7 +3,7 @@ package com.repocleaner.lambdaclean;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
-import com.repocleaner.clean.Cleaner;
+import com.repocleaner.coreclean.Cleaner;
 import com.repocleaner.s3.S3CleanIO;
 import com.repocleaner.util.RepoCleanerException;
 

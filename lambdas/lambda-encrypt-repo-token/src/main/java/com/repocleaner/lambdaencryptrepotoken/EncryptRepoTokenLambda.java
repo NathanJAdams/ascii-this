@@ -2,22 +2,32 @@ package com.repocleaner.lambdaencryptrepotoken;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.repocleaner.io.rest.EncryptRepoTokenLambdaRequest;
-import com.repocleaner.io.rest.EncryptRepoTokenLambdaResponse;
-import com.repocleaner.repotoken.RepoToken;
+import com.repocleaner.corerepotoken.RepoToken;
+import com.repocleaner.io.rest.EncryptRepoTokenRequest;
+import com.repocleaner.io.rest.EncryptRepoTokenResponse;
+import com.repocleaner.io.rest.ResponseInfo;
 import com.repocleaner.util.RepoCleanerException;
 
-public class EncryptRepoTokenLambda implements RequestHandler<EncryptRepoTokenLambdaRequest, EncryptRepoTokenLambdaResponse> {
+public class EncryptRepoTokenLambda implements RequestHandler<EncryptRepoTokenRequest, EncryptRepoTokenResponse> {
     private static final RepoToken REPO_TOKEN = new RepoToken();
 
     @Override
-    public EncryptRepoTokenLambdaResponse handleRequest(EncryptRepoTokenLambdaRequest request, Context context) {
+    public EncryptRepoTokenResponse handleRequest(EncryptRepoTokenRequest request, Context context) {
         String token = request.getToken();
+        String encryptedToken;
+        boolean success;
+        String message;
         try {
-            String encryptedToken = REPO_TOKEN.encryptToken(token);
-            return new EncryptRepoTokenLambdaResponse(true, encryptedToken, null);
+            encryptedToken = REPO_TOKEN.encryptToken(token);
+            success = true;
+            message = "Successfully encrypted token";
         } catch (RepoCleanerException e) {
-            return new EncryptRepoTokenLambdaResponse(false, null, e.getMessage());
+            e.printStackTrace();
+            success = false;
+            message = "Failed to encrypt token";
+            encryptedToken = null;
         }
+        ResponseInfo responseInfo = new ResponseInfo(success, message);
+        return new EncryptRepoTokenResponse(responseInfo, encryptedToken);
     }
 }

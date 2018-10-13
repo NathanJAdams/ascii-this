@@ -134,11 +134,6 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>core-cron</artifactId>
-                <version>${repo-cleaner.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.repocleaner</groupId>
                 <artifactId>core-prepare</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
@@ -149,9 +144,20 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
+                <artifactId>core-schedule-api</artifactId>
+                <version>${repo-cleaner.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.repocleaner</groupId>
+                <artifactId>core-schedule-cron</artifactId>
+                <version>${repo-cleaner.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.repocleaner</groupId>
                 <artifactId>core-send</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
+
             <!--external-->
             <dependency>
                 <groupId>com.repocleaner</groupId>
@@ -178,6 +184,7 @@
                 <artifactId>secrets</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
+
             <!--misc-->
             <dependency>
                 <groupId>com.repocleaner</groupId>

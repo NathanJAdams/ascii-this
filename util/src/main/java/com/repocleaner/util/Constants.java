@@ -3,7 +3,7 @@ package com.repocleaner.util;
 public class Constants {
     public static final String AWS_REGION = "eu-west-1";
 
-    public static final String LAMBDA_PREPARE_NAME = "prepare";
+    public static final String LAMBDA_PREPARE_NAME = "coreprepare";
 
     public static final String BUCKET_WAITING = "waiting.repocleaner.com";
     public static final String BUCKET_PREPARED = "prepared.repocleaner.com";

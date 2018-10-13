@@ -15,7 +15,7 @@ public class S3FileStructure implements AutoCloseable {
     private static final String ROOT_PREFIX = "root_";
     private static final String TEMP_PREFIX = "temp_";
     private static final String LIFECYCLE_REQUEST = "lifecycle-request";
-    private static final String CLEAN_RESULT = "clean-result";
+    private static final String CLEAN_RESULT = "coreclean-result";
     private static final String TOKEN = "token";
 
     private final String key;
