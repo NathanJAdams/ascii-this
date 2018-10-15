@@ -92,6 +92,17 @@ public class GitUtil {
         }
     }
 
+    public static void addAll(Git git) throws RepoCleanerException {
+        try {
+            git.add()
+                    .addFilepattern("*")
+                    .call();
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+            throw new RepoCleanerException("Failed to add files", e);
+        }
+    }
+
     public static void commit(Git git, String message) throws RepoCleanerException {
         try {
             git.commit()

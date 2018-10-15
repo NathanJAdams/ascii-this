@@ -23,14 +23,6 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>sink</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>source</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
             <artifactId>util</artifactId>
         </dependency>
         <dependency>

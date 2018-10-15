@@ -1,7 +1,9 @@
-package com.repocleaner.sink;
+package com.repocleaner.json.customisers;
 
 import com.google.gson.GsonBuilder;
 import com.repocleaner.model.Sink;
+import com.repocleaner.sink.RepoHostSink;
+import com.repocleaner.sink.ZipFileSink;
 import com.repocleaner.util.json.GsonCustomiser;
 import com.repocleaner.util.json.RuntimeTypeAdapterFactory;
 

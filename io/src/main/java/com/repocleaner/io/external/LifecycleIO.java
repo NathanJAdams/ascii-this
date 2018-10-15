@@ -1,13 +1,11 @@
 package com.repocleaner.io.external;
 
-import com.repocleaner.model.LifecycleRequest;
-import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.json.JsonUtil;
-
-import java.io.File;
+import com.repocleaner.model.FileStructure;
 
 public interface LifecycleIO extends AutoCloseable {
-    File getCodeFolder() throws RepoCleanerException;
+    FileStructure getFileStructure();
 
-    LifecycleRequest getLifecycleRequest(JsonUtil jsonUtil) throws RepoCleanerException;
+    default void close() {
+        getFileStructure().close();
+    }
 }

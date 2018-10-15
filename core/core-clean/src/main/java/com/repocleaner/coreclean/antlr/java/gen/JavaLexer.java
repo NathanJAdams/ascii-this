@@ -1,10 +1,13 @@
-// Generated from C:/Users/Nathan/IdeaProjects/repoCleaner/api/api-coreclean/src/main/java/com/repocleaner/coreclean/antlr/java\Java.g4 by ANTLR 4.7
+// Generated from C:/Users/Nathan/IdeaProjects/repoCleaner/core/core-clean/src/main/java/com/repocleaner/coreclean/antlr/java\Java.g4 by ANTLR 4.7
 package com.repocleaner.coreclean.antlr.java.gen;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class JavaLexer extends Lexer {

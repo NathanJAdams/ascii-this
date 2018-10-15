@@ -1,7 +1,6 @@
 package com.repocleaner.corescheduleapi;
 
 import com.repocleaner.initiator.ApiInitiator;
-import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.io.external.ScheduleIO;
 import com.repocleaner.io.external.UserIO;
 import com.repocleaner.model.Config;
@@ -11,18 +10,13 @@ import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
 import com.repocleaner.model.UsageToken;
 import com.repocleaner.model.User;
-import com.repocleaner.sink.SinkGsonCustomiser;
-import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.LocalDateTimeUtil;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.json.JsonUtil;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ApiScheduler {
-    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SinkGsonCustomiser(), new SourceGsonCustomiser());
-
     public static String schedule(UserIO userIO, ScheduleIO scheduleIO, String userId, String token, Source source, Sink sink) throws RepoCleanerException {
         User user = getUser(userIO, userId);
         UsageToken usageToken = getUsageToken(user, token);
@@ -30,7 +24,7 @@ public class ApiScheduler {
         Initiator initiator = createInitiator(user, usageToken);
         Config config = usageToken.getConfig();
         LifecycleRequest lifecycleRequest = new LifecycleRequest(id, initiator, config, source, sink);
-        scheduleIO.schedule(lifecycleRequest, JSON_UTIL);
+        scheduleIO.schedule(lifecycleRequest);
         return id;
     }
 

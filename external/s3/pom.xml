@@ -19,6 +19,10 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
+            <artifactId>initiator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
             <artifactId>io</artifactId>
         </dependency>
         <dependency>

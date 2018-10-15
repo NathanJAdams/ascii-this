@@ -1,8 +1,8 @@
 package com.repocleaner.sink;
 
+import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.Sink;
 import com.repocleaner.s3.S3Commander;
-import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
 import lombok.AllArgsConstructor;

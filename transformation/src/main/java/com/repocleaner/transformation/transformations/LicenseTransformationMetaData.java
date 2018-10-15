@@ -1,9 +1,9 @@
-package com.repocleaner.model.transform.transformations;
+package com.repocleaner.transformation.transformations;
 
+import com.repocleaner.model.TransformationMetaData;
 import com.repocleaner.model.transform.EffectType;
 import com.repocleaner.model.transform.LicenseType;
 import com.repocleaner.model.transform.RiskType;
-import com.repocleaner.model.transform.TransformationInfo;
 import com.repocleaner.util.IOUtils;
 import lombok.Getter;
 
@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class LicenseTransformationInfo extends TransformationInfo {
+public class LicenseTransformationMetaData extends TransformationMetaData {
     private static final Map<LicenseType, String> LICENSE_TYPE_STRING_MAP = new HashMap<>();
 
     private final String license;
 
-    public LicenseTransformationInfo(int priority, LicenseType licenseType) {
+    public LicenseTransformationMetaData(int priority, LicenseType licenseType) {
         super(RiskType.None, EffectType.Comment, priority);
         this.license = getLicense(licenseType);
     }
@@ -28,7 +28,7 @@ public class LicenseTransformationInfo extends TransformationInfo {
         String license = LICENSE_TYPE_STRING_MAP.get(licenseType);
         if (license == null) {
             String fileName = licenseType.name() + "License.txt";
-            try (InputStream is = LicenseTransformationInfo.class.getResourceAsStream(fileName)) {
+            try (InputStream is = LicenseTransformationMetaData.class.getResourceAsStream(fileName)) {
                 license = IOUtils.toString(is, StandardCharsets.UTF_8);
                 LICENSE_TYPE_STRING_MAP.put(licenseType, license);
             } catch (IOException e) {

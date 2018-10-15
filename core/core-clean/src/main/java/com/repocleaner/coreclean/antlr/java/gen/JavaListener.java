@@ -1,4 +1,4 @@
-// Generated from C:/Users/Nathan/IdeaProjects/repoCleaner/api/api-coreclean/src/main/java/com/repocleaner/coreclean/antlr/java\Java.g4 by ANTLR 4.7
+// Generated from C:/Users/Nathan/IdeaProjects/repoCleaner/core/core-clean/src/main/java/com/repocleaner/coreclean/antlr/java\Java.g4 by ANTLR 4.7
 package com.repocleaner.coreclean.antlr.java.gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

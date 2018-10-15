@@ -9,6 +9,7 @@ import com.repocleaner.io.external.UserIO;
 import com.repocleaner.io.rest.ResponseInfo;
 import com.repocleaner.io.rest.ScheduleApiRequest;
 import com.repocleaner.io.rest.ScheduleApiResponse;
+import com.repocleaner.json.JsonInfo;
 import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
 import com.repocleaner.s3.S3ScheduleIO;
@@ -29,7 +30,7 @@ public class ScheduleApiLambda implements RequestHandler<ScheduleApiRequest, Sch
             e.printStackTrace();
         }
         USER_IO = userIO;
-        SCHEDULE_IO = new S3ScheduleIO();
+        SCHEDULE_IO = new S3ScheduleIO(JsonInfo.JSON_UTIL);
     }
 
     @Override

@@ -25,12 +25,16 @@
         <module>initiator</module>
         <module>source</module>
         <module>sink</module>
+        <module>transformation</module>
+        <module>json</module>
+        <module>io</module>
         <module>transaction</module>
 
-        <module>io</module>
         <module>external</module>
         <module>core</module>
         <module>lambdas</module>
+
+        <module>lifecycle-test</module>
     </modules>
 
     <dependencyManagement>
@@ -198,6 +202,11 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
+                <artifactId>json</artifactId>
+                <version>${repo-cleaner.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.repocleaner</groupId>
                 <artifactId>model</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
@@ -218,6 +227,11 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
+                <artifactId>transformation</artifactId>
+                <version>${repo-cleaner.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.repocleaner</groupId>
                 <artifactId>util</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
@@ -228,6 +242,11 @@
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.15.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

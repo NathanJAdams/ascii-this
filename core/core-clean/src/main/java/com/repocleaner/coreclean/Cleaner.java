@@ -9,17 +9,14 @@ import com.repocleaner.coreclean.transform.TransformationCoster;
 import com.repocleaner.coreclean.transform.Transformer;
 import com.repocleaner.coreclean.transform.coster.PlainCoster;
 import com.repocleaner.coreclean.transform.transformers.EOFTransformer;
-import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.io.external.CleanIO;
+import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.Config;
+import com.repocleaner.model.FileStructure;
 import com.repocleaner.model.Initiator;
 import com.repocleaner.model.LifecycleRequest;
-import com.repocleaner.sink.SinkGsonCustomiser;
-import com.repocleaner.source.SourceGsonCustomiser;
-import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.json.JsonUtil;
 import org.eclipse.jgit.api.Git;
 
 import java.io.File;
@@ -33,13 +30,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cleaner {
-    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SinkGsonCustomiser(), new SourceGsonCustomiser());
-
     public static void clean(CleanIO cleanIO) throws RepoCleanerException {
-        LifecycleRequest lifecycleRequest = cleanIO.getLifecycleRequest(JSON_UTIL);
+        FileStructure fileStructure = cleanIO.getFileStructure();
+        LifecycleRequest lifecycleRequest = fileStructure.getLifecycleRequest();
         Initiator initiator = lifecycleRequest.getInitiator();
         Config config = lifecycleRequest.getConfig();
-        File codeFolder = cleanIO.getCodeFolder();
+        File codeFolder = fileStructure.getCodeFolder();
         try (Git git = GitUtil.open(codeFolder)) {
             Set<String> branchNames = GitUtil.getBranchNames(git);
             String cleanBranch = "repo-cleaner-" + "master";// TODO GitUtil.getUnusedBranchName(git);
@@ -47,7 +43,7 @@ public class Cleaner {
         }
         CleanResult cleanResult = clean(codeFolder, initiator, config);
         postCheck(cleanResult, initiator);
-        cleanIO.cleaned(cleanResult, JSON_UTIL);
+        cleanIO.cleaned(cleanResult);
     }
 
     private static void postCheck(CleanResult cleanResult, Initiator initiator) throws RepoCleanerException {

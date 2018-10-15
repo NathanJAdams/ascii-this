@@ -1,7 +1,6 @@
 package com.repocleaner.model;
 
 import com.repocleaner.model.transform.SplitType;
-import com.repocleaner.model.transform.TransformationInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 public class LanguageConfig {
     private String version;
     private Map<String, Boolean> splitTypes;
-    private Map<String, TransformationInfo> transformationInfos;
+    private Map<String, TransformationMetaData> transformationInfos;
 
     public Iterable<SplitType> getSplitTypes() {
         return splitTypes.keySet()

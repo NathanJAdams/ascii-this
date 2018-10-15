@@ -4,14 +4,15 @@ import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.repocleaner.io.external.PrepareIO;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
+import com.repocleaner.util.json.JsonUtil;
 
 public class S3PrepareIO extends S3LifecycleIO implements PrepareIO {
-    public S3PrepareIO(S3Event event) {
-        super(event);
+    public S3PrepareIO(S3Event event, JsonUtil jsonUtil) throws RepoCleanerException {
+        super(event, jsonUtil);
     }
 
     @Override
     public void prepared() throws RepoCleanerException {
-        getFileStructure().upload(Constants.BUCKET_PREPARED);
+        S3FileStructure.upload(getFileStructure(), Constants.BUCKET_PREPARED);
     }
 }

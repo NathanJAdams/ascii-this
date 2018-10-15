@@ -1,11 +1,11 @@
 package com.repocleaner.sink;
 
+import com.repocleaner.corerepotoken.RepoToken;
+import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.RepoHost;
 import com.repocleaner.model.Sink;
 import com.repocleaner.repohost.RepoHostBase;
 import com.repocleaner.repohost.RepoHosts;
-import com.repocleaner.corerepotoken.RepoToken;
-import com.repocleaner.util.CleanResult;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.rest.RestRequest;

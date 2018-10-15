@@ -1,7 +1,6 @@
 package com.repocleaner.coreschedulecron;
 
 import com.repocleaner.initiator.CronInitiator;
-import com.repocleaner.initiator.InitiatorGsonCustomiser;
 import com.repocleaner.io.external.ScheduleIO;
 import com.repocleaner.io.external.UserIO;
 import com.repocleaner.model.Config;
@@ -13,19 +12,14 @@ import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
 import com.repocleaner.model.User;
 import com.repocleaner.sink.RepoHostSink;
-import com.repocleaner.sink.SinkGsonCustomiser;
 import com.repocleaner.source.RepoHostSource;
-import com.repocleaner.source.SourceGsonCustomiser;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.json.JsonUtil;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
 public class CronScheduler {
-    private static final JsonUtil JSON_UTIL = new JsonUtil(new InitiatorGsonCustomiser(), new SinkGsonCustomiser(), new SourceGsonCustomiser());
-
     public static void schedule(UserIO userIO, ScheduleIO scheduleIO) throws RepoCleanerException {
         Map<String, HostedRepo> hostedRepos = userIO.getHostedReposToClean(LocalDateTime.now(), 100);
         hostedRepos.values()
@@ -35,7 +29,7 @@ public class CronScheduler {
     private static void startCleanJob(UserIO userIO, ScheduleIO scheduleIO, HostedRepo hostedRepo) {
         try {
             LifecycleRequest lifecycleRequest = createLifecycleRequest(userIO, hostedRepo);
-            scheduleIO.schedule(lifecycleRequest, JSON_UTIL);
+            scheduleIO.schedule(lifecycleRequest);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
         }
@@ -53,7 +47,6 @@ public class CronScheduler {
         }
         String id = UUID.randomUUID().toString();
         HostedAccount hostedAccount = user.getAccounts().get(hostedRepo.getAccountId());
-        String encryptedToken = hostedAccount.getEncryptedToken();
         Source source = createSource(hostedAccount, hostedRepo);
         Sink sink = createSink(hostedAccount, hostedRepo);
         Config config = hostedRepo.getConfig();

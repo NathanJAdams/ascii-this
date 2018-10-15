@@ -1,15 +1,15 @@
-package com.repocleaner.model.transform.transformations;
+package com.repocleaner.transformation.transformations;
 
+import com.repocleaner.model.TransformationMetaData;
 import com.repocleaner.model.transform.EffectType;
 import com.repocleaner.model.transform.RiskType;
-import com.repocleaner.model.transform.TransformationInfo;
 import lombok.Getter;
 
 @Getter
-public class EOFTransformationInfo extends TransformationInfo {
+public class EOFTransformationMetaData extends TransformationMetaData {
     private final String eof;
 
-    public EOFTransformationInfo(int priority, String eof) {
+    public EOFTransformationMetaData(int priority, String eof) {
         super(RiskType.None, EffectType.Comment, priority);
         this.eof = eof;
     }

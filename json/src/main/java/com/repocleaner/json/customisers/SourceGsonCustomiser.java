@@ -1,7 +1,9 @@
-package com.repocleaner.source;
+package com.repocleaner.json.customisers;
 
 import com.google.gson.GsonBuilder;
 import com.repocleaner.model.Source;
+import com.repocleaner.source.RepoHostSource;
+import com.repocleaner.source.ZipFileSource;
 import com.repocleaner.util.json.GsonCustomiser;
 import com.repocleaner.util.json.RuntimeTypeAdapterFactory;
 

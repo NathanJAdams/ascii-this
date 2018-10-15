@@ -18,6 +18,8 @@ public class ZipFileSource implements Source {
         File zipped = new File(location);
         ZipUtil.extract(zipped, sourceFolder);
         try (Git git = GitUtil.init(sourceFolder)) {
+            GitUtil.addAll(git);
+            GitUtil.commit(git, "Initial commit");
         }
     }
 }

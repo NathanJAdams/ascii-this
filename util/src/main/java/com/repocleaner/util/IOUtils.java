@@ -39,6 +39,12 @@ public class IOUtils {
         return new String(bytes, charset);
     }
 
+    public static long copy(File input, File output) throws IOException {
+        try (FileInputStream fis = new FileInputStream(input)) {
+            return copy(fis, output);
+        }
+    }
+
     public static long copy(InputStream is, File file) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(file);
              BufferedOutputStream bos = new BufferedOutputStream(fos)) {

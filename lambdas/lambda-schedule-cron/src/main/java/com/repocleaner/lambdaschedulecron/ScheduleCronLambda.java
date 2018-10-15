@@ -7,6 +7,7 @@ import com.repocleaner.coreschedulecron.CronScheduler;
 import com.repocleaner.firebase.FirebaseUserIO;
 import com.repocleaner.io.external.ScheduleIO;
 import com.repocleaner.io.external.UserIO;
+import com.repocleaner.json.JsonInfo;
 import com.repocleaner.s3.S3ScheduleIO;
 import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
@@ -25,7 +26,7 @@ public class ScheduleCronLambda implements RequestHandler<S3Event, Void> {
             e.printStackTrace();
         }
         USER_IO = userIO;
-        SCHEDULE_IO = new S3ScheduleIO();
+        SCHEDULE_IO = new S3ScheduleIO(JsonInfo.JSON_UTIL);
     }
 
     @Override
