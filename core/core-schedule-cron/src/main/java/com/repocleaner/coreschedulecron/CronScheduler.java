@@ -1,8 +1,8 @@
 package com.repocleaner.coreschedulecron;
 
 import com.repocleaner.initiator.CronInitiator;
-import com.repocleaner.io.external.ScheduleIO;
-import com.repocleaner.io.external.UserIO;
+import com.repocleaner.io.ScheduleIO;
+import com.repocleaner.io.UserIO;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.HostedAccount;
 import com.repocleaner.model.HostedRepo;

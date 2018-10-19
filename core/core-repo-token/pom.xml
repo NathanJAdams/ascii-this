@@ -15,14 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>cognito</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
             <artifactId>secrets</artifactId>
         </dependency>
         <dependency>

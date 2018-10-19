@@ -1,6 +1,6 @@
 package com.repocleaner.s3;
 
-import com.repocleaner.io.external.ScheduleIO;
+import com.repocleaner.io.ScheduleIO;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.model.LifecycleRequest;
 import com.repocleaner.util.Constants;

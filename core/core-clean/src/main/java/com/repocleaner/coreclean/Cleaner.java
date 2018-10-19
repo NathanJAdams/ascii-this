@@ -9,7 +9,7 @@ import com.repocleaner.coreclean.transform.TransformationCoster;
 import com.repocleaner.coreclean.transform.Transformer;
 import com.repocleaner.coreclean.transform.coster.PlainCoster;
 import com.repocleaner.coreclean.transform.transformers.EOFTransformer;
-import com.repocleaner.io.external.CleanIO;
+import com.repocleaner.io.CleanIO;
 import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.FileStructure;

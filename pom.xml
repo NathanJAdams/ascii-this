@@ -165,11 +165,6 @@
             <!--external-->
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>cognito</artifactId>
-                <version>${repo-cleaner.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.repocleaner</groupId>
                 <artifactId>firebase</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>

@@ -1,6 +1,6 @@
 package com.repocleaner.coreprepare;
 
-import com.repocleaner.io.external.PrepareIO;
+import com.repocleaner.io.PrepareIO;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.model.LifecycleRequest;
 import com.repocleaner.model.Source;

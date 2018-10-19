@@ -1,4 +1,4 @@
-package com.repocleaner.io.external;
+package com.repocleaner.io;
 
 import com.repocleaner.model.LifecycleRequest;
 import com.repocleaner.util.RepoCleanerException;

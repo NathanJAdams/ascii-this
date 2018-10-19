@@ -4,11 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.repocleaner.corescheduleapi.ApiScheduler;
 import com.repocleaner.firebase.FirebaseUserIO;
-import com.repocleaner.io.external.ScheduleIO;
-import com.repocleaner.io.external.UserIO;
-import com.repocleaner.io.rest.ResponseInfo;
-import com.repocleaner.io.rest.ScheduleApiRequest;
-import com.repocleaner.io.rest.ScheduleApiResponse;
+import com.repocleaner.io.ScheduleIO;
+import com.repocleaner.io.UserIO;
 import com.repocleaner.json.JsonInfo;
 import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
@@ -16,6 +13,7 @@ import com.repocleaner.s3.S3ScheduleIO;
 import com.repocleaner.secrets.SecretCommander;
 import com.repocleaner.util.Constants;
 import com.repocleaner.util.RepoCleanerException;
+import com.repocleaner.util.rest.ResponseUtil;
 
 public class ScheduleApiLambda implements RequestHandler<ScheduleApiRequest, ScheduleApiResponse> {
     private static final UserIO USER_IO;
@@ -35,24 +33,18 @@ public class ScheduleApiLambda implements RequestHandler<ScheduleApiRequest, Sch
 
     @Override
     public ScheduleApiResponse handleRequest(ScheduleApiRequest request, Context context) {
+        request.preCheck();
         String userId = request.getUserId();
         String token = request.getToken();
         Source source = request.getSource();
         Sink sink = request.getSink();
-        boolean success;
-        String message;
         String id;
         try {
             id = ApiScheduler.schedule(USER_IO, SCHEDULE_IO, userId, token, source, sink);
-            success = true;
-            message = "Successfully scheduled clean";
+            return new ScheduleApiResponse(id);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
-            success = false;
-            message = "Failed to schedule clean";
-            id = null;
+            return ResponseUtil.internalError("Schedule clean");
         }
-        ResponseInfo responseInfo = new ResponseInfo(success, message);
-        return new ScheduleApiResponse(responseInfo, id);
     }
 }

@@ -1,7 +1,7 @@
 package com.repocleaner.s3;
 
 import com.amazonaws.services.lambda.runtime.events.S3Event;
-import com.repocleaner.io.external.LifecycleIO;
+import com.repocleaner.io.LifecycleIO;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.json.JsonUtil;

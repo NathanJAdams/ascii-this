@@ -21,3 +21,19 @@ function getBranches(repoHost, user, repo, resultFunction) {
       }
     });
 }
+
+function encryptToken(token) {
+    $.ajax({
+      method: 'POST',
+      url: 'https://3rps4m1fm1.execute-api.eu-west-1.amazonaws.com/default/encrypt-token',
+      body: {
+        token
+      },
+      success(repos) {
+        resultFunction(repos);
+      },
+      error(e) {
+        console.log(e);
+      }
+    });
+}

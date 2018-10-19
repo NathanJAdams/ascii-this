@@ -1,8 +1,8 @@
 package com.repocleaner.corescheduleapi;
 
 import com.repocleaner.initiator.ApiInitiator;
-import com.repocleaner.io.external.ScheduleIO;
-import com.repocleaner.io.external.UserIO;
+import com.repocleaner.io.ScheduleIO;
+import com.repocleaner.io.UserIO;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.Initiator;
 import com.repocleaner.model.LifecycleRequest;

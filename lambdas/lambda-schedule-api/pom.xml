@@ -27,10 +27,6 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
             <artifactId>json</artifactId>
         </dependency>
         <dependency>

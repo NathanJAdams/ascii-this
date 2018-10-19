@@ -1,4 +1,4 @@
-package com.repocleaner.io.rest;
+package com.repocleaner.lambdaencryptrepotoken;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class EncryptRepoTokenResponse {
-    private final ResponseInfo responseInfo;
-    private final String encryptedToken;
+    private final String token;
 }

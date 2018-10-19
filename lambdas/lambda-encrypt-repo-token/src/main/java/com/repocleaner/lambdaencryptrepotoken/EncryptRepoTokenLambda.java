@@ -3,31 +3,23 @@ package com.repocleaner.lambdaencryptrepotoken;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.repocleaner.corerepotoken.RepoToken;
-import com.repocleaner.io.rest.EncryptRepoTokenRequest;
-import com.repocleaner.io.rest.EncryptRepoTokenResponse;
-import com.repocleaner.io.rest.ResponseInfo;
 import com.repocleaner.util.RepoCleanerException;
+import com.repocleaner.util.rest.ResponseUtil;
 
 public class EncryptRepoTokenLambda implements RequestHandler<EncryptRepoTokenRequest, EncryptRepoTokenResponse> {
     private static final RepoToken REPO_TOKEN = new RepoToken();
 
     @Override
     public EncryptRepoTokenResponse handleRequest(EncryptRepoTokenRequest request, Context context) {
+        request.preCheck();
         String token = request.getToken();
         String encryptedToken;
-        boolean success;
-        String message;
         try {
             encryptedToken = REPO_TOKEN.encryptToken(token);
-            success = true;
-            message = "Successfully encrypted token";
+            return new EncryptRepoTokenResponse(encryptedToken);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
-            success = false;
-            message = "Failed to encrypt token";
-            encryptedToken = null;
+            return ResponseUtil.internalError("Encrypt token");
         }
-        ResponseInfo responseInfo = new ResponseInfo(success, message);
-        return new EncryptRepoTokenResponse(responseInfo, encryptedToken);
     }
 }

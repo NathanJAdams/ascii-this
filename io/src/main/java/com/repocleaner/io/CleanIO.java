@@ -1,4 +1,4 @@
-package com.repocleaner.io.external;
+package com.repocleaner.io;
 
 import com.repocleaner.model.CleanResult;
 import com.repocleaner.util.RepoCleanerException;

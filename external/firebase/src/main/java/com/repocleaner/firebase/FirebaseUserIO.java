@@ -2,7 +2,7 @@ package com.repocleaner.firebase;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.repocleaner.io.external.UserIO;
+import com.repocleaner.io.UserIO;
 import com.repocleaner.model.HostedRepo;
 import com.repocleaner.model.User;
 import com.repocleaner.util.LocalDateTimeUtil;

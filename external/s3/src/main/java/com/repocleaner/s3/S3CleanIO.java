@@ -1,7 +1,7 @@
 package com.repocleaner.s3;
 
 import com.amazonaws.services.lambda.runtime.events.S3Event;
-import com.repocleaner.io.external.CleanIO;
+import com.repocleaner.io.CleanIO;
 import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.util.Constants;

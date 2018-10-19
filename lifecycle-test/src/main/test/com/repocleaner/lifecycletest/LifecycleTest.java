@@ -4,7 +4,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.repocleaner.corescheduleapi.ApiScheduler;
-import com.repocleaner.io.external.UserIO;
+import com.repocleaner.io.UserIO;
 import com.repocleaner.json.customisers.InitiatorGsonCustomiser;
 import com.repocleaner.json.customisers.SourceGsonCustomiser;
 import com.repocleaner.json.customisers.TransformationInfoGsonCustomiser;
