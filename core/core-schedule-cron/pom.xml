@@ -15,10 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>firebase</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
             <artifactId>initiator</artifactId>
         </dependency>
         <dependency>
@@ -27,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>s3</artifactId>
+            <artifactId>model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
