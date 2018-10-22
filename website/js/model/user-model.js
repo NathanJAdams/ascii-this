@@ -1,160 +1,122 @@
 function UserModel() {
     var self = this;
-    this.isSignedUp = ko.observable(false);
     this.isLoggedIn = ko.observable(false);
-    this.accessToken;
-    this.signup = function(email, password, onSuccess, onError) {
-        if (!UserModel.preCheck(email, password)) {
-            return false;
-        }
-        // TODO can attribute be removed
-        var emailAttributeData = {
-            Name : 'email',
-            Value : email
-        };
-        var emailAttribute = new AmazonCognitoIdentity.CognitoUserAttribute(emailAttributeData);
-        var attributeList = [];
-        attributeList.push(emailAttribute);
-        var _onSuccess = function(result) {
-            self.isSignedUp(true);
-            if (onSuccess) {
-                onSuccess(result);
-            }
-        };
-        var resultHandler = createResultHandler(_onSuccess, onError);
-        UserModel.userPool.signUp(email, password, attributeList, null, resultHandler);
-    };
-    this.login = function(email, password, onSuccess, onError) {
-        if (!UserModel.preCheck(email, password)) {
-            return false;
-        }
-        var cognitoUser = UserModel.createCognitoUser(email);
-        var authenticationData = {
-            Username: email,
-            Password: password
-        };
-        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-        var resultHandler = {
-            onSuccess: function(result) {
-                console.log(result);
-                console.log('Successful login');
-                self.accessToken = result.accessToken;
-                self.isSignedUp(true);
-                self.isLoggedIn(true);
-                if (onSuccess) {
-                    onSuccess(result);
-                }
-            },
-            onFailure: function(error) {
-                console.log('Failed to login:' + error);
-                if (onError) {
-                    onError(error);
-                }
-            }
-        };
-        cognitoUser.authenticateUser(authenticationDetails, resultHandler);
-    };
-    this.changePassword = function(oldPassword, newPassword, onSuccess, onError) {
-        var cognitoUser = UserModel.userPool.getCurrentUser();
-        if (cognitoUser == null) {
-            console.log('User must be logged in to change password');
+
+
+    //  http://www.repocleaner.com/?mode=verifyEmail&oobCode=HRHKY5YAzVutrXnkw694fdIjfF7sf7Uw5jWB7OfkqOoAAAFmmQ0y_g&apiKey=AIzaSyDRY6xLtjJQTHAToMsvIMm3oyT0Rg-dSzo&lang=en
+
+    this.signup = function(email, password) {
+        if (self.isLoggedIn()) {
+            console.log('Already logged in');
             return;
         }
-        if (!UserModel.passwordRegex.test(oldPassword)) {
+        if (!UserModel.isValidCredentials(email, password)) {
+            console.log("Invalid credentials");
             return false;
         }
-        if (oldPassword === newPassword) {
-            console.log('New password must be different to old password');
+        firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(function() {
+                firebase.auth()
+                    .currentUser.sendEmailVerification()
+                .then(function() {
+                    // email sent
+                }, UserModel.errorHandler);
+            })
+            .catch(UserModel.errorHandler);
+    };
+    this.login = function(email, password) {
+        if (self.isLoggedIn()) {
+            console.log('Already logged in');
+            return;
+        }
+        if (!UserModel.isValidCredentials(email, password)) {
             return false;
         }
-        var resultHandler = createResultHandler(onSuccess, onError);
-        cognitoUser.changePassword(oldPassword, newPassword, resultHandler);
+        firebase.auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(function() {
+                self.isLoggedIn(true);
+            })
+            .catch(UserModel.errorHandler);
     };
-    this.logout = function(onSuccess) {
-        var cognitoUser = UserModel.userPool.getCurrentUser();
-        if (cognitoUser != null) {
-            cognitoUser.signOut();
+    this.changePassword = function(oldPassword, newPassword) {
+        if (!self.isLoggedIn()) {
+            console.log('Not logged in');
+            return;
         }
-        self.isLoggedIn(false);
-        if (onSuccess) {
-            onSuccess();
+        if (!UserModel.isValidPasswordChange(oldPassword, newPassword)) {
+            return false;
         }
+        firebase.auth()
+            .currentUser.updatePassword(newPassword)
+            .then(function() {
+                console.log('Successfully changed password')
+            })
+            .catch(UserModel.errorHandler);
     };
-    // TODO
-//    this.globalLogout = function(onSuccess, onError) {
-//        var cognitoUser = UserModel.userPool.getCurrentUser();
-//        if (cognitoUser == null) {
-//            self.isLoggedIn(false);
-//        } else {
-//            cognitoUser.getSession(function(error, session) {
-//                if (error) {
-//                    if (onError) {
-//                        onError(error);
-//                    }
-//                } else {
-//                    console.log('session validity: ' + session.isValid());
-//                    var params = {
-//                        AccessToken: self.accessToken
-//                    };
-//                    cognitoUser.globalSignOut();
-//                    self.isLoggedIn(false);
-//                    if (onSuccess) {
-//                        onSuccess(session);
-//                    }
-//                }
-//            });
-//        }
-//    };
-    this.deleteUser = function(email, password, onSuccess, onError) {
-        var cognitoUser = UserModel.createCognitoUser(email);
-        var resultHandler = createResultHandler(onSuccess, onError);
-        cognitoUser.deleteUser(resultHandler);
-        self.isLoggedIn(false);
-        self.isSignedUp(false);
+    this.logout = function(email, password) {
+        if (!self.isLoggedIn()) {
+            console.log('Not logged in');
+            return;
+        }
+        if (!UserModel.isValidCredentials(email, password)) {
+            return false;
+        }
+        firebase.auth()
+            .signOut()
+            .then(function() {
+                self.isLoggedIn(false);
+            })
+            .catch(UserModel.errorHandler);
+    };
+    this.deleteUser = function() {
+        if (!self.isLoggedIn()) {
+            console.log('Not logged in');
+            return;
+        }
+        firebase.auth()
+            .currentUser.delete()
+            .then(function() {
+                self.isLoggedIn(false);
+            })
+            .catch(UserModel.errorHandler);
     };
 };
-// only need a simple email check to ensure no obvious mistakes
-Object.defineProperty(UserModel, 'emailRegex', { value: /^\S+@\S+$/ });
-Object.defineProperty(UserModel, 'passwordRegex', { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/ });
-Object.defineProperty(UserModel, 'preCheck', { value:
+Object.defineProperty(UserModel, 'isValidEmail', { value: function(email) { return /^\S+@\S+$/.test(email); } });
+Object.defineProperty(UserModel, 'isValidPasswordLower', { value: function(password) { return /^(?=.*[a-z])/.test(password); } });
+Object.defineProperty(UserModel, 'isValidPasswordUpper', { value: function(password) { return /^(?=.*[A-Z])/.test(password); } });
+Object.defineProperty(UserModel, 'isValidPasswordNumbers', { value: function(password) { return /^(?=.*[0-9])/.test(password); } });
+Object.defineProperty(UserModel, 'isValidPasswordMinChars', { value: function(password) { return /^(?=.{8,})/.test(password); } });
+Object.defineProperty(UserModel, 'isValidPassword', { value:
+    function(password) {
+        console.log("lower" + UserModel.isValidPasswordLower(password));
+        console.log("upper" + UserModel.isValidPasswordUpper(password));
+        console.log("numbers" + UserModel.isValidPasswordNumbers(password));
+        console.log("min chars" + UserModel.isValidPasswordMinChars(password));
+        return UserModel.isValidPasswordLower(password)
+            && UserModel.isValidPasswordUpper(password)
+            && UserModel.isValidPasswordNumbers(password)
+            && UserModel.isValidPasswordMinChars(password);
+    }
+});
+Object.defineProperty(UserModel, 'isValidCredentials', { value:
     function(email, password) {
-        if (!UserModel.emailRegex.test(email)) {
-            console.log('Invalid email')
-            return false;
-        }
-        if (!UserModel.passwordRegex.test(password)) {
-            console.log('Invalid password')
-            return false;
-        }
-        console.log('Email and Password passed pre checks');
-        return true;
+        console.log(UserModel.isValidEmail("email" + email));
+        return UserModel.isValidEmail(email)
+            && UserModel.isValidPassword(password);
     }
 });
-
-Object.defineProperty(UserModel, 'clientId', { value: '1f63er20154oqhllurcb4qs9cn' });
-Object.defineProperty(UserModel, 'userPoolData', { value: { UserPoolId: 'eu-west-1_eU9ClkneX', ClientId: UserModel.clientId } });
-Object.defineProperty(UserModel, 'userPool', { value: new AmazonCognitoIdentity.CognitoUserPool(UserModel.userPoolData) });
-Object.defineProperty(UserModel, 'createCognitoUser', { value:
-    function(email) {
-        var userData = {
-            Username: email,
-            Pool: UserModel.userPool
-        };
-        return new AmazonCognitoIdentity.CognitoUser(userData);
+Object.defineProperty(UserModel, 'isValidPasswordChange', { value:
+    function(oldPassword, newPassword) {
+        return oldPassword !== newPassword
+            && UserModel.isValidPassword(oldPassword)
+            && UserModel.isValidPassword(newPassword);
     }
 });
-Object.defineProperty(UserModel, 'createResultHandler', { value:
-    function(onSuccess, onError) {
-        return function(error, result) {
-            if (error) {
-                if (onError) {
-                    onError(error);
-                }
-            } else {
-                if (onSuccess) {
-                    onSuccess(result);
-                }
-            }
-        }
+Object.defineProperty(UserModel, 'errorHandler', { value:
+    function(error) {
+        console.log(error.code);
+        console.log(error.message);
     }
 });
