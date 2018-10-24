@@ -1,14 +1,12 @@
-function LoginViewModel(user) {
+function LoginViewModel() {
     var self = this;
-    this.user = user;
     this.email = ko.observable('');
     this.password = ko.observable('');
-    this.isLoggedIn = ko.computed(function() {
-        return self.user.isLoggedIn();
-    });
     this.login = function() {
-        var email = self.email();
-        var password = self.password();
-        self.user.login(email, password);
+        console.log('logging in');
+        var onSuccess = function() {
+            redirect('account');
+        };
+        firebaseLogin(self.email(), self.password(), onSuccess);
     };
 };

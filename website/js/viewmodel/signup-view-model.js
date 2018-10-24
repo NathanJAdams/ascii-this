@@ -1,23 +1,22 @@
-function SignupViewModel(user) {
+function SignupViewModel() {
     var self = this;
-    this.user = user;
     this.email = ko.observable('');
     this.password = ko.observable('');
     this.confirmedPassword = ko.observable('');
     this.isEmailValid = ko.computed(function() {
-        return UserModel.isValidEmail(self.email());
+        return isValidEmail(self.email());
     });
     this.isPasswordValidLower = ko.computed(function() {
-        return UserModel.isValidPasswordLower(self.password());
+        return isValidPasswordLower(self.password());
     });
     this.isPasswordValidUpper = ko.computed(function() {
-        return UserModel.isValidPasswordUpper(self.password());
+        return isValidPasswordUpper(self.password());
     });
     this.isPasswordValidNumbers = ko.computed(function() {
-        return UserModel.isValidPasswordNumbers(self.password());
+        return isValidPasswordNumbers(self.password());
     });
     this.isPasswordValidMinChars = ko.computed(function() {
-        return UserModel.isValidPasswordMinChars(self.password());
+        return isValidPasswordMinChars(self.password());
     });
     this.isPasswordMatch = ko.computed(function() {
         return self.password() === self.confirmedPassword();
@@ -28,6 +27,9 @@ function SignupViewModel(user) {
             console.log('Passwords must match');
             return false;
         }
-        self.user.signup(self.email(), _password);
+        var onSuccess = function() {
+            alert('Check your email');
+        };
+        firebaseSignup(self.email(), _password, onSuccess);
     };
 };

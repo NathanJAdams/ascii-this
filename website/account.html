@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repo Cleaner</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<!--<script language="JavaScript">-->
+<!--function signUp(e) {-->
+<!--var email = document.getElementById('email');-->
+<!--var password = document.getElementById('password');-->
+<!--var userUID = firebase.database().ref('users').push().key;-->
+
+
+<!--var userData = {-->
+<!--email: email.value,-->
+<!--password: password.value,-->
+<!--createdAt: Date.now()-->
+<!--};-->
+<!--var updates = {};-->
+<!--updates[userUID] = userData;-->
+<!--var promise = firebase.database().ref('users').update(updates);-->
+<!--promise.then(function(result) {-->
+<!--console.log(result); // "Stuff worked!"-->
+<!--console.log('done', Date.now(), email.value, password.value);-->
+<!--}, function(err) {-->
+<!--console.log(err); // Error: "It broke"-->
+<!--console.log('failed', Date.now(), email.value, password.value);-->
+<!--});-->
+<!--}-->
+<!--</script>-->
+
+
+<div id="user">
+    <button id="user-info">Info</button>
+    <button id="user-hosted-accounts">Hosted Accounts</button>
+    <button id="user-tokens">Tokens</button>
+</div>
+</body>

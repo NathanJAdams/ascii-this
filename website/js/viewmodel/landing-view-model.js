@@ -1,6 +1,9 @@
-function LandingViewModel(user) {
+function LandingViewModel() {
     var self = this;
-    this.user = user;
-    this.signup = ko.observable(new SignupViewModel(user));
-    this.login = ko.observable(new LoginViewModel(user));
+    this.signup = function() {
+        redirect('signup');
+    };
+    this.login = function() {
+        redirect('login');
+    };
 }
