@@ -11,40 +11,8 @@
 
 <body>
 <div id="landing">
-    <div id="signup" data-bind="click: signup">
-        <div>
-            <label for="signup-email">Email</label>
-            <input id="signup-email" type="email" data-bind="textInput: email">
-        </div>
-        <div>
-            <label for="signup-password">Password</label>
-            <input id="signup-password" type="password" data-bind="textInput: password"/>
-            <div id="signup-password-valid" class="fas fa-check"></div>
-            <div id="signup-password-invalid" class="fas fa-times"></div>
-        </div>
-        <div>
-            <label for="signup-password-confirm">Confirm password</label>
-            <input id="signup-password-confirm" type="password" data-bind="textInput: confirmedPassword"/>
-            <div id="signup-password-confirm-valid" class="fas fa-check"></div>
-            <div id="signup-password-confirm-invalid" class="fas fa-times"></div>
-        </div>
-        <div>
-            <button id="signup-initiate" data-bind="click: signup">Sign up</button>
-        </div>
-    </div>
-    <div id="login" data-bind="with: login">
-        <div>
-            <label for="login-email">Email</label>
-            <input id="login-email" type="email" data-bind="value: email"/>
-        </div>
-        <div>
-            <label for="login-password">Password</label>
-            <input id="login-password" type="password" data-bind="value: password"/>
-        </div>
-        <div>
-            <button id="login-initiate" data-bind="click: login">Log in</button>
-        </div>
-    </div>
+    <button id="signup" data-bind="click: signup">Sign Up</button>
+    <button id="login" data-bind="click: login">Log In</button>
 </div>
 
 <div id="scripts">
