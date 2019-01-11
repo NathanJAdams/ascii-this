@@ -2,6 +2,11 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
+| 1h    | S3                | Rename buckets
+| 2d    | Front end         | Receive example id, check bucket for diff and show
+| 1d    | Front end         | Sign up
+| 1d    | Front end         | Log in/out
+| 1d    | Front end         | Delete account
 | 1h    | Lambda            | Change private key
 | 2h    | Front end         | Add/Remove hosted account
 | 2d    | Front end         | Show hosted accounts, transaction history, personal access tokens, config
@@ -28,11 +33,10 @@
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|
-| 2d    | Front end         | Show example transformations in PR
 | 4h    | Config            | PR groupings, by transformation/effect/file/size
 
 
-<b>Would haves if time
+<b>Would like to haves
 
 | Time  | Theme             | Description |
 |:------|:------------------|:------------|

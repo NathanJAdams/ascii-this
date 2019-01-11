@@ -23,6 +23,7 @@
         <module>lambda-prepare</module>
         <module>lambda-schedule-api</module>
         <module>lambda-schedule-cron</module>
+        <module>lambda-schedule-web</module>
         <module>lambda-send</module>
     </modules>
 

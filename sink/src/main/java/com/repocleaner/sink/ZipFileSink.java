@@ -11,12 +11,12 @@ import java.io.File;
 
 @AllArgsConstructor
 public class ZipFileSink implements Sink {
-    private final String location;
+    private final String bucketKey;
     private final ZipResponseType zipResponseType;
 
     @Override
     public void upload(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
         zipResponseType.saveTo(sourceFolder, tempFile);
-        S3Commander.upload(Constants.BUCKET_HELD, location, tempFile);
+        S3Commander.upload(Constants.BUCKET_HELD, bucketKey, tempFile);
     }
 }

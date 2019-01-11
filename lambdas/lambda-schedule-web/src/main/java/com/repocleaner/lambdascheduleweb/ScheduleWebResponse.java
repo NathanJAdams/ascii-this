@@ -1,4 +1,4 @@
-package com.repocleaner.lambdascheduleapi;
+package com.repocleaner.lambdascheduleweb;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ScheduleApiResponse {
+public class ScheduleWebResponse {
     private String id;
 }

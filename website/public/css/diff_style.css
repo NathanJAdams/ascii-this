@@ -1,0 +1,9 @@
+.diff-removed {
+    background-color: #F88;
+    color: #000;
+}
+
+.diff-added {
+    background-color: #8F8;
+    color: #000;
+}
