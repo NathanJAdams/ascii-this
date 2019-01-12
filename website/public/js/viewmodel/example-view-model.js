@@ -11,7 +11,7 @@ function ExampleViewModel() {
     this.validityColor = ko.computed(function() {
         return self.isValidUser()
             ? 'lightgreen'
-            : ' pink';
+            : 'pink';
     });
     this.updateUser = ko.computed(function() {
         var currentUser = self.user();
@@ -66,6 +66,17 @@ function ExampleViewModel() {
     });
     this.tryExample = function() {
         console.log('try example');
-        // TODO send request to lambda, get token back, keep checking for completion
+        var currentProvider = self.provider().name();
+        var currentUser = self.user();
+        var currentRepo = self.repo().name();
+        var currentBranch = self.branch().name();
+        var onSuccess = id => {
+            console.log('success ' + id);
+        };
+        var onError = () => {
+            console.log('error');
+        };
+        requestDiff(currentProvider, currentUser, currentRepo, currentBranch, onSuccess, onError);
+        // TODO keep checking for completion
     };
 }

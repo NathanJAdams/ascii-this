@@ -138,7 +138,7 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>core-prepare</artifactId>
+                <artifactId>core-download</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
@@ -148,12 +148,12 @@
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>core-schedule-api</artifactId>
+                <artifactId>core-requester-api</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.repocleaner</groupId>
-                <artifactId>core-schedule-cron</artifactId>
+                <artifactId>core-requester-cron</artifactId>
                 <version>${repo-cleaner.version}</version>
             </dependency>
             <dependency>

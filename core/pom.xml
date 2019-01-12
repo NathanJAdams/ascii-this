@@ -15,10 +15,10 @@
 
     <modules>
         <module>core-clean</module>
-        <module>core-prepare</module>
+        <module>core-download</module>
         <module>core-repo-token</module>
-        <module>core-schedule-api</module>
-        <module>core-schedule-cron</module>
+        <module>core-requester-api</module>
+        <module>core-requester-cron</module>
         <module>core-send</module>
     </modules>
 </project>

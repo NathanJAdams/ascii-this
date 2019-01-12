@@ -3,14 +3,21 @@ package com.repocleaner.s3;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.event.S3EventNotification;
 import com.repocleaner.model.FileStructure;
+import com.repocleaner.util.Constants;
+import com.repocleaner.util.IOUtils;
 import com.repocleaner.util.RepoCleanerException;
 import com.repocleaner.util.ZipUtil;
 import com.repocleaner.util.json.JsonUtil;
-
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 public class S3FileStructure {
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
+
     public static FileStructure download(S3Event event, JsonUtil jsonUtil) throws RepoCleanerException {
         List<S3EventNotification.S3EventNotificationRecord> records = event.getRecords();
         S3EventNotification.S3EventNotificationRecord record = records.get(0);
@@ -34,5 +41,23 @@ public class S3FileStructure {
         ZipUtil.zip(rootFolder, zippedOutputFolder);
         S3Commander.upload(uploadBucket, key, zippedOutputFolder);
         zippedOutputFolder.delete();
+    }
+
+    public static String downloadDiff(String id) throws RepoCleanerException {
+        File zippedDiffFolder = new File(S3Info.TMP_FOLDER, "zippedDiff_" + id);
+        File unzippedDiffFolder = new File(S3Info.TMP_FOLDER, "unzippedDiff_" + id);
+        S3Commander.download(Constants.BUCKET_WAITING, id, zippedDiffFolder);
+        ZipUtil.extract(zippedDiffFolder, unzippedDiffFolder);
+        File file = new File(unzippedDiffFolder, Constants.DIFF_FILE);
+        try (FileInputStream fis = new FileInputStream(file);
+             BufferedInputStream bis = new BufferedInputStream(fis)) {
+            return IOUtils.toString(bis, UTF_8);
+        } catch (IOException e) {
+            throw new RepoCleanerException("Failed to read diff", e);
+        } finally {
+            file.delete();
+            unzippedDiffFolder.delete();
+            zippedDiffFolder.delete();
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.repocleaner.lifecycletest;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.repocleaner.corescheduleapi.ApiScheduler;
+import com.repocleaner.corerequesterapi.ApiRequester;
 import com.repocleaner.io.UserIO;
 import com.repocleaner.json.customisers.InitiatorGsonCustomiser;
 import com.repocleaner.json.customisers.SourceGsonCustomiser;
@@ -12,7 +12,7 @@ import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.model.LanguageConfig;
-import com.repocleaner.model.LifecycleRequest;
+import com.repocleaner.model.CleanRequest;
 import com.repocleaner.model.Sink;
 import com.repocleaner.model.Source;
 import com.repocleaner.model.TransformationMetaData;
@@ -59,7 +59,7 @@ public class LifecycleTest {
         Sink sink = mockSink();
         FileStructure fileStructure = mockFileStructure(sink);
         LifecycleSkeleton skeleton = new LifecycleSkeleton(fileStructure, this::onScheduled, this::onPrepared, this::onCleaned, this::onSent);
-        ApiScheduler.schedule(userIO, skeleton, userId, token, source, sink);
+        ApiRequester.schedule(userIO, skeleton, userId, token, source, sink);
     }
 
     private Config mockConfig() {
@@ -85,7 +85,7 @@ public class LifecycleTest {
 
     private UsageToken mockUsageToken(Config config) {
         UsageToken usageToken = new UsageToken();
-        LocalDateTime time = LocalDateTime.now().plusMinutes(1);
+        LocalDateTime time = LocalDateTime.now().plusHours(1);
         String expiryTimeHex = LocalDateTimeUtil.toHex(time);
         usageToken.setExpiryTimeHex(expiryTimeHex);
         usageToken.setNotificationEndPoint("end-point");
@@ -157,12 +157,12 @@ public class LifecycleTest {
         return new FileStructure(rootParentFolder, key, jsonUtil);
     }
 
-    private void onScheduled(LifecycleRequest lifecycleRequest) {
+    private void onScheduled(CleanRequest cleanRequest) {
         System.out.println("scheduled");
-        System.out.println(lifecycleRequest.getConfig());
-        System.out.println(lifecycleRequest.getInitiator());
-        System.out.println(lifecycleRequest.getSource());
-        System.out.println(lifecycleRequest.getSink());
+        System.out.println(cleanRequest.getConfig());
+        System.out.println(cleanRequest.getInitiator());
+        System.out.println(cleanRequest.getSource());
+        System.out.println(cleanRequest.getSink());
     }
 
     private void onPrepared() {

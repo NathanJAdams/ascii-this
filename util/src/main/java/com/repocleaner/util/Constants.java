@@ -9,8 +9,11 @@ public class Constants {
     public static final String FIREBASE_DATABASE_URL = "https://repocleaner-db.firebaseio.com";
 
     private static final String BUCKET_SUFFIX = ".repocleaner.com";
-    public static final String BUCKET_WAITING = "waiting" + BUCKET_SUFFIX;
-    public static final String BUCKET_PREPARED = "prepared" + BUCKET_SUFFIX;
+    public static final String BUCKET_REQUESTED = "requested" + BUCKET_SUFFIX;
+    public static final String BUCKET_DOWNLOADED = "downloaded" + BUCKET_SUFFIX;
     public static final String BUCKET_CLEANED = "cleaned" + BUCKET_SUFFIX;
-    public static final String BUCKET_HELD = "held" + BUCKET_SUFFIX;
+    public static final String BUCKET_WAITING = "waiting" + BUCKET_SUFFIX;
+
+    public static final String DIFF_FOLDER = "diff";
+    public static final String DIFF_FILE = "diff.txt";
 }

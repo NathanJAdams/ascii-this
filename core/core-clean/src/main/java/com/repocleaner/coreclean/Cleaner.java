@@ -14,7 +14,7 @@ import com.repocleaner.model.CleanResult;
 import com.repocleaner.model.Config;
 import com.repocleaner.model.FileStructure;
 import com.repocleaner.model.Initiator;
-import com.repocleaner.model.LifecycleRequest;
+import com.repocleaner.model.CleanRequest;
 import com.repocleaner.util.GitUtil;
 import com.repocleaner.util.RepoCleanerException;
 import org.eclipse.jgit.api.Git;
@@ -32,9 +32,9 @@ import java.util.stream.Collectors;
 public class Cleaner {
     public static void clean(CleanIO cleanIO) throws RepoCleanerException {
         FileStructure fileStructure = cleanIO.getFileStructure();
-        LifecycleRequest lifecycleRequest = fileStructure.getLifecycleRequest();
-        Initiator initiator = lifecycleRequest.getInitiator();
-        Config config = lifecycleRequest.getConfig();
+        CleanRequest cleanRequest = fileStructure.getLifecycleRequest();
+        Initiator initiator = cleanRequest.getInitiator();
+        Config config = cleanRequest.getConfig();
         File codeFolder = fileStructure.getCodeFolder();
         try (Git git = GitUtil.open(codeFolder)) {
             Set<String> branchNames = GitUtil.getBranchNames(git);
@@ -69,7 +69,7 @@ public class Cleaner {
                 graphsBuilder.addFile(fileName);
             }
         } catch (IOException e) {
-            throw new RepoCleanerException("Failed to coreclean repository", e);
+            throw new RepoCleanerException("Failed to clean repository", e);
         }
         Map<Language, Graph> graphs = graphsBuilder.build();
         TransformationCoster coster = new PlainCoster();
@@ -80,6 +80,7 @@ public class Cleaner {
         GraphWriter graphWriter = new GraphWriter();
         for (Graph graph : graphs.values()) {
             Transformation transformation = transformer.createTransformation(graph);
+            System.out.println("Transformation: " + transformation);
             if (transformation != null) {
                 int cost = coster.calculateTokenCost(transformation);
                 int newTotalCost = totalCost + cost;

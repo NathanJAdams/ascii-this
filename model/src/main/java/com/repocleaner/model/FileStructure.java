@@ -35,12 +35,12 @@ public class FileStructure implements AutoCloseable {
         this.cleanResultFile = new File(rootFolder, CLEAN_RESULT);
     }
 
-    public LifecycleRequest getLifecycleRequest() throws RepoCleanerException {
-        return jsonUtil.fromJsonFileOrNull(lifecycleRequestFile, LifecycleRequest.class);
+    public CleanRequest getLifecycleRequest() throws RepoCleanerException {
+        return jsonUtil.fromJsonFileOrNull(lifecycleRequestFile, CleanRequest.class);
     }
 
-    public void setLifecycleRequest(LifecycleRequest lifecycleRequest) throws RepoCleanerException {
-        jsonUtil.toJsonFile(lifecycleRequest, lifecycleRequestFile);
+    public void setLifecycleRequest(CleanRequest cleanRequest) throws RepoCleanerException {
+        jsonUtil.toJsonFile(cleanRequest, lifecycleRequestFile);
     }
 
     public CleanResult getCleanResult() throws RepoCleanerException {

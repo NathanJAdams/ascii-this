@@ -17,6 +17,6 @@ public class ZipFileSink implements Sink {
     @Override
     public void upload(File sourceFolder, CleanResult cleanResult, File tempFile) throws RepoCleanerException {
         zipResponseType.saveTo(sourceFolder, tempFile);
-        S3Commander.upload(Constants.BUCKET_HELD, bucketKey, tempFile);
+        S3Commander.upload(Constants.BUCKET_WAITING, bucketKey, tempFile);
     }
 }

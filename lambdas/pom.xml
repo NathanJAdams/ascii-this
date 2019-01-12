@@ -20,10 +20,11 @@
     <modules>
         <module>lambda-clean</module>
         <module>lambda-encrypt-repo-token</module>
-        <module>lambda-prepare</module>
-        <module>lambda-schedule-api</module>
-        <module>lambda-schedule-cron</module>
-        <module>lambda-schedule-web</module>
+        <module>lambda-download</module>
+        <module>lambda-request-api</module>
+        <module>lambda-request-cron</module>
+        <module>lambda-request-web</module>
+        <module>lambda-retrieve-diff</module>
         <module>lambda-send</module>
     </modules>
 

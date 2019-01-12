@@ -1,5 +1,12 @@
 package com.repocleaner.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -9,18 +16,10 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class GitUtil {
     public static final PersonIdent REPO_CLEANER_AUTHOR = new PersonIdent("repocleaner.com", "repo.cleaner@gmail.com");
@@ -152,10 +151,19 @@ public class GitUtil {
 
     private static RevCommit[] getLast2Commits(Git git) throws RepoCleanerException {
         RevCommit[] last2Commits = new RevCommit[2];
-        try (RevWalk walk = new RevWalk(git.getRepository())) {
-            last2Commits[0] = walk.next();
-            last2Commits[1] = walk.next();
-        } catch (IOException e) {
+        try {
+            Iterator<RevCommit> revCommits = git.log().all().call().iterator();
+            if (revCommits.hasNext()) {
+                last2Commits[0] = revCommits.next();
+            } else {
+                throw new RepoCleanerException("Zero commits, could not create a diff");
+            }
+            if (revCommits.hasNext()) {
+                last2Commits[1] = revCommits.next();
+            } else {
+                throw new RepoCleanerException("One commit, could not create a diff");
+            }
+        } catch (IOException | GitAPIException e) {
             throw new RepoCleanerException("Failed to get diff", e);
         }
         return last2Commits;

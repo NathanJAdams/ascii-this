@@ -19,11 +19,11 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>core-prepare</artifactId>
+            <artifactId>core-download</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>core-schedule-api</artifactId>
+            <artifactId>core-requester-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
