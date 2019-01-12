@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repo Cleaner</title>
+    <link rel="shortcut icon"
+          href="images/favicon.png"
+          type="image/x-icon">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.8/css/bootstrap-combobox.css">
+    <!--<link rel="stylesheet"-->
+    <!--href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"-->
+    <!--integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"-->
+    <!--crossorigin="anonymous">-->
+    <!--<link rel="stylesheet"-->
+    <!--href="css/style.css">-->
+    <link rel="stylesheet"
+          href="css/diff_style.css">
+    <link rel="stylesheet"
+          href="css/expand.css">
+    <link rel="stylesheet"
+          href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+
+<body>
+<div id="header" class="text-center bg-primary">
+    <input id="header-title" class="btn btn-primary btn-lg p-4" type="text" value="Repo Cleaner">
+    <div id="header-login" class="p-2" data-bind="with:login">
+        <input id="header-login-email" class="" type="email" data-bind="value:email" placeholder="Email...">
+        <input id="header-login-password" class="" type="password" data-bind="value:password"
+               placeholder="Password...">
+        <input id="header-login-click" class="" type="button" value="Log In" data-bind="click:login">
+    </div>
+</div>
+<div id="options" class="container p-4" data-bind="with:signup">
+    <div class="row justify-content-around">
+        <div id="options-signup" class="col-5 align-self-center">
+            <input id="options-signup-email" class="row btn-block" type="email" data-bind="value:email"
+                   placeholder="Email...">
+            <input id="options-signup-password" class="row btn-block" type="password" data-bind="value:password"
+                   placeholder="Password...">
+            <input id="options-signup-click" class="row btn-block" type="button" value="Sign Up"
+                   data-bind="click:signup">
+        </div>
+        <div id="options-try" class="col-5 align-self-center align-middle">
+            <div class="row btn-block ml-auto input-lg" data-toggle="tooltip" data-placement="bottom" title="Private repositories won't be visible">
+                Try it out on your <u>public</u> repository
+            </div>
+        </div>
+    </div>
+</div>
+<div id="try-out" class="container-fluid" data-bind="with:example">
+    <div class="row justify-content-around p-4">
+        <div id="try-out-providers" class="col-3 dropdown btn-block">
+            <select data-bind="options:providers, value:provider, optionsText:'name'"
+                    class="dropdown"></select>
+        </div>
+        <input id="try-out-user" class="col-3 btn-block" type="text" placeholder="User..."
+               data-bind="textInput:user, style:{ 'background-color':validityColor }">
+        <div id="try-out-repos" class="col-3 dropdown btn-block">
+            <select data-bind="options:repos, value:repo, optionsText:'name'"
+                    class="dropdown"></select>
+        </div>
+        <div id="try-out-branches" class="col-3 dropdown btn-block">
+            <select data-bind="options:branches, value:branch, optionsText:'name'"
+                    class="dropdown"></select>
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <button data-bind="visible:tryVisibility, click:tryExample">View example cleaning</button>
+    </div>
+    <div class="container2 m-4" data-bind="visible:tryVisibility">
+        <div class="container-fluid">
+            <div class="row">
+                <div id="try-out-original" class="col code-box">Text</div>
+                <div id="try-out-cleaned" class="col code-box">Text</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="scripts">
+    <!--bootstrap, jquery-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.8/js/bootstrap-combobox.min.js"></script>
+    <!--firebase-->
+    <!--<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>-->
+    <!--<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>-->
+    <!--<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>-->
+
+    <!--ajax-->
+    <script src="js/ajax/login-ajax.js"></script>
+    <script src="js/ajax/signup-ajax.js"></script>
+    <script src="js/ajax/try-ajax.js"></script>
+    <!--util-->
+    <!--<script src="js/util/error.js"></script>-->
+    <!--<script src="js/util/validity.js"></script>-->
+    <!--<script src="js/util/redirect.js"></script>-->
+    <script src="js/util/dropdown.js"></script>
+
+    <!--ext-->
+    <!--<script src="js/ext/firebase.js"></script>-->
+
+    <!--models-->
+    <script src="js/model/provider-model.js"></script>
+    <script src="js/model/repo-model.js"></script>
+    <script src="js/model/branch-model.js"></script>
+
+    <!--view models-->
+    <script src="js/viewmodel/login-view-model.js"></script>
+    <script src="js/viewmodel/signup-view-model.js"></script>
+    <script src="js/viewmodel/example-view-model.js"></script>
+    <script src="js/viewmodel/index-view-model.js"></script>
+    <!--<script src="js/viewmodel/signup-view-model.js"></script>-->
+    <!--<script src="js/viewmodel/landing-view-model.js"></script>-->
+
+    <!--init-->
+    <!--<script src="js/init/init-firebase.js"></script>-->
+    <script src="js/bind/index-binder.js"></script>
+</div>
+</body>
+</html>

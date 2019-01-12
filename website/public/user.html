@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repo Cleaner</title>
+    <link rel="shortcut icon"
+          href="images/favicon.png"
+          type="image/x-icon">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          crossorigin="anonymous">
+    <!--<link rel="stylesheet"-->
+          <!--href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+          <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"-->
+          <!--crossorigin="anonymous">-->
+    <link rel="stylesheet"
+          href="css/style.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+
+<body>
+
+<!--<script language="JavaScript">-->
+<!--function signUp(e) {-->
+<!--var email = document.getElementById('email');-->
+<!--var password = document.getElementById('password');-->
+<!--var userUID = firebase.database().ref('users').push().key;-->
+
+
+<!--var userData = {-->
+<!--email: email.value,-->
+<!--password: password.value,-->
+<!--createdAt: Date.now()-->
+<!--};-->
+<!--var updates = {};-->
+<!--updates[userUID] = userData;-->
+<!--var promise = firebase.database().ref('users').update(updates);-->
+<!--promise.then(function(result) {-->
+<!--console.log(result); // "Stuff worked!"-->
+<!--console.log('done', Date.now(), email.value, password.value);-->
+<!--}, function(err) {-->
+<!--console.log(err); // Error: "It broke"-->
+<!--console.log('failed', Date.now(), email.value, password.value);-->
+<!--});-->
+<!--}-->
+<!--</script>-->
+
+
+<div id="user">
+    <span id="user-info">Info</span>
+    <span>ID:</span>
+    <span id="user-id" data-bind="text: id"></span>
+    <br>
+    <span>Name:</span>
+    <span id="user-name" data-bind="text: name"></span>
+    <br>
+    <span>Email:</span>
+    <span id="user-email" data-bind="text: email"></span>
+    <br>
+    <span>Verified:</span>
+    <span id="user-email-verified" data-bind="text: isEmailVerified"></span>
+    <br>
+    <span id="user-hosted-accounts">Hosted Accounts</span>
+    <br>
+    <span id="user-tokens">Tokens</span>
+    <br>
+</div>
+<div id="scripts">
+    <!--bootstrap and popper-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/popper.min.js"></script>
+    <!--firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+
+    <!--util-->
+    <script src="js/util/error.js"></script>
+    <script src="js/util/validity.js"></script>
+    <script src="js/util/redirect.js"></script>
+
+    <!--ext-->
+    <script src="js/ext/firebase.js"></script>
+
+    <!--model-->
+    <script src="js/model/credit-transaction-model.js"></script>
+    <script src="js/model/repo-host-model.js"></script>
+
+    <!--view models-->
+    <script src="js/viewmodel/logout-view-model.js"></script>
+    <script src="js/viewmodel/credits-view-model.js"></script>
+    <script src="js/viewmodel/repos-view-model.js"></script>
+    <script src="js/viewmodel/user-view-model.js"></script>
+
+    <!--init-->
+    <script src="js/init/init-firebase.js"></script>
+    <script src="js/init/init-user.js"></script>
+</div>
+</body>
