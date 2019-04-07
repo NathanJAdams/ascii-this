@@ -1,5 +1,7 @@
 function ExampleViewModel() {
     var self = this;
+
+    this.spinnerVisibility = ko.observable(false);
     this.providers = ko.observableArray();
     this.provider = ko.observable(null);
     this.user = ko.observable(null);
@@ -8,6 +10,11 @@ function ExampleViewModel() {
     this.branches = ko.observableArray();
     this.branch = ko.observable(null);
     this.isValidUser = ko.observable(false);
+    this.diffId = ko.observable(null);
+    this.checkDiffId = ko.observable(null);
+    this.diff = new DiffViewModel();
+    this.tryEnabled = ko.observable(true);
+
     this.validityColor = ko.computed(function() {
         return self.isValidUser()
             ? 'lightgreen'
@@ -26,6 +33,21 @@ function ExampleViewModel() {
             getRepos(currentProvider, currentUser, self.setRepos, self.setReposError);
         }
     }).extend({throttle: 1000});
+    this.updateRepo = ko.computed(function() {
+        var currentRepo = self.repo();
+        if (currentRepo == null) {
+            self.branches([]);
+        } else {
+            var provider = self.provider();
+            var user = self.user();
+            var repo = currentRepo.name();
+            getBranches(provider, user, repo, self.setBranches, self.setBranchesError);
+        }
+    }).extend({throttle: 1000});
+    this.tryVisibility = ko.computed(function() {
+        return (self.branch() != null);
+    });
+
     this.setRepos = function(repos) {
         var repoArray = [];
         self.isValidUser(true);
@@ -40,17 +62,6 @@ function ExampleViewModel() {
         self.repos([]);
         self.branches([]);
     };
-    this.updateRepo = ko.computed(function() {
-        var currentRepo = self.repo();
-        if (currentRepo == null) {
-            self.branches([]);
-        } else {
-            var provider = self.provider();
-            var user = self.user();
-            var repo = currentRepo.name();
-            getBranches(provider, user, repo, self.setBranches, self.setBranchesError);
-        }
-    }).extend({throttle: 1000});
     this.setBranches = function(branches) {
         var branchArray = [];
         branches.forEach(function(branchJson) {
@@ -61,22 +72,39 @@ function ExampleViewModel() {
     };
     this.setBranchesError = function() {
     };
-    this.tryVisibility = ko.computed(function() {
-        return (self.branch() != null);
-    });
+    this.checkDiff = function() {
+        var onSuccess = (diff, textStatus, xhr) => {
+            if (xhr.status == 200) {
+                clearInterval(self.checkDiffId());
+                self.diffId(null);
+                self.checkDiffId(null);
+                self.diff.update(diff);
+                self.tryEnabled(true);
+                self.spinnerVisibility(false);
+            }
+        };
+        var onError = (e) => {
+            console.log(e);
+        };
+        var diff = getDiff(self.diffId(), onSuccess, onError);
+    };
     this.tryExample = function() {
-        console.log('try example');
+        self.tryEnabled(false);
+        self.spinnerVisibility(true);
         var currentProvider = self.provider().name();
         var currentUser = self.user();
         var currentRepo = self.repo().name();
         var currentBranch = self.branch().name();
-        var onSuccess = id => {
-            console.log('success ' + id);
+        var onSuccess = result => {
+            var id = result.id;
+            self.diffId(id);
+            var checkDiffIdVal = setInterval(self.checkDiff, 5000);
+            self.checkDiffId(checkDiffIdVal);
         };
-        var onError = () => {
-            console.log('error');
+        var onError = (e) => {
+            console.log(e);
+            self.tryEnabled(true);
         };
-        requestDiff(currentProvider, currentUser, currentRepo, currentBranch, onSuccess, onError);
-        // TODO keep checking for completion
+        requestWeb(currentProvider, currentUser, currentRepo, currentBranch, onSuccess, onError);
     };
 }

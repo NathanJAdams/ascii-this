@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class EncryptRepoTokenResponse {
-    private final String token;
+    private final String encryptedToken;
 }

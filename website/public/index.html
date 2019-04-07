@@ -17,13 +17,13 @@
     <!--integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"-->
     <!--crossorigin="anonymous">-->
     <!--<link rel="stylesheet"-->
-    <!--href="css/style.css">-->
+    <!--href="css/cursor.css">-->
     <link rel="stylesheet"
           href="css/diff_style.css">
     <link rel="stylesheet"
-          href="css/expand.css">
+          href="css/cursor.css">
     <link rel="stylesheet"
-          href="css/style.css">
+          href="css/spinner.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 </head>
 
@@ -48,8 +48,9 @@
                    data-bind="click:signup">
         </div>
         <div id="options-try" class="col-5 align-self-center align-middle">
-            <div class="row btn-block ml-auto input-lg" data-toggle="tooltip" data-placement="bottom" title="Private repositories won't be visible">
-                Try it out on your <u>public</u> repository
+            <div class="row btn-block ml-auto input-lg" data-toggle="tooltip" data-placement="bottom"
+                 title="Private repositories won't be visible">
+                Try it out on your <b>public</b> repository
             </div>
         </div>
     </div>
@@ -72,18 +73,49 @@
         </div>
     </div>
     <div class="row justify-content-around">
-        <button data-bind="visible:tryVisibility, click:tryExample">View example cleaning</button>
+        <button data-bind="visible:tryVisibility, click:tryExample">View example cleaning
+        </button>
     </div>
-    <div class="container2 m-4" data-bind="visible:tryVisibility">
+    <div class="try-example m-4" data-bind="visible:tryVisibility">
         <div class="container-fluid">
             <div class="row">
-                <div id="try-out-original" class="col code-box">Text</div>
-                <div id="try-out-cleaned" class="col code-box">Text</div>
+                <div id="diff" data-bind="with:diff">
+                    <div class="file" data-bind="foreach:fileDiffs">
+                        <div class="file-name" data-bind="text:fileName"></div>
+                        <div class="file-parts" data-bind="foreach:fileParts">
+                            <div class="file-parts-left" data-bind="foreach:a"><!--
+                                    --><span class="file-part-element-left"
+                                             data-bind="text:diffText, css:className"></span><!--
+                            --></div>
+                            <div class="file-parts-right" data-bind="foreach:b"><!--
+                                    --><span class="file-part-element-right"
+                                             data-bind="text:diffText, css:className"></span><!--
+                            --></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<div data-bind="with:example">
+    <div class="spinner-background" data-bind="visible:spinnerVisibility">
+        <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
 
 <div id="scripts">
     <!--bootstrap, jquery-->
@@ -116,6 +148,9 @@
     <!--<script src="js/ext/firebase.js"></script>-->
 
     <!--models-->
+    <script src="js/model/diff/file-diff-model.js"></script>
+    <script src="js/model/diff/file-part-diff-model.js"></script>
+    <script src="js/model/diff/file-part-element-diff-model.js"></script>
     <script src="js/model/provider-model.js"></script>
     <script src="js/model/repo-model.js"></script>
     <script src="js/model/branch-model.js"></script>
@@ -123,6 +158,7 @@
     <!--view models-->
     <script src="js/viewmodel/login-view-model.js"></script>
     <script src="js/viewmodel/signup-view-model.js"></script>
+    <script src="js/viewmodel/diff-view-model.js"></script>
     <script src="js/viewmodel/example-view-model.js"></script>
     <script src="js/viewmodel/index-view-model.js"></script>
     <!--<script src="js/viewmodel/signup-view-model.js"></script>-->

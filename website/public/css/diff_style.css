@@ -1,9 +1,45 @@
+.try-example {
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: scroll;
+    background-color:#DFE;
+}
+.file {
+    clear: left;
+    clear: right;
+    width: 100%;
+    background-color:#DEF;
+}
+.file-name {
+    width: 100%;
+    background-color:#FEE;
+}
+.file-parts {
+    display: flow-root;
+}
+.file-parts-left {
+    float: left;
+    width: 45%;
+}
+.file-parts-right {
+    float: right;
+    width: 45%;
+}
+.file-part-element-left {
+}
+.file-part-element-right {
+}
 .diff-removed {
-    background-color: #F88;
+    background-color: #FFD0D0;
     color: #000;
 }
-
 .diff-added {
-    background-color: #8F8;
+    background-color: #D0FFD0;
+    color: #000;
+}
+.diff-common {
     color: #000;
 }

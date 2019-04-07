@@ -11,7 +11,9 @@ import com.repocleaner.util.RepoCleanerException;
 public class CleanLambda implements RequestHandler<S3Event, Void> {
     public Void handleRequest(S3Event event, Context context) {
         try (S3CleanIO cleanIO = new S3CleanIO(event, JsonInfo.JSON_UTIL)) {
+            System.out.println("Start cleaning");
             Cleaner.clean(cleanIO);
+            System.out.println("Finished cleaning");
         } catch (RepoCleanerException e) {
             e.printStackTrace();
         }

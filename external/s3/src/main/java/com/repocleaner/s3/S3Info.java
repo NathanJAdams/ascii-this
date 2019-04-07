@@ -8,8 +8,8 @@ import com.repocleaner.util.Constants;
 import java.io.File;
 
 public class S3Info {
-    static final File TMP_FOLDER = new File("/tmp");
-    static final AmazonS3 CLIENT = AmazonS3ClientBuilder.standard()
+    public static final File TMP_FOLDER = new File("/tmp");
+    public static final AmazonS3 CLIENT = AmazonS3ClientBuilder.standard()
             .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
             .withRegion(Constants.AWS_REGION)
             .build();

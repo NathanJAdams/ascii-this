@@ -12,40 +12,62 @@ function getRepos(provider, user, success, error) {
 function getBranches(provider, user, repo, success, error) {
     var url = provider.branchesUrlPrefix() + user + provider.branchesUrlRepoPrefix() + repo + provider.branchesUrlSuffix();
     $.ajax({
-      url,
+        url,
         success: function(branches) {
             var branchArray = provider.branchesFunction()(branches);
             success(branchArray);
         },
-      error
+        error
     });
 }
 
-function requestDiff(provider, user, repo, branch, success, error) {
-    var url = 'https://qcpg7x18of.execute-api.eu-west-1.amazonaws.com/prod';
-    var body = {
+function requestWeb(provider, user, repo, branch, success, error) {
+    var url = 'https://983keykw22.execute-api.eu-west-1.amazonaws.com/prod/request-web';
+    var data = {
         provider,
         user,
         repo,
         branch
     };
+    data = JSON.stringify(data);
+    console.log(data);
     $.ajax({
-        method: 'POST',
+        type: 'POST',
         url,
-        body,
+        contentType: 'application/json',
+        data,
+        dataType: 'json',
         success,
         error
     });
 }
 
 function getDiff(id, success, error) {
-    var url = 'https://ac1sxokozd.execute-api.eu-west-1.amazonaws.com/prod';
-    var body = { id };
+    var url = 'https://hn1vshpp7b.execute-api.eu-west-1.amazonaws.com/prod/retrieve-diff';
+    var data = { id };
+    data = JSON.stringify(data);
     $.ajax({
-      method: 'POST',
-      url,
-      body,
-      success,
-      error
+        type: 'POST',
+        url,
+        contentType: 'application/json',
+        data,
+        dataType: 'json',
+        success,
+        error
+    });
+}
+
+function getEncryptedToken(token, success, error) {
+    var url = 'https://q18tczrab8.execute-api.eu-west-1.amazonaws.com/prod/encrypt-token';
+    var data = { token };
+    data = JSON.stringify(data);
+    $.ajax({
+        type: 'POST',
+        url,
+        contentType: 'application/json',
+        data,
+        dataType: 'json',
+        success,
+        error
     });
 }

@@ -12,11 +12,13 @@ public class RetrieveDiffLambda implements RequestHandler<RetrieveDiffRequest, R
         request.preCheck();
         String id = request.getId();
         try {
-            String diff = S3FileStructure.downloadDiff(id);
+            String diffString = S3FileStructure.downloadDiff(id);
+            Diff diff = DiffExtractor.extract(diffString);
+            System.out.println(diff);
             return new RetrieveDiffResponse(diff);
         } catch (RepoCleanerException e) {
             e.printStackTrace();
-            return ResponseUtil.internalError("Retrieve diff");
+            return ResponseUtil.clientError("Failed to retrieve diff");
         }
     }
 }

@@ -13,6 +13,7 @@
 | 2h    | Front end         | Add/Remove personal access token
 | 3d    | Front end         | Add credits
 | 4w    | Transformations   | Add more transformations
+| 3d    | Front end         | Make example diff look better
 
 
 <b>Should haves

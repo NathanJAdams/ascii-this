@@ -7,6 +7,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class RetrieveDiffResponse {
-    private final Diff diff;
+public class Diff {
+    private final FileDiff[] fileDiffs;
 }

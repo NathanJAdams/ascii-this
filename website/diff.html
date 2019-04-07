@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+          href="public/css/diff_style.css">
+    <link rel="stylesheet"
+          href="public/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="diff" data-bind="with:diff">
+    <div data-bind="foreach:files">
+        <div class="box clear" data-bind="text:fileName"></div>
+        <div class="clear" data-bind="foreach:fileParts">
+            <div class="box left">
+                <div data-bind="foreach:a">
+                    <span data-bind="text:diffText, css:className"></span>
+                </div>
+            </div>
+            <div class="box right">
+                <div data-bind="foreach:b">
+                    <span data-bind="text:diffText, css:className"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var vm = new DiffViewModel();
+    ko.applyBindings(vm);
+    function Diff() {
+        this.files = ko.observableArray();
+    }
+    function FileDiff() {
+        this.fileName = ko.observable();
+        this.fileParts = ko.observableArray();
+    }
+    function FilePartDiff() {
+        this.a = ko.observableArray();
+        this.b = ko.observableArray();
+    }
+    function FilePartElement() {
+        this.diffText = ko.observable();
+        this.className = ko.observable();
+    }
+    function DiffViewModel() {
+        var self = this;
+        this.diff = ko.observable();
+        this.appendFilePartElements = function(dataArray, commonArray, className, elementArray) {
+            var commonIndex = 0;
+            for (i=0; i<dataArray.length; i++) {
+                var element = dataArray[i];
+                var filePartElement = new FilePartElement();
+                if (element === null) {
+                    filePartElement.diffText(commonArray[commonIndex]);
+                    filePartElement.className('diff-common');
+                    commonIndex++;
+                } else {
+                    filePartElement.diffText(element);
+                    filePartElement.className(className);
+                }
+                elementArray.push(filePartElement);
+            }
+        };
+        this.update = function(data) {
+            var json = JSON.parse(data);
+            var dataDiff = json.diff;
+            var diff = new Diff();
+            for (var i=0; i<dataDiff.fileDiffs.length; i++) {
+                var dataFileDiff = dataDiff.fileDiffs[i];
+                var fileDiff = new FileDiff();
+                fileDiff.fileName(dataFileDiff.fileNameA);
+                var dataFilePartDiffs = dataFileDiff.filePartDiffs;
+                for (var j=0; j<dataFilePartDiffs.length; j++) {
+                    var dataFilePartDiff = dataFilePartDiffs[j];
+                    var filePartDiff = new FilePartDiff();
+                    var common = dataFilePartDiff.common;
+                    self.appendFilePartElements(dataFilePartDiff.a, common, 'diff-removed', filePartDiff.a);
+                    self.appendFilePartElements(dataFilePartDiff.b, common, 'diff-added', filePartDiff.b);
+                    fileDiff.fileParts.push(filePartDiff);
+                }
+                diff.files.push(fileDiff);
+            }
+            self.diff(diff);
+        };
+    }
+    var data =
+    '{'+
+        '"diff": {'+
+            '"fileDiffs": ['+
+                '{'+
+                    '"fileNameA": "src/api/ABounding.java",'+
+                    '"fileNameB": "src/api/ABounding.java",'+
+                    '"filePartDiffs": ['+
+                        '{'+
+                            '"a": ['+
+                                'null,'+
+                                '"<POSITION, ROTATION, SCALE>",'+
+                                'null,'+
+                                'null,'+
+                                'null,'+
+                                'null,'+
+                                '"<POSITION, ROTATION, SCALE>"'+
+                            '],'+
+                            '"b": ['+
+                                'null,'+
+                                'null,'+
+                                'null,'+
+                                '"fdsnjkfdv",'+
+                                'null,'+
+                                '"ppJFDSkjfFKJ",'+
+                                'null'+
+                            '],'+
+                            '"common": ['+
+                                '"   Common Text 1 ",'+
+                                '"   Common Text 2 ",'+
+                                '"   Common Text 3 ",'+
+                                '"   Common Text 4 ",'+
+                                '"   Common Text 5 "'+
+                            ']'+
+                        '}'+
+                    ']'+
+                '}'+
+            ']'+
+        '}'+
+    '}';
+    vm.update(data);
+</script>
+</body>

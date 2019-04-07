@@ -51,13 +51,5 @@ public enum ZipResponseType {
         }
     };
 
-    public static void main(String[] args) throws Exception {
-        File sourceFolder = new File("C:/Users/Nathan/Desktop/verJ/verJ");
-        try (Git git = GitUtil.open(sourceFolder)) {
-            String diff = GitUtil.getLatestDiff(git);
-            System.out.println(diff);
-        }
-    }
-
     public abstract void saveTo(File sourceFolder, File zipFile) throws RepoCleanerException;
 }

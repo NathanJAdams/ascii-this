@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class GitUtil {
             return Git.cloneRepository()
                     .setCredentialsProvider(CredentialsProvider.getDefault())
                     .setURI(uri)
+                    .setBranchesToClone(Collections.singleton(branch))
                     .setBranch(branch)
                     .setCloneSubmodules(true)
                     .setDirectory(downloadFolder)
