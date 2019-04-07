@@ -8,13 +8,13 @@ import com.repocleaner.coreclean.graph.match.VertexMatcher;
 public class SourceTypeVertexMatcher implements VertexMatcher {
     private final String captureId;
     private final VertexType sourceVertexType;
-    private final int sourceType;
+    private final String sourceType;
 
-    public SourceTypeVertexMatcher(VertexType sourceVertexType, int sourceType) {
+    public SourceTypeVertexMatcher(VertexType sourceVertexType, String sourceType) {
         this(null, sourceVertexType, sourceType);
     }
 
-    public SourceTypeVertexMatcher(String captureId, VertexType sourceVertexType, int sourceType) {
+    public SourceTypeVertexMatcher(String captureId, VertexType sourceVertexType, String sourceType) {
         this.captureId = captureId;
         this.sourceVertexType = sourceVertexType;
         this.sourceType = sourceType;

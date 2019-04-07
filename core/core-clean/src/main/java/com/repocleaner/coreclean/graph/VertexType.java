@@ -4,8 +4,8 @@ public enum VertexType implements GraphElementType {
     Repo,
     Folder,
     File,
-    SourceRule,
-    SourceNode;
+    SourceBranch,
+    SourceLeaf;
 
     @Override
     public String getName() {

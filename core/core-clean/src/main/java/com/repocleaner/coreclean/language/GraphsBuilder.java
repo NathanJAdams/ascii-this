@@ -2,7 +2,6 @@ package com.repocleaner.coreclean.language;
 
 import com.repocleaner.coreclean.graph.Graph;
 import com.repocleaner.util.RepoCleanerException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,13 +9,14 @@ public class GraphsBuilder {
     private final Map<Language, GraphBuilder> builders = new HashMap<>();
 
     public void addFile(String filePath) throws RepoCleanerException {
+        System.out.println("adding file " + filePath);
         Language language = Language.fromFilePath(filePath);
+        System.out.println("Parsed language " + language);
         if (language != null) {
-            GraphBuilder builder = builders.get(language);
-            if (builder == null) {
-                builder = new GraphBuilder(language.getParsedFileCreator());
-                builders.put(language, builder);
-            }
+            System.out.println("Getting builder");
+            GraphBuilder builder = builders.computeIfAbsent(language, key -> new GraphBuilder(language.getGrammar()));
+            System.out.println("Builder " + builder);
+            System.out.println("Builder add file");
             builder.addFile(filePath);
         }
     }

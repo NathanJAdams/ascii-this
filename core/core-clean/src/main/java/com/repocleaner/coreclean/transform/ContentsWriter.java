@@ -3,6 +3,7 @@ package com.repocleaner.coreclean.transform;
 import com.repocleaner.coreclean.graph.EdgeDirection;
 import com.repocleaner.coreclean.graph.EdgeType;
 import com.repocleaner.coreclean.graph.Graph;
+import com.repocleaner.coreclean.graph.PropertyKey;
 import com.repocleaner.coreclean.graph.PropertyKeys;
 import com.repocleaner.coreclean.graph.Vertex;
 import com.repocleaner.coreclean.graph.VertexType;
@@ -13,7 +14,6 @@ import com.repocleaner.coreclean.graph.match.VertexMatcher;
 import com.repocleaner.coreclean.graph.match.matchers.edge.TypeEdgeMatcher;
 import com.repocleaner.coreclean.graph.match.matchers.vertex.TypeVertexMatcher;
 import com.repocleaner.util.StringUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,12 +64,12 @@ public class ContentsWriter {
     private String createFileContents(Graph graph, Vertex fileVertex) {
         StringBuilder sb = new StringBuilder();
         appendVertexContents(graph, fileVertex, sb);
-        appendHiddenText(fileVertex, sb);
+        appendHiddenText(fileVertex, PropertyKeys.NEXT_HIDDEN_TEXT, sb);
         return sb.toString();
     }
 
     private void appendVertexContents(Graph graph, Vertex vertex, StringBuilder sb) {
-        appendHiddenText(vertex, sb);
+        appendHiddenText(vertex, PropertyKeys.PREVIOUS_HIDDEN_TEXT, sb);
         FIRST_CHILD_MATCHER.apply(graph, vertex)
                 .map(SubPath::getVertex)
                 .forEach(firstChildVertex -> {
@@ -82,8 +82,8 @@ public class ContentsWriter {
                 });
     }
 
-    private void appendHiddenText(Vertex vertex, StringBuilder sb) {
-        String hiddenText = vertex.getProperty(PropertyKeys.HIDDEN_TEXT);
+    private void appendHiddenText(Vertex vertex, PropertyKey<String> direction, StringBuilder sb) {
+        String hiddenText = vertex.getProperty(direction);
         if (StringUtil.isNotEmpty(hiddenText)) {
             sb.append(hiddenText);
         }

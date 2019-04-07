@@ -4,18 +4,16 @@ import com.repocleaner.coreclean.graph.Graph;
 import com.repocleaner.coreclean.graph.PropertyKeys;
 import com.repocleaner.coreclean.graph.Vertex;
 import com.repocleaner.coreclean.graph.match.VertexMatcher;
-import com.repocleaner.coreclean.graph.match.matchers.vertex.SourceNodeTypeVertexMatcher;
+import com.repocleaner.coreclean.graph.match.matchers.vertex.LeafSourceTypeVertexMatcher;
 import com.repocleaner.coreclean.transform.SuccessStrategy;
 import com.repocleaner.coreclean.transform.Transformation;
 import com.repocleaner.coreclean.transform.Transformer;
 import com.repocleaner.util.StringUtil;
-import org.antlr.v4.runtime.Recognizer;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EOFTransformer implements Transformer {
-    private final VertexMatcher EOF_MATCHER = new SourceNodeTypeVertexMatcher(Recognizer.EOF);
+    private final VertexMatcher EOF_MATCHER = new LeafSourceTypeVertexMatcher("EOF");
     private final String eofText;
 
     public EOFTransformer(String eofText) {
@@ -36,7 +34,7 @@ public class EOFTransformer implements Transformer {
             return null;
         }
         for (Vertex eofVertex : eofVertices) {
-            String previousHiddenText = eofVertex.setProperty(PropertyKeys.HIDDEN_TEXT, eofText);
+            String previousHiddenText = eofVertex.setProperty(PropertyKeys.PREVIOUS_HIDDEN_TEXT, eofText);
             if (StringUtil.isNotEmpty(previousHiddenText)) {
                 builder.change(1);
             } else {

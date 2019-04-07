@@ -1,31 +1,37 @@
 package com.repocleaner.coreclean.language;
 
-import com.repocleaner.coreclean.antlr.HiddenTokensListener;
 import com.repocleaner.coreclean.graph.Edge;
 import com.repocleaner.coreclean.graph.EdgeType;
 import com.repocleaner.coreclean.graph.Graph;
+import com.repocleaner.coreclean.graph.PropertyKey;
 import com.repocleaner.coreclean.graph.PropertyKeys;
 import com.repocleaner.coreclean.graph.Vertex;
+import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesPackages;
+import com.repocleaner.parser_gen.Grammar;
+import com.repocleaner.parser_gen.ImmutableParseTreeFactory;
+import com.repocleaner.parser_gen.ImmutableTreeBranch;
+import com.repocleaner.parser_gen.ImmutableTreeLeaf;
+import com.repocleaner.parser_gen.ImmutableTreeNode;
+import com.repocleaner.parser_gen.LexedToken;
+import com.repocleaner.parser_gen.ParserException;
+import com.repocleaner.parser_gen.streams.CharStream;
+import com.repocleaner.parser_gen.streams.CharStreamReader;
+import com.repocleaner.parser_gen.streams.FileCharStream;
 import com.repocleaner.util.RepoCleanerException;
-import com.repocleaner.util.StringUtil;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.RuleNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GraphBuilder {
-    private final ParsedFileCreator parsedFileCreator;
+    private final ImmutableParseTreeFactory factory = new ImmutableParseTreeFactory();
+    private final Grammar grammar;
     private final Graph graph = new Graph();
     private final Vertex repoVertex = Vertex.createRepoVertex();
     private final Map<String, Vertex> folderVertices = new HashMap<>();
 
-    public GraphBuilder(ParsedFileCreator parsedFileCreator) {
-        this.parsedFileCreator = parsedFileCreator;
+    public GraphBuilder(Grammar grammar) {
+        this.grammar = grammar;
         graph.addVertex(repoVertex);
     }
 
@@ -34,43 +40,51 @@ public class GraphBuilder {
     }
 
     public void addFile(String filePath) throws RepoCleanerException {
-        ParsedFile parsedFile = parsedFileCreator.parse(filePath);
-        if (parsedFile == null) {
-            throw new RepoCleanerException("Couldn't parse file: " + filePath);
+        File file = new File(filePath);
+        CharStream fileCharStream = new FileCharStream(file);
+        CharStreamReader reader = new CharStreamReader(fileCharStream);
+        ImmutableTreeNode parsed;
+        try {
+            parsed = grammar.parse(reader, JavaParserRulesPackages.CompilationUnit, factory);
+        } catch (ParserException e) {
+            throw new RepoCleanerException("Failed to parse from file: " + filePath, e);
         }
-        ParseTree fileParseTree = parsedFile.getParseTree();
-        Map<ParseTree, Vertex> mapping = new HashMap<>();
-        addToMapping(mapping, fileParseTree);
+        Map<ImmutableTreeNode, Vertex> mapping = new HashMap<>();
+        System.out.println("Add to mapping");
+        addToMapping(mapping, parsed);
+        System.out.println("Adding vertices");
         mapping.values().forEach(graph::addVertex);
-        Vertex contentsVertex = mapping.get(fileParseTree);
+        System.out.println("Getting contents vertex");
+        Vertex contentsVertex = mapping.get(parsed);
+        System.out.println("Adding file edges");
         addFileEdges(graph, repoVertex, folderVertices, filePath, contentsVertex);
-        addRecursiveEdges(graph, fileParseTree, mapping);
-        addHiddenText(mapping, parsedFile);
+        System.out.println("Adding recursive edges");
+        addRecursiveEdges(graph, mapping, parsed);
+        System.out.println("Adding hidden text");
+        addHiddenText(mapping, parsed);
     }
 
-    private void addToMapping(Map<ParseTree, Vertex> mapping, ParseTree parseTree) throws RepoCleanerException {
-        Vertex vertex = toVertex(parseTree);
+    private void addToMapping(Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) throws RepoCleanerException {
+        Vertex vertex = toVertex(node);
         if (vertex != null) {
-            mapping.put(parseTree, vertex);
-            int childCount = parseTree.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                ParseTree child = parseTree.getChild(i);
-                addToMapping(mapping, child);
+            mapping.put(node, vertex);
+            if (node instanceof ImmutableTreeBranch) {
+                ImmutableTreeBranch branch = (ImmutableTreeBranch) node;
+                List<ImmutableTreeNode> children = branch.getChildren();
+                for (ImmutableTreeNode child : children) {
+                    addToMapping(mapping, child);
+                }
             }
         }
     }
 
-    private Vertex toVertex(ParseTree parseTree) throws RepoCleanerException {
-        if (parseTree instanceof RuleNode) {
-            int ruleIndex = ((RuleNode) parseTree).getRuleContext().getRuleIndex();
-            return Vertex.createRuleVertex(ruleIndex);
-        } else if (parseTree instanceof TerminalNode) {
-            Token symbol = ((TerminalNode) parseTree).getSymbol();
-            int type = symbol.getType();
-            String text = (type == Recognizer.EOF)
-                    ? null
-                    : symbol.getText();
-            return Vertex.createNodeVertex(type, text);
+    private Vertex toVertex(ImmutableTreeNode node) throws RepoCleanerException {
+        String type = node.getName();
+        if (node instanceof ImmutableTreeBranch) {
+            return Vertex.createRuleVertex(type);
+        } else if (node instanceof ImmutableTreeLeaf) {
+            String token = ((ImmutableTreeLeaf) node).getParsedToken().getLexedToken().getToken();
+            return Vertex.createNodeVertex(type, token);
         } else {
             throw new RepoCleanerException("Failed to com.repocleaner.coreclean");
         }
@@ -95,39 +109,54 @@ public class GraphBuilder {
         graph.addEdge(fileVertex, contentsVertex, new Edge(EdgeType.FirstChild));
     }
 
-    private void addRecursiveEdges(Graph graph, ParseTree parseTree, Map<ParseTree, Vertex> mapping) {
-        Vertex vertex = mapping.get(parseTree);
-        int childCount = parseTree.getChildCount();
-        if (childCount > 0) {
-            ParseTree firstChild = parseTree.getChild(0);
-            Vertex childVertex = mapping.get(firstChild);
-            graph.addEdge(vertex, childVertex, new Edge(EdgeType.FirstChild));
-            graph.addEdge(vertex, childVertex, new Edge(EdgeType.Child));
-            addRecursiveEdges(graph, firstChild, mapping);
-            for (int i = 1; i < childCount; i++) {
-                ParseTree nextSibling = parseTree.getChild(i);
-                Vertex nextSiblingVertex = mapping.get(nextSibling);
-                graph.addEdge(vertex, nextSiblingVertex, new Edge(EdgeType.Child));
-                graph.addEdge(childVertex, nextSiblingVertex, new Edge(EdgeType.NextSibling));
-                addRecursiveEdges(graph, nextSibling, mapping);
-                childVertex = nextSiblingVertex;
+    private void addRecursiveEdges(Graph graph, Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) {
+        Vertex vertex = mapping.get(node);
+        if (node instanceof ImmutableTreeBranch) {
+            ImmutableTreeBranch branch = (ImmutableTreeBranch) node;
+            List<ImmutableTreeNode> children = branch.getChildren();
+            if (!children.isEmpty()) {
+                ImmutableTreeNode firstChild = children.get(0);
+                Vertex childVertex = mapping.get(firstChild);
+                graph.addEdge(vertex, childVertex, new Edge(EdgeType.FirstChild));
+                graph.addEdge(vertex, childVertex, new Edge(EdgeType.Child));
+                addRecursiveEdges(graph, mapping, firstChild);
+                for (int i = 1; i < children.size(); i++) {
+                    ImmutableTreeNode nextSibling = children.get(i);
+                    Vertex nextSiblingVertex = mapping.get(nextSibling);
+                    graph.addEdge(vertex, nextSiblingVertex, new Edge(EdgeType.Child));
+                    graph.addEdge(childVertex, nextSiblingVertex, new Edge(EdgeType.NextSibling));
+                    addRecursiveEdges(graph, mapping, nextSibling);
+                    childVertex = nextSiblingVertex;
+                }
             }
         }
     }
 
-    private void addHiddenText(Map<ParseTree, Vertex> mapping, ParsedFile parsedFile) {
-        HiddenTokensListener hiddenTokensListener = parsedFile.getHiddenTokensListener();
-        mapping.forEach((parseTree, vertex) -> {
-            if (parseTree instanceof TerminalNode) {
-                String hiddenText = hiddenTokensListener.getTerminalPreviousHiddenText((TerminalNode) parseTree);
-                addHiddenTextVertex(vertex, hiddenText);
+    private void addHiddenText(Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) {
+        Vertex vertex = mapping.get(node);
+        if (node instanceof ImmutableTreeLeaf) {
+            ImmutableTreeLeaf leaf = (ImmutableTreeLeaf) node;
+            addHiddenTextVertex(vertex, leaf);
+        } else if (node instanceof ImmutableTreeBranch) {
+            ImmutableTreeBranch branch = (ImmutableTreeBranch) node;
+            for (ImmutableTreeNode child : branch.getChildren()) {
+                addHiddenText(mapping, child);
             }
-        });
+        }
     }
 
-    private void addHiddenTextVertex(Vertex vertex, String hiddenText) {
-        if (StringUtil.isNotEmpty(hiddenText)) {
-            vertex.setProperty(PropertyKeys.HIDDEN_TEXT, hiddenText);
+    private void addHiddenTextVertex(Vertex vertex, ImmutableTreeLeaf leaf) {
+        addTextProperty(vertex, PropertyKeys.PREVIOUS_HIDDEN_TEXT, leaf.getParsedToken().getPreviousHiddenTokens());
+        addTextProperty(vertex, PropertyKeys.NEXT_HIDDEN_TEXT, leaf.getParsedToken().getNextHiddenTokens());
+    }
+
+    private void addTextProperty(Vertex vertex, PropertyKey<String> propertyKey, List<LexedToken> lexedTokens) {
+        StringBuilder sb = new StringBuilder();
+        for (LexedToken lexedToken : lexedTokens) {
+            sb.append(lexedToken.getToken());
+        }
+        if (sb.length() >= 0) {
+            vertex.setProperty(propertyKey, sb.toString());
         }
     }
 }

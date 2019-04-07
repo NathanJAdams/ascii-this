@@ -1,16 +1,20 @@
 package com.repocleaner.coreclean.language;
 
+import com.repocleaner.coreclean.languages.java.JavaGrammarCreator;
 import com.repocleaner.coreclean.transform.Contextualiser;
 import com.repocleaner.coreclean.transform.java.JavaContextualiser;
-
+import com.repocleaner.parser_gen.Grammar;
+import com.repocleaner.parser_gen.GrammarCreator;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.Getter;
 
 public enum Language {
-    Java(new JavaParsedFileCreator(), new JavaContextualiser(), "java");
+    Java(new JavaGrammarCreator(), new JavaContextualiser(), "java");
+
     private static final Map<String, Language> EXTENSION_LANGUAGES = new HashMap<>();
 
     static {
@@ -21,12 +25,14 @@ public enum Language {
         }
     }
 
-    private final ParsedFileCreator parsedFileCreator;
+    @Getter
+    private final Grammar grammar;
+    @Getter
     private final Contextualiser contextualiser;
     private final List<String> extensions;
 
-    Language(ParsedFileCreator parsedFileCreator, Contextualiser contextualiser, String... extensions) {
-        this.parsedFileCreator = parsedFileCreator;
+    Language(GrammarCreator grammarCreator, Contextualiser contextualiser, String... extensions) {
+        this.grammar = grammarCreator.create();
         this.contextualiser = contextualiser;
         this.extensions = Arrays.asList(extensions);
     }
@@ -48,13 +54,5 @@ public enum Language {
 
     public static Language getFromExtension(String extension) {
         return EXTENSION_LANGUAGES.get(extension);
-    }
-
-    public ParsedFileCreator getParsedFileCreator() {
-        return parsedFileCreator;
-    }
-
-    public Contextualiser getContextualiser() {
-        return contextualiser;
     }
 }

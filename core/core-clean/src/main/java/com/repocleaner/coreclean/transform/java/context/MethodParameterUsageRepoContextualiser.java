@@ -1,6 +1,5 @@
 package com.repocleaner.coreclean.transform.java.context;
 
-import com.repocleaner.coreclean.antlr.java.gen.JavaParser;
 import com.repocleaner.coreclean.graph.EdgeDirection;
 import com.repocleaner.coreclean.graph.EdgeType;
 import com.repocleaner.coreclean.graph.Graph;
@@ -12,7 +11,8 @@ import com.repocleaner.coreclean.graph.match.SubPathMatcher;
 import com.repocleaner.coreclean.graph.match.VertexMatcher;
 import com.repocleaner.coreclean.graph.match.matchers.edge.TypeEdgeMatcher;
 import com.repocleaner.coreclean.graph.match.matchers.vertex.AnyVertexMatcher;
-import com.repocleaner.coreclean.graph.match.matchers.vertex.SourceRuleTypeVertexMatcher;
+import com.repocleaner.coreclean.graph.match.matchers.vertex.BranchSourceTypeVertexMatcher;
+import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesParameters;
 import com.repocleaner.coreclean.transform.Contextualiser;
 
 public class MethodParameterUsageRepoContextualiser implements Contextualiser {
@@ -29,7 +29,7 @@ public class MethodParameterUsageRepoContextualiser implements Contextualiser {
     }
 
     private PathMatcher getPathMatcher() {
-        VertexMatcher formalParameterList = new SourceRuleTypeVertexMatcher("formal-parameters", JavaParser.RULE_formalParameters);
+        VertexMatcher formalParameterList = new BranchSourceTypeVertexMatcher("formal-parameters", JavaParserRulesParameters.FormalParameters.name());
         EdgeMatcher formalParametersFirstChildEdge = new TypeEdgeMatcher(EdgeDirection.Outgoing, EdgeType.FirstChild);
         VertexMatcher formalParametersFirstChild = new AnyVertexMatcher("first-child");
         SubPathMatcher firstChildMatcher = new SubPathMatcher(formalParametersFirstChildEdge, formalParametersFirstChild);

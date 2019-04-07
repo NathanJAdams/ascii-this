@@ -42,12 +42,12 @@
             <artifactId>gson</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>parser-gen</artifactId>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jgit</groupId>

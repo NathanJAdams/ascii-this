@@ -22,15 +22,15 @@ public class Vertex extends GraphElement {
         return vertex;
     }
 
-    public static Vertex createRuleVertex(int ruleId) {
-        Vertex vertex = new Vertex(VertexType.SourceRule);
-        vertex.setProperty(PropertyKeys.SOURCE_TYPE, ruleId);
+    public static Vertex createRuleVertex(String branchType) {
+        Vertex vertex = new Vertex(VertexType.SourceBranch);
+        vertex.setProperty(PropertyKeys.SOURCE_TYPE, branchType);
         return vertex;
     }
 
-    public static Vertex createNodeVertex(int nodeId, String text) {
-        Vertex vertex = new Vertex(VertexType.SourceNode);
-        vertex.setProperty(PropertyKeys.SOURCE_TYPE, nodeId);
+    public static Vertex createNodeVertex(String leafType, String text) {
+        Vertex vertex = new Vertex(VertexType.SourceLeaf);
+        vertex.setProperty(PropertyKeys.SOURCE_TYPE, leafType);
         vertex.setProperty(PropertyKeys.SOURCE_TEXT, text);
         return vertex;
     }

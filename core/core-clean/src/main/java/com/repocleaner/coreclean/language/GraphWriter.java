@@ -8,7 +8,6 @@ import com.repocleaner.coreclean.graph.Vertex;
 import com.repocleaner.coreclean.graph.VertexType;
 import com.repocleaner.coreclean.graph.match.matchers.vertex.TypeVertexMatcher;
 import com.repocleaner.util.RepoCleanerException;
-
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class GraphWriter {
     }
 
     private void writeVertexText(Vertex vertex, Writer writer) throws RepoCleanerException {
-        write(writer, vertex.getProperty(PropertyKeys.HIDDEN_TEXT));
+        write(writer, vertex.getProperty(PropertyKeys.PREVIOUS_HIDDEN_TEXT));
         write(writer, vertex.getProperty(PropertyKeys.SOURCE_TEXT));
     }
 
