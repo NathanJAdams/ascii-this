@@ -1,25 +1,23 @@
-package com.repocleaner.coreclean.languages.java;
+package com.repocleaner.coreclean.languages;
 
-import com.repocleaner.coreclean.tregex.TreeNode;
-import com.repocleaner.coreclean.tregex.TreeNodeParseTreeFactory;
-import com.repocleaner.parser_gen.Grammar;
-import com.repocleaner.parser_gen.ParseTreeFactory;
-import com.repocleaner.parser_gen.ParserException;
-import com.repocleaner.parser_gen.ParserRule;
+import com.repocleaner.coreclean.languages.java.JavaGrammarCreator;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesExpressions;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesFields;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesNames;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesParameters;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesStatements;
 import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesTypes;
+import com.repocleaner.parser_gen.Grammar;
+import com.repocleaner.parser_gen.ImmutableParseTreeFactory;
+import com.repocleaner.parser_gen.ImmutableTreeNode;
+import com.repocleaner.parser_gen.ParserException;
+import com.repocleaner.parser_gen.ParserRule;
 import com.repocleaner.parser_gen.streams.CharStream;
 import com.repocleaner.parser_gen.streams.CharStreamReader;
 import com.repocleaner.parser_gen.streams.StringCharStream;
-//import edu.stanford.nlp.trees.Tree;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.reflect.generics.tree.Tree;
 
 import static org.junit.Assert.assertEquals;
 
@@ -78,10 +76,7 @@ public class ParseJavaGrammarTest {
         testText("a<<0", JavaParserRulesExpressions.Expression);
         testText("a>9", JavaParserRulesExpressions.Expression);
         testText("(a)", JavaParserRulesExpressions.Expression);
-        testText("String a = \"string\";", JavaParserRulesExpressions.Expression);
         testText("System.nanoTime();", JavaParserRulesExpressions.Expression);
-        testText("boolean b = true;", JavaParserRulesExpressions.Expression);
-        testText("int a =1;", JavaParserRulesExpressions.Expression);
     }
 
     @Test
@@ -98,6 +93,9 @@ public class ParseJavaGrammarTest {
         testText("a+b;", JavaParserRulesStatements.Statement, "Statement_Expression");
         testText("10*8;", JavaParserRulesStatements.Statement, "Statement_Expression");
         testText("long preCompile = System.nanoTime();", JavaParserRulesStatements.LocalVariableDeclarationStatement);
+        testText("String a = \"string\";", JavaParserRulesStatements.LocalVariableDeclarationStatement);
+        testText("boolean b = true;", JavaParserRulesStatements.LocalVariableDeclarationStatement);
+        testText("int a =1;", JavaParserRulesStatements.LocalVariableDeclarationStatement);
 
         testText("assert true;", JavaParserRulesStatements.Statement, "Statement_Assert");
         testText("assert true : false;", JavaParserRulesStatements.Statement, "Statement_Assert");
@@ -131,14 +129,12 @@ public class ParseJavaGrammarTest {
         CharStream charStream = new StringCharStream(text);
         CharStreamReader reader = new CharStreamReader(charStream);
         Grammar grammar = new JavaGrammarCreator().create();
-//        ParseTreeFactory<TreeNode, TreeNode, TreeNode> parseTreeFactory = new TreeNodeParseTreeFactory();
-//        Tree tree = grammar.parse(reader, parserRule, parseTreeFactory);
-//        if (tree == null) {
-//            System.out.println("null");
-//            Assert.fail();
-//        } else {
-//            System.out.println(tree.pennString());
-//            assertEquals(name, tree.label().value());
-//        }
+        ImmutableParseTreeFactory parseTreeFactory = new ImmutableParseTreeFactory();
+        ImmutableTreeNode node = grammar.parse(reader, parserRule, parseTreeFactory);
+        if (node == null) {
+            Assert.fail();
+        } else {
+            assertEquals(name, node.getName());
+        }
     }
 }

@@ -36,17 +36,17 @@ public class JavaGrammarCreator implements GrammarCreator {
         List<LexerRule> lexerRules = new ArrayList<>();
         Arrays.stream(JavaLexerRulesPrimitiveTypes.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesKeywords.values()).forEach(lexerRules::add);
+        Arrays.stream(JavaLexerRulesSeparators.values()).forEach(lexerRules::add);
+        Arrays.stream(JavaLexerRulesOperators.values()).forEach(lexerRules::add);
+        Arrays.stream(JavaLexerRulesNullLiterals.values()).forEach(lexerRules::add);
+        Arrays.stream(JavaLexerRulesNonCodeSymbols.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesIntegerLiterals.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesFloatingPointLiterals.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesBooleanLiterals.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesCharacterLiterals.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesStringLiterals.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesEscapeLiterals.values()).forEach(lexerRules::add);
-        Arrays.stream(JavaLexerRulesNullLiterals.values()).forEach(lexerRules::add);
-        Arrays.stream(JavaLexerRulesSeparators.values()).forEach(lexerRules::add);
-        Arrays.stream(JavaLexerRulesOperators.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesIdentifiers.values()).forEach(lexerRules::add);
-        Arrays.stream(JavaLexerRulesNonCodeSymbols.values()).forEach(lexerRules::add);
         Arrays.stream(JavaLexerRulesWhitespace.values()).forEach(lexerRules::add);
         return lexerRules;
     }

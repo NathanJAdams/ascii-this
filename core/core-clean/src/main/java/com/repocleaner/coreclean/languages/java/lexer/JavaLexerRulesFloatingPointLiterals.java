@@ -74,11 +74,6 @@ public enum JavaLexerRulesFloatingPointLiterals implements LexerRule {
     },
     DecimalFloatingPointLiteral {
         @Override
-        public ParseType getParseType() {
-            return ParseType.Included;
-        }
-
-        @Override
         public LexerPart createLexerPart() {
             return or(
                     and(
