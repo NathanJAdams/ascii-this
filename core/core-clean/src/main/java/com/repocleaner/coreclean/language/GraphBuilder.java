@@ -6,7 +6,6 @@ import com.repocleaner.coreclean.graph.Graph;
 import com.repocleaner.coreclean.graph.PropertyKey;
 import com.repocleaner.coreclean.graph.PropertyKeys;
 import com.repocleaner.coreclean.graph.Vertex;
-import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesPackages;
 import com.repocleaner.parser_gen.Grammar;
 import com.repocleaner.parser_gen.ImmutableParseTreeFactory;
 import com.repocleaner.parser_gen.ImmutableTreeBranch;
@@ -14,6 +13,7 @@ import com.repocleaner.parser_gen.ImmutableTreeLeaf;
 import com.repocleaner.parser_gen.ImmutableTreeNode;
 import com.repocleaner.parser_gen.LexedToken;
 import com.repocleaner.parser_gen.ParserException;
+import com.repocleaner.parser_gen.ParserRule;
 import com.repocleaner.parser_gen.streams.CharStream;
 import com.repocleaner.parser_gen.streams.CharStreamReader;
 import com.repocleaner.parser_gen.streams.FileCharStream;
@@ -26,12 +26,14 @@ import java.util.Map;
 public class GraphBuilder {
     private final ImmutableParseTreeFactory factory = new ImmutableParseTreeFactory();
     private final Grammar grammar;
+    private final ParserRule fileParserRule;
     private final Graph graph = new Graph();
     private final Vertex repoVertex = Vertex.createRepoVertex();
     private final Map<String, Vertex> folderVertices = new HashMap<>();
 
-    public GraphBuilder(Grammar grammar) {
+    public GraphBuilder(Grammar grammar, ParserRule fileParserRule) {
         this.grammar = grammar;
+        this.fileParserRule = fileParserRule;
         graph.addVertex(repoVertex);
     }
 
@@ -45,7 +47,7 @@ public class GraphBuilder {
         CharStreamReader reader = new CharStreamReader(fileCharStream);
         ImmutableTreeNode parsed;
         try {
-            parsed = grammar.parse(reader, JavaParserRulesPackages.CompilationUnit, factory);
+            parsed = grammar.parse(reader, fileParserRule, factory);
         } catch (ParserException e) {
             throw new RepoCleanerException("Failed to parse from file: " + filePath, e);
         }

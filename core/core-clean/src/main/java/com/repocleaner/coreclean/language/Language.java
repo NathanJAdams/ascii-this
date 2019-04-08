@@ -1,10 +1,12 @@
 package com.repocleaner.coreclean.language;
 
 import com.repocleaner.coreclean.languages.java.JavaGrammarCreator;
+import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesPackages;
 import com.repocleaner.coreclean.transform.Contextualiser;
 import com.repocleaner.coreclean.transform.java.JavaContextualiser;
 import com.repocleaner.parser_gen.Grammar;
 import com.repocleaner.parser_gen.GrammarCreator;
+import com.repocleaner.parser_gen.ParserRule;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,7 +15,7 @@ import java.util.Map;
 import lombok.Getter;
 
 public enum Language {
-    Java(new JavaGrammarCreator(), new JavaContextualiser(), "java");
+    Java(new JavaGrammarCreator(), JavaParserRulesPackages.CompilationUnit, new JavaContextualiser(), "java");
 
     private static final Map<String, Language> EXTENSION_LANGUAGES = new HashMap<>();
 
@@ -28,11 +30,14 @@ public enum Language {
     @Getter
     private final Grammar grammar;
     @Getter
+    private final ParserRule fileParserRule;
+    @Getter
     private final Contextualiser contextualiser;
     private final List<String> extensions;
 
-    Language(GrammarCreator grammarCreator, Contextualiser contextualiser, String... extensions) {
+    Language(GrammarCreator grammarCreator, ParserRule fileParserRule, Contextualiser contextualiser, String... extensions) {
         this.grammar = grammarCreator.create();
+        this.fileParserRule = fileParserRule;
         this.contextualiser = contextualiser;
         this.extensions = Arrays.asList(extensions);
     }

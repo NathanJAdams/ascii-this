@@ -14,7 +14,7 @@ public class GraphsBuilder {
         System.out.println("Parsed language " + language);
         if (language != null) {
             System.out.println("Getting builder");
-            GraphBuilder builder = builders.computeIfAbsent(language, key -> new GraphBuilder(language.getGrammar()));
+            GraphBuilder builder = builders.computeIfAbsent(language, key -> new GraphBuilder(language.getGrammar(), language.getFileParserRule()));
             System.out.println("Builder " + builder);
             System.out.println("Builder add file");
             builder.addFile(filePath);
