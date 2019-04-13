@@ -4,16 +4,16 @@ import com.repocleaner.parser_gen.LexerPart;
 import com.repocleaner.parser_gen.LexerRule;
 import com.repocleaner.parser_gen.ParseType;
 
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.Digits;
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.HexDigits;
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.HexNumeral;
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.Dot;
 import static com.repocleaner.parser_gen.LexerPartBuilder.and;
 import static com.repocleaner.parser_gen.LexerPartBuilder.classes;
 import static com.repocleaner.parser_gen.LexerPartBuilder.group;
 import static com.repocleaner.parser_gen.LexerPartBuilder.literal;
 import static com.repocleaner.parser_gen.LexerPartBuilder.or;
 import static com.repocleaner.parser_gen.LexerPartBuilder.ref;
-import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.Digits;
-import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.HexDigits;
-import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIntegerLiterals.HexNumeral;
-import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.Dot;
 
 public enum JavaLexerRulesFloatingPointLiterals implements LexerRule {
     BinaryExponentIndicator {
@@ -97,6 +97,11 @@ public enum JavaLexerRulesFloatingPointLiterals implements LexerRule {
         }
     },
     FloatingPointLiteral {
+        @Override
+        public ParseType getParseType() {
+            return ParseType.Included;
+        }
+
         @Override
         public LexerPart createLexerPart() {
             return or(ref(DecimalFloatingPointLiteral), ref(HexadecimalFloatingPointLiteral));

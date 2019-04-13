@@ -37,6 +37,7 @@ public enum ZipResponseType {
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 Writer writer = new OutputStreamWriter(bos);
                 writer.write(diff);
+                writer.close();
                 ZipUtil.zip(tempFolder, zipFile);
             } catch (IOException e) {
                 throw new RepoCleanerException("Failed to create diff file", e);

@@ -14,7 +14,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <repo-cleaner.version>0.0.1</repo-cleaner.version>
-        <aws.sdk.version>1.11.400</aws.sdk.version>
+        <aws.sdk.version>1.11.487</aws.sdk.version>
         <jackson.version>2.9.0</jackson.version>
     </properties>
 
@@ -41,11 +41,6 @@
         <dependencies>
             <!--core-->
             <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>3.4.0</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.firebase</groupId>
                 <artifactId>firebase-admin</artifactId>
                 <version>6.3.0</version>
@@ -68,8 +63,13 @@
 
             <!--aws-->
             <dependency>
-                <artifactId>aws-java-sdk-api-gateway</artifactId>
                 <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk</artifactId>
+                <version>${aws.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-apigatewayv2</artifactId>
                 <version>${aws.sdk.version}</version>
             </dependency>
             <dependency>
@@ -138,6 +138,7 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.0</version>
+                <scope>provided</scope>
             </dependency>
 
             <!--api-->
@@ -252,6 +253,7 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>2.15.0</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

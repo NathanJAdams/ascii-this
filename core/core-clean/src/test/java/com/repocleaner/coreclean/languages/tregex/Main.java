@@ -1,20 +1,9 @@
-package com.repocleaner.coreclean.tregex;
+package com.repocleaner.coreclean.languages.tregex;
 
-import com.repocleaner.coreclean.languages.java.JavaGrammarCreator;
-import com.repocleaner.parser_gen.Grammar;
-import com.repocleaner.parser_gen.ParseTreeFactory;
-import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesPackages;
-import com.repocleaner.parser_gen.streams.CharStream;
-import com.repocleaner.parser_gen.streams.CharStreamReader;
-import com.repocleaner.parser_gen.streams.FileCharStream;
 //import edu.stanford.nlp.trees.Tree;
 //import edu.stanford.nlp.trees.tregex.TregexPattern;
 //import edu.stanford.nlp.trees.tregex.tsurgeon.Tsurgeon;
 //import edu.stanford.nlp.trees.tregex.tsurgeon.TsurgeonPattern;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 public class Main {
 //    public static void main(String[] args) {
@@ -30,7 +19,6 @@ public class Main {
 //    private static void test(){
 //        long preCompile = System.nanoTime();
 //        Grammar grammar = new JavaGrammarCreator().create();
-//        grammar.compile();
 //        ParseTreeFactory<TreeNode, TreeNode, TreeNode> parseTreeFactory = new TreeNodeParseTreeFactory();
 //        long postCompile = System.nanoTime();
 //        long preLex = System.nanoTime();
@@ -67,7 +55,7 @@ public class Main {
 //        TregexPattern regex = TregexPattern.compile("ClassBodyDeclaration_Member=a");
 //        regex = TregexPattern.compile("ClassBodyDeclaration_Member=a <--. (MemberDeclaration .<-- (b not == a))");
 //        TregexMatcher matcher = regex.matcher(tree);
-//        List<Tree>trees = new ArrayList<>();
+//        List<Tree> trees = new ArrayList<>();
 //        while(matcher.findNextMatchingNode()){
 //            trees.add(matcher.getMatch());
 //        }

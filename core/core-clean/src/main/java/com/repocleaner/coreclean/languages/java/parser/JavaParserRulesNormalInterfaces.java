@@ -48,7 +48,7 @@ public enum JavaParserRulesNormalInterfaces implements ParserRule {
             return and(
                     "InterfaceBody",
                     ref(LBrace),
-                    ref(InterfaceBodyDeclaration),
+                    ref(InterfaceBodyDeclaration).any(),
                     ref(RBrace));
         }
     },

@@ -1,13 +1,4 @@
-package com.repocleaner.coreclean.tregex;
-
-import com.repocleaner.coreclean.languages.java.JavaGrammarCreator;
-import com.repocleaner.parser_gen.Grammar;
-import com.repocleaner.parser_gen.ParseTreeFactory;
-import com.repocleaner.coreclean.languages.java.parser.JavaParserRulesPackages;
-import com.repocleaner.parser_gen.streams.CharStream;
-import com.repocleaner.parser_gen.streams.CharStreamReader;
-import com.repocleaner.parser_gen.streams.FileCharStream;
-import java.io.File;
+package com.repocleaner.coreclean.languages.tregex;
 
 public class ExciseTest {
 //    private static void test() {

@@ -158,7 +158,7 @@ public enum JavaParserRulesTypes implements ParserRule {
                     and(
                             "TypeParameter_Extends",
                             ref(Extends),
-                            ref(Bound)));
+                            ref(Bound)).optional());
         }
     },
     Bound {

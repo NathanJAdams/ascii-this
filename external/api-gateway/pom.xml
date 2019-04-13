@@ -14,13 +14,8 @@
 
     <dependencies>
         <dependency>
-            <artifactId>aws-java-sdk-api-gateway</artifactId>
             <groupId>com.amazonaws</groupId>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk</artifactId>
-            <version>1.11.487</version>
+            <artifactId>aws-java-sdk-apigatewayv2</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

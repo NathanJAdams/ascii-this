@@ -34,4 +34,8 @@ public class Vertex extends GraphElement {
         vertex.setProperty(PropertyKeys.SOURCE_TEXT, text);
         return vertex;
     }
+
+    public static Vertex createEofVertex() {
+        return new Vertex(VertexType.SourceEof);
+    }
 }

@@ -89,14 +89,20 @@ public class Cleaner {
         int totalCost = 0;
         StringBuilder description = new StringBuilder();
         long maxCredits = initiator.getMaxCredits();
+        maxCredits = 10000;
         GraphWriter graphWriter = new GraphWriter();
         System.out.println("transforming graphs");
         for (Graph graph : languageGraphs.values()) {
             Transformation transformation = transformer.createTransformation(graph);
+            System.out.println("Transformation: " + transformation);
             if (transformation != null) {
                 int cost = coster.calculateTokenCost(transformation);
+                System.out.println("Cost: " + cost);
                 int newTotalCost = totalCost + cost;
+                System.out.println("Total cost: " + totalCost);
+                System.out.println("maxCredits: " + maxCredits);
                 if (newTotalCost > maxCredits) {
+                    System.out.println("total cost is more than max credits");
                     break;
                 }
                 totalCost = newTotalCost;

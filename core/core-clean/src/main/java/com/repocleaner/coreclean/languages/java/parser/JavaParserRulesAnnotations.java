@@ -3,17 +3,19 @@ package com.repocleaner.coreclean.languages.java.parser;
 import com.repocleaner.parser_gen.ParserPart;
 import com.repocleaner.parser_gen.ParserRule;
 
-import static com.repocleaner.parser_gen.ParserPartBuilder.and;
-import static com.repocleaner.parser_gen.ParserPartBuilder.or;
-import static com.repocleaner.parser_gen.ParserPartBuilder.ref;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesIdentifiers.Identifier;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesNonCodeSymbols.At;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesOperators.Assign;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.Comma;
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.LBrace;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.LParen;
+import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.RBrace;
 import static com.repocleaner.coreclean.languages.java.lexer.JavaLexerRulesSeparators.RParen;
 import static com.repocleaner.coreclean.languages.java.parser.JavaParserRulesExpressions.Expression1;
 import static com.repocleaner.coreclean.languages.java.parser.JavaParserRulesNames.QualifiedIdentifier;
+import static com.repocleaner.parser_gen.ParserPartBuilder.and;
+import static com.repocleaner.parser_gen.ParserPartBuilder.or;
+import static com.repocleaner.parser_gen.ParserPartBuilder.ref;
 
 public enum JavaParserRulesAnnotations implements ParserRule {
     Annotation {
@@ -74,11 +76,12 @@ public enum JavaParserRulesAnnotations implements ParserRule {
     ElementValueArrayInitializer {
         @Override
         public ParserPart createParserPart() {
-            // TODO does this need to be an array?
             return and(
                     "ElementValueArrayInitializer",
+                    ref(LBrace),
                     ref(ElementValues).optional(),
-                    ref(Comma).optional());
+                    ref(Comma).optional(),
+                    ref(RBrace));
         }
     },
     ElementValues {

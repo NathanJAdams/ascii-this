@@ -61,9 +61,15 @@ public class GraphBuilder {
         System.out.println("Adding file edges");
         addFileEdges(graph, repoVertex, folderVertices, filePath, contentsVertex);
         System.out.println("Adding recursive edges");
-        addRecursiveEdges(graph, mapping, parsed);
+        Vertex lastVertex = addRecursiveEdgesGetLast(graph, mapping, parsed);
         System.out.println("Adding hidden text");
         addHiddenText(mapping, parsed);
+        Vertex eofVertex = Vertex.createEofVertex();
+        String lastHiddenText = lastVertex.getProperty(PropertyKeys.NEXT_HIDDEN_TEXT);
+        eofVertex.setProperty(PropertyKeys.PREVIOUS_HIDDEN_TEXT, lastHiddenText);
+        graph.addVertex(eofVertex);
+        graph.addEdge(lastVertex, eofVertex, new Edge(EdgeType.NextSibling));
+        graph.addEdge(contentsVertex, eofVertex, new Edge(EdgeType.Eof));
     }
 
     private void addToMapping(Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) throws RepoCleanerException {
@@ -111,7 +117,8 @@ public class GraphBuilder {
         graph.addEdge(fileVertex, contentsVertex, new Edge(EdgeType.FirstChild));
     }
 
-    private void addRecursiveEdges(Graph graph, Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) {
+    private Vertex addRecursiveEdgesGetLast(Graph graph, Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) {
+        Vertex last = null;
         Vertex vertex = mapping.get(node);
         if (node instanceof ImmutableTreeBranch) {
             ImmutableTreeBranch branch = (ImmutableTreeBranch) node;
@@ -121,17 +128,20 @@ public class GraphBuilder {
                 Vertex childVertex = mapping.get(firstChild);
                 graph.addEdge(vertex, childVertex, new Edge(EdgeType.FirstChild));
                 graph.addEdge(vertex, childVertex, new Edge(EdgeType.Child));
-                addRecursiveEdges(graph, mapping, firstChild);
+                last = addRecursiveEdgesGetLast(graph, mapping, firstChild);
                 for (int i = 1; i < children.size(); i++) {
                     ImmutableTreeNode nextSibling = children.get(i);
                     Vertex nextSiblingVertex = mapping.get(nextSibling);
                     graph.addEdge(vertex, nextSiblingVertex, new Edge(EdgeType.Child));
                     graph.addEdge(childVertex, nextSiblingVertex, new Edge(EdgeType.NextSibling));
-                    addRecursiveEdges(graph, mapping, nextSibling);
+                    last = addRecursiveEdgesGetLast(graph, mapping, nextSibling);
                     childVertex = nextSiblingVertex;
                 }
             }
         }
+        return (last == null)
+                ? vertex
+                : last;
     }
 
     private void addHiddenText(Map<ImmutableTreeNode, Vertex> mapping, ImmutableTreeNode node) {

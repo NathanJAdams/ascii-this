@@ -6,7 +6,8 @@ public enum EdgeType implements GraphElementType {
     FolderContainsFile,
     Child,
     FirstChild,
-    NextSibling;
+    NextSibling,
+    Eof;
 
     @Override
     public String getName() {

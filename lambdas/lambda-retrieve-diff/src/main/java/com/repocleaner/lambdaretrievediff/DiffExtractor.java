@@ -77,13 +77,20 @@ public class DiffExtractor {
             }
             String[] lineNumberPartsFrom = lineNumberParts[1].split(",");
             String[] lineNumberPartsTo = lineNumberParts[2].split(",");
-            if ((lineNumberPartsFrom.length != 2) || (lineNumberPartsTo.length != 2)) {
+            if ((lineNumberPartsFrom.length == 0) || (lineNumberPartsTo.length == 0)) {
+                throwError("Error in diff format", null);
+            }
+            if ((lineNumberPartsFrom.length > 2) || (lineNumberPartsTo.length > 2)) {
                 throwError("Error in diff format", null);
             }
             int fromIndexA = Integer.valueOf(lineNumberPartsFrom[0]);
-            int countA = Integer.valueOf(lineNumberPartsFrom[1]);
+            int countA = (lineNumberPartsFrom.length == 1)
+                    ? 0
+                    : Integer.valueOf(lineNumberPartsFrom[1]);
             int fromIndexB = Integer.valueOf(lineNumberPartsTo[0]);
-            int countB = Integer.valueOf(lineNumberPartsTo[1]);
+            int countB = (lineNumberPartsTo.length == 1)
+                    ? 0
+                    : Integer.valueOf(lineNumberPartsTo[1]);
             fileDiffBuilder.setFileLines(fromIndexA, fromIndexB, countA, countB);
         } catch (NumberFormatException e) {
             throwError("Error in diff format", e);

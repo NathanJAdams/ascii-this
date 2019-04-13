@@ -76,7 +76,6 @@ public class ParseJavaGrammarTest {
         testText("a<<0", JavaParserRulesExpressions.Expression);
         testText("a>9", JavaParserRulesExpressions.Expression);
         testText("(a)", JavaParserRulesExpressions.Expression);
-        testText("System.nanoTime();", JavaParserRulesExpressions.Expression);
     }
 
     @Test
@@ -92,6 +91,9 @@ public class ParseJavaGrammarTest {
         testText("a++;", JavaParserRulesStatements.Statement, "Statement_Expression");
         testText("a+b;", JavaParserRulesStatements.Statement, "Statement_Expression");
         testText("10*8;", JavaParserRulesStatements.Statement, "Statement_Expression");
+        testText("System.nanoTime();", JavaParserRulesStatements.Statement, "Statement_Expression");
+        testText("map.put(null, 0.0)", JavaParserRulesExpressions.Expression);
+        testText("map.put(null, 0.0);", JavaParserRulesStatements.Statement, "Statement_Expression");
         testText("long preCompile = System.nanoTime();", JavaParserRulesStatements.LocalVariableDeclarationStatement);
         testText("String a = \"string\";", JavaParserRulesStatements.LocalVariableDeclarationStatement);
         testText("boolean b = true;", JavaParserRulesStatements.LocalVariableDeclarationStatement);
@@ -133,8 +135,9 @@ public class ParseJavaGrammarTest {
         ImmutableTreeNode node = grammar.parse(reader, parserRule, parseTreeFactory);
         if (node == null) {
             Assert.fail();
-        } else {
-            assertEquals(name, node.getName());
         }
+        assertEquals(name, node.getName());
+        assertEquals(0, reader.length());
+        assertEquals(text.length(), reader.getPosition());
     }
 }

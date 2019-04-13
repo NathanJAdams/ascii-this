@@ -4,7 +4,7 @@ import com.repocleaner.coreclean.graph.Graph;
 import com.repocleaner.coreclean.graph.PropertyKeys;
 import com.repocleaner.coreclean.graph.Vertex;
 import com.repocleaner.coreclean.graph.match.VertexMatcher;
-import com.repocleaner.coreclean.graph.match.matchers.vertex.LeafSourceTypeVertexMatcher;
+import com.repocleaner.coreclean.graph.match.matchers.vertex.EofVertexMatcher;
 import com.repocleaner.coreclean.transform.SuccessStrategy;
 import com.repocleaner.coreclean.transform.Transformation;
 import com.repocleaner.coreclean.transform.Transformer;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EOFTransformer implements Transformer {
-    private final VertexMatcher EOF_MATCHER = new LeafSourceTypeVertexMatcher("EOF");
+    private final VertexMatcher EOF_MATCHER = new EofVertexMatcher();
     private final String eofText;
 
     public EOFTransformer(String eofText) {

@@ -5,7 +5,8 @@ public enum VertexType implements GraphElementType {
     Folder,
     File,
     SourceBranch,
-    SourceLeaf;
+    SourceLeaf,
+    SourceEof;
 
     @Override
     public String getName() {
