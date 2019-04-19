@@ -11,16 +11,23 @@
 
     <properties>
         <main.class>LambdaClass</main.class>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <modules>
+        <module>lambda-clean</module>
+        <module>lambda-encrypt-repo-token</module>
+        <module>lambda-download</module>
+        <module>lambda-request-api</module>
+        <module>lambda-request-cron</module>
+        <module>lambda-request-web</module>
+        <module>lambda-retrieve-diff</module>
+        <module>lambda-send</module>
+    </modules>
+
     <dependencies>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>connector-repo-hosts</artifactId>
-            <version>0.0.1</version>
-        </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>core</artifactId>
@@ -34,18 +41,40 @@
         </dependency>
     </dependencies>
 
-    <modules>
-        <module>lambda-clean</module>
-        <module>lambda-encrypt-repo-token</module>
-        <module>lambda-download</module>
-        <module>lambda-request-api</module>
-        <module>lambda-request-cron</module>
-        <module>lambda-request-web</module>
-        <module>lambda-retrieve-diff</module>
-        <module>lambda-send</module>
-    </modules>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>s3_repo</id>
+            <url>s3://repository.repocleaner.com/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>s3_repo</id>
+            <url>s3://repository.repocleaner.com/releases</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>s3_repo</id>
+            <url>s3://repository.repocleaner.com/releases</url>
+        </repository>
+    </repositories>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

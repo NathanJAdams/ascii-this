@@ -24,17 +24,17 @@
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
+            <artifactId>connector-repo-hosts</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
             <artifactId>connector-s3</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
             <artifactId>connector-secrets</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>repo-hosts</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

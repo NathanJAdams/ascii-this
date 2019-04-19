@@ -1,0 +1,9 @@
+image: maven:3.3.9
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - maven
+        script:
+          - mvn -B -s settings.xml clean deploy -Dusername="$S3_ACCESS_KEY" -Dpassword="$S3_SECRET_ACCESS_KEY"
