@@ -4,118 +4,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.repocleaner</groupId>
-    <artifactId>lambdas</artifactId>
-    <version>0.0.1</version>
-    <packaging>pom</packaging>
+    <parent>
+        <groupId>com.repocleaner</groupId>
+        <artifactId>lambda-base</artifactId>
+        <version>0.0.1</version>
+        <relativePath>maven-common/lambda-base.xml</relativePath>
+    </parent>
+
+    <artifactId>lambda-clean</artifactId>
 
     <properties>
-        <main.class>LambdaClass</main.class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <main.class>com.repocleaner.lambdaclean.CleanLambda</main.class>
     </properties>
-
-    <modules>
-        <module>lambda-clean</module>
-        <module>lambda-encrypt-repo-token</module>
-        <module>lambda-download</module>
-        <module>lambda-request-api</module>
-        <module>lambda-request-cron</module>
-        <module>lambda-request-web</module>
-        <module>lambda-retrieve-diff</module>
-        <module>lambda-send</module>
-    </modules>
 
     <dependencies>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>core</artifactId>
-            <version>0.0.1</version>
+            <artifactId>connector-s3</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
-            <scope>provided</scope>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.repocleaner</groupId>
+            <artifactId>cleaner</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
         </dependency>
     </dependencies>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>s3_repo</id>
-            <url>s3://repository.repocleaner.com/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>s3_repo</id>
-            <url>s3://repository.repocleaner.com/releases</url>
-        </repository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-        <repository>
-            <id>s3_repo</id>
-            <url>s3://repository.repocleaner.com/releases</url>
-        </repository>
-    </repositories>
-
-    <build>
-        <extensions>
-            <extension>
-                <groupId>org.springframework.build</groupId>
-                <artifactId>aws-maven</artifactId>
-                <version>5.0.0.RELEASE</version>
-            </extension>
-        </extensions>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>${main.class}</mainClass>
-                        </transformer>
-                    </transformers>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>all</shadedClassifierName>
-                    <artifactSet>
-                        <includes>
-                            <include>*:*</include>
-                        </includes>
-                    </artifactSet>
-                    <minimizeJar>false</minimizeJar>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

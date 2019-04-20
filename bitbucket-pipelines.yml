@@ -6,4 +6,5 @@ pipelines:
         caches:
           - maven
         script:
-          - mvn -B -s settings.xml clean deploy -Dusername="$S3_ACCESS_KEY" -Dpassword="$S3_SECRET_ACCESS_KEY"
+          - git clone https://RepoCleaner:${BB_READ_TOKEN}@bitbucket.org/repocleaner/maven-common.git
+          - mvn -B -s maven-common/settings.xml clean deploy -Dusername="$S3_ACCESS_KEY" -Dpassword="$S3_SECRET_ACCESS_KEY"
