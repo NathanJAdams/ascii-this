@@ -1,4 +1,4 @@
-image: maven:3.3.9
+image: contentwisetv/maven-aws-docker-gosu
 
 pipelines:
   default:
@@ -7,4 +7,6 @@ pipelines:
           - maven
         script:
           - git clone https://RepoCleaner:${BB_READ_TOKEN}@bitbucket.org/repocleaner/maven-common.git
-          - mvn -B -s maven-common/settings.xml clean deploy -Dusername="$S3_ACCESS_KEY" -Dpassword="$S3_SECRET_ACCESS_KEY"
+          - mv maven-common/*.sh maven-common/settings.xml -t .
+          - chmod +x deploy-lambda.sh
+          - ./deploy-lambda.sh "clean"
