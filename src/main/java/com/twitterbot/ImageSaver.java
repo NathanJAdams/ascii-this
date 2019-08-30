@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class ImageSaver {
     public static File toFile(BufferedImage image) {
         String name = UUID.randomUUID().toString();
-        File file = new File("C:/Users/Nathan/Desktop/" + name + ".png");
+        File file = new File("/tmp/" + name + ".png");
         try {
             ImageIO.write(image, "png", file);
             return file;
