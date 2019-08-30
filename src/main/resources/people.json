@@ -1,0 +1,188 @@
+{
+  "people": [
+    {
+      "name": "Donald Trump",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "realDonaldTrump",
+        "Facebook": "DonaldTrump"
+      }
+    },
+    {
+      "name": "Joe Walsh",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "WalshFreedom",
+        "Facebook": "joewalsh"
+      }
+    },
+    {
+      "name": "Bill Weld",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "GovBillWeld",
+        "Facebook": "GovBillWeld"
+      }
+    },
+    {
+      "name": "Michael Bennet",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "MichaelBennet",
+        "Facebook": "michaelbennet"
+      }
+    },
+    {
+      "name": "Joe Biden",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "JoeBiden",
+        "Facebook": "joebiden"
+      }
+    },
+    {
+      "name": "Cory Booker",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "CoryBooker",
+        "Facebook": "corybooker"
+      }
+    },
+    {
+      "name": "Steve Bullock",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "GovernorBullock",
+        "Facebook": "GovernorBullock"
+      }
+    },
+    {
+      "name": "Pete Buttigieg",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "PeteButtigieg",
+        "Facebook": "petebuttigieg1"
+      }
+    },
+    {
+      "name": "Julián Castro",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "JulianCastro",
+        "Facebook": "julianforthefuture"
+      }
+    },
+    {
+      "name": "Bill de Blasio",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "BilldeBlasio",
+        "Facebook": "bill.deblasio"
+      }
+    },
+    {
+      "name": "John Delaney",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "JohnDelaney",
+        "Facebook": "JohnKDelaneyJKD"
+      }
+    },
+    {
+      "name": "Tulsi Gabbard",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "TulsiGabbard",
+        "Facebook": "TulsiGabbard"
+      }
+    },
+    {
+      "name": "Kamala Harris",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "KamalaHarris",
+        "Facebook": "KamalaHarris"
+      }
+    },
+    {
+      "name": "Amy Klobuchar",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "AmyKlobuchar",
+        "Facebook": "amyklobuchar"
+      }
+    },
+    {
+      "name": "Wayne Messam",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "WayneMessam",
+        "Facebook": "WayneForAmerica"
+      }
+    },
+    {
+      "name": "Beto O'Rourke",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "BetoORourke",
+        "Facebook": "betoorourke"
+      }
+    },
+    {
+      "name": "Tim Ryan",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "TimRyan",
+        "Facebook": "timryan"
+      }
+    },
+    {
+      "name": "Bernie Sanders",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "BernieSanders",
+        "Facebook": "berniesanders"
+      }
+    },
+    {
+      "name": "Joe Sestak",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "JoeSestak",
+        "Facebook": "joesestak"
+      }
+    },
+    {
+      "name": "Tom Steyer",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "TomSteyer",
+        "Facebook": "officialtomsteyer"
+      }
+    },
+    {
+      "name": "Elizabeth Warren",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "ewarren",
+        "Facebook": "ElizabethWarren"
+      }
+    },
+    {
+      "name": "Marianne Williamson",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "marwilliamson",
+        "Facebook": "williamsonmarianne"
+      }
+    },
+    {
+      "name": "Andrew Yang",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "AndrewYang",
+        "Facebook": "andrewyang2020"
+      }
+    }
+  ]
+}

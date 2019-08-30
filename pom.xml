@@ -11,36 +11,38 @@
         <relativePath>maven-common/lambda-base.xml</relativePath>
     </parent>
 
-    <artifactId>lambda-clean</artifactId>
+    <artifactId>lambda-twitter-bot</artifactId>
 
     <properties>
-        <main.class>com.repocleaner.lambdaclean.CleanLambda</main.class>
+        <main.class>com.twitterbot.TwitterBot</main.class>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>connector-s3</artifactId>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.repocleaner</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>cleaner</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>sinks</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.repocleaner</groupId>
-            <artifactId>sources</artifactId>
+            <artifactId>connector-dynamodb</artifactId>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-lambda-java-core</artifactId>
+            <artifactId>aws-lambda-java-events</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>4.0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>
