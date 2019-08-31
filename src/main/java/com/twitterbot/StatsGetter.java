@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import twitter4j.DirectMessage;
 
 public class StatsGetter {
-    private static final String TAG = "2020 US Presidential Candidates";
+    public static final String TAG = "2020 US Presidential Candidates";
     private static final Gson GSON = new Gson();
 
     public static Map<Person, SocialMediaChanges> getPeopleChanges(People people, long today, int days) {

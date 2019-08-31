@@ -64,7 +64,7 @@ public class ImageCreator {
         g.setFont(TITLE_FONT);
         g.setColor(TEXT);
         g.drawString("Top 10 Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
-        g.drawString("2020 US Presidential Candidates", BAR_LEFT, TITLE_TOP + 40);
+        g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
 
         int barTop = BAR_TOP;
         int nameTop = NAME_TOP;

@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,36 +26,6 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
     private static final Gson GSON = new Gson();
 
     public static void main(String[] args) {
-//        List<DirectMessage> dms = TwitterAPI.getDMs(a -> true);
-//        dms.forEach(System.out::println);
-//        TwitterBot twitterBot = new TwitterBot();
-//        List<SocialMediaCount> list = new ArrayList<>();
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "dogeth0", 12));
-//        list.add(new SocialMediaCount(SocialMedia.Twitter, "twatter", 123));
-//        DatedRawCounts datedRawCounts = new DatedRawCounts("#US Presidential Candidates", LocalDate.now().toEpochDay(), list);
-//        String json = GSON.toJson(datedRawCounts);
-//        TwitterAPI.dm("who_viral", json);
-
-//        List<DirectMessage>dms = TwitterAPI.getDMs(dm->true);
-//        dms.forEach(System.out::println);
         new TwitterBot().handleRequest(null, null);
     }
 
@@ -82,7 +51,8 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
             for (int i = 0; i < mediaIDsList.size(); i++) {
                 mediaIDs[i] = mediaIDsList.get(i);
             }
-            TwitterAPI.tweet("Hello World!", mediaIDs);
+            String text = TextCreator.createText(peopleChanges, Theme.Percentage, 3);
+            TwitterAPI.tweet(text, mediaIDs);
         }
         return null;
     }
@@ -115,7 +85,10 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
     }
 
     private Person getPerson(String name, String affiliation) {
-        return new Person(name, affiliation, Collections.emptyMap());
+        Map<SocialMedia, String> accounts = new HashMap<>();
+        accounts.put(SocialMedia.Twitter, name.replace(" ", "_"));
+        accounts.put(SocialMedia.Facebook, name.replace(" ", "_"));
+        return new Person(name, affiliation, accounts);
     }
 
     private Map<SocialMedia, Change> getSocialMediaChanges() {
