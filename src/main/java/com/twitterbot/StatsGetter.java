@@ -8,7 +8,6 @@ import com.twitterbot.data.Person;
 import com.twitterbot.data.SocialMedia;
 import com.twitterbot.data.SocialMediaChanges;
 import com.twitterbot.data.SocialMediaCount;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,10 @@ import java.util.stream.Collectors;
 import twitter4j.DirectMessage;
 
 public class StatsGetter {
-    private static final String TAG = "#US Presidential Candidates";
+    private static final String TAG = "2020 US Presidential Candidates";
     private static final Gson GSON = new Gson();
 
-    public static Map<Person, SocialMediaChanges> getPeopleChanges(People people, int days) {
-        long today = LocalDate.now().toEpochDay();
+    public static Map<Person, SocialMediaChanges> getPeopleChanges(People people, long today, int days) {
         long previous = today - days;
         DatedRawCounts previousDatedRawCounts = getPreviousDatedRawCounts(people, previous);
         DatedRawCounts todaysDatedRawCounts = getTodaysDatedRawCounts(people, today);

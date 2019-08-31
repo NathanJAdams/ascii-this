@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,13 +66,14 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
             System.out.println("No people found");
             return null;
         }
-        Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, DAYS_AVERAGED);
+        long today = LocalDate.now().toEpochDay();
+        Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
         if (peopleChanges != null && !peopleChanges.isEmpty()) {
             int max = 10;
             List<Long> mediaIDsList = new ArrayList<>();
             for (SocialMedia socialMedia : SocialMedia.values()) {
                 for (Theme theme : Theme.values()) {
-                    BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, theme, max);
+                    BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, theme, max, today, DAYS_AVERAGED);
                     File file = ImageSaver.toFile(image);
                     mediaIDsList.add(TwitterAPI.uploadFile(file));
                 }

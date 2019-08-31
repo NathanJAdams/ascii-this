@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ImageCreator {
         FORMAT.setMinimumFractionDigits(2);
     }
 
-    public static BufferedImage createImage(SocialMedia socialMedia, Map<Person, SocialMediaChanges> peopleChanges, Theme theme, int max) {
+    public static BufferedImage createImage(SocialMedia socialMedia, Map<Person, SocialMediaChanges> peopleChanges, Theme theme, int max, long today, int days) {
         System.out.println("Creating image for " + socialMedia + " with theme " + theme);
         BufferedImage bufferedImage = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics graphics = bufferedImage.getGraphics();
@@ -112,9 +113,11 @@ public class ImageCreator {
             String text = person.getName() + " (" + person.getAffiliation() + ") +" + theme.getFormat().format(change);
             g.drawString(text, NAME_LEFT, nameTop);
         }
+        LocalDate from = LocalDate.ofEpochDay(today - days + 1);
+        LocalDate to = LocalDate.ofEpochDay(today);
         g.setFont(FOOTNOTE_FONT);
         g.drawString("Percentage increase in daily Twitter followers", FOOTNOTE_LEFT, FOOTNOTE_TOP);
-        g.drawString("(averaged between 2019-08-14 and 2019-08-20 inclusive)", FOOTNOTE_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
+        g.drawString("(averaged between " + from + " and " + to + " inclusive)", FOOTNOTE_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
         return bufferedImage;
     }
 }
