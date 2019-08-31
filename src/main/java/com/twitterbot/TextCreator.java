@@ -21,7 +21,9 @@ public class TextCreator {
             while (sorted.size() > max) {
                 sorted.remove(sorted.size() - 1);
             }
-            sb.append("Top 3 Viral ");
+            sb.append("Top ");
+            sb.append(max);
+            sb.append(" Viral ");
             sb.append(StatsGetter.TAG);
             sb.append(" on ");
             sb.append(socialMedia);
