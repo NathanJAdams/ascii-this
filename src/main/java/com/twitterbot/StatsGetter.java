@@ -99,16 +99,24 @@ public class StatsGetter {
     }
 
     private static Change calculateChange(int start, int end, int days) {
-        double ratioChange;
+        double ratioChange = calculateRatioChange(start, end, days);
+        double rawChange = calculateRawChange(start, end, days);
+        return new Change(ratioChange, rawChange);
+    }
+
+    private static double calculateRatioChange(int start, int end, int days) {
         if (start == end || end == 0) {
-            ratioChange = 0;
+            return 0;
         } else {
             double multiple = (double) end / start;
-            ratioChange = multiple - 1;
+            double exponent = 1.0 / days;
+            double averageMultiple = Math.pow(multiple, exponent);
+            return averageMultiple - 1;
         }
+    }
+
+    private static double calculateRawChange(int start, int end, int days) {
         double rawChange = end - start;
-        ratioChange /= days;
-        rawChange /= days;
-        return new Change(ratioChange, rawChange);
+        return rawChange / days;
     }
 }

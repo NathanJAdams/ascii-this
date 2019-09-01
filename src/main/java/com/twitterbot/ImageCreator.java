@@ -46,7 +46,6 @@ public class ImageCreator {
 
     private static final int FOOTNOTE_TOP = 490;
     private static final int FOOTNOTE_HEIGHT = 15;
-    private static final int FOOTNOTE_LEFT = 124;
 
     static {
         FORMAT.setMaximumFractionDigits(2);
@@ -63,7 +62,7 @@ public class ImageCreator {
         g.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         g.setFont(TITLE_FONT);
         g.setColor(TEXT);
-        g.drawString("Top 10 Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
+        g.drawString("Top " + max + " Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
         g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
 
         int barTop = BAR_TOP;
@@ -113,11 +112,11 @@ public class ImageCreator {
             String text = person.getName() + " (" + person.getAffiliation() + ") +" + theme.getFormat().format(change);
             g.drawString(text, NAME_LEFT, nameTop);
         }
-        LocalDate from = LocalDate.ofEpochDay(today - days + 1);
+        LocalDate from = LocalDate.ofEpochDay(today - days);
         LocalDate to = LocalDate.ofEpochDay(today);
         g.setFont(FOOTNOTE_FONT);
-        g.drawString("Percentage increase in daily Twitter followers", FOOTNOTE_LEFT, FOOTNOTE_TOP);
-        g.drawString("(averaged between " + from + " and " + to + " inclusive)", FOOTNOTE_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
+        g.drawString("Percentage increase in daily " + socialMedia.getAccountName(), BAR_LEFT, FOOTNOTE_TOP);
+        g.drawString("(averaged between " + from + " 8:00am CST and " + to + " 8:00am CST)", BAR_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
         return bufferedImage;
     }
 }
