@@ -26,9 +26,9 @@ public class ImageCreator {
     private static final Color BAR_ACTUAL_POSITIVE = new Color(170, 170, 255);
     private static final Color TEXT = new Color(70, 70, 70);
 
-    private static final Font TITLE_FONT = new Font("Arial", Font.PLAIN, 28);
+    private static final Font TITLE_FONT = new Font("Arial", Font.PLAIN, 26);
     private static final Font TEXT_FONT = new Font("Arial", Font.PLAIN, 20);
-    private static final Font FOOTNOTE_FONT = new Font("Arial", Font.PLAIN, 12);
+    private static final Font FOOTNOTE_FONT = new Font("Arial", Font.PLAIN, 10);
 
     private static final int IMAGE_WIDTH = 460;
     private static final int IMAGE_HEIGHT = 512;
