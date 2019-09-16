@@ -72,11 +72,11 @@ public class StatsGetter {
     private static Map<Person, SocialMediaChanges> getPeopleChanges(People people, DatedRawCounts previousDatedRawCounts, DatedRawCounts todaysDatedRawCounts, int days) {
         System.out.println("Getting people changes");
         Map<Person, SocialMediaChanges> peopleChanges = new HashMap<>();
-        for (Map.Entry<String, SocialMediaCount> entry : previousDatedRawCounts.getAccountSocialMediaCounts().entrySet()) {
+        for (Map.Entry<String, SocialMediaCount> entry : todaysDatedRawCounts.getAccountSocialMediaCounts().entrySet()) {
             String name = entry.getKey();
-            SocialMediaCount previousSocialMediaCount = entry.getValue();
-            SocialMediaCount todaysSocialMediaCount = todaysDatedRawCounts.getAccountSocialMediaCounts().get(name);
-            if (todaysSocialMediaCount != null) {
+            SocialMediaCount previousSocialMediaCount = previousDatedRawCounts.getAccountSocialMediaCounts().get(name);
+            SocialMediaCount todaysSocialMediaCount = entry.getValue();
+            if (previousSocialMediaCount != null) {
                 Map<SocialMedia, Change> socialMediaChanges = new HashMap<>();
                 for (Map.Entry<SocialMedia, Integer> socialMediaCount : previousSocialMediaCount.getSocialMediaCounts().entrySet()) {
                     SocialMedia socialMedia = socialMediaCount.getKey();

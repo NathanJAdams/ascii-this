@@ -1,6 +1,14 @@
 {
   "people": [
     {
+      "name": "Mark Sanford",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "MarkSanford",
+        "Facebook": "marksanford"
+      }
+    },
+    {
       "name": "Donald Trump",
       "affiliation": "REP",
       "accounts": {
