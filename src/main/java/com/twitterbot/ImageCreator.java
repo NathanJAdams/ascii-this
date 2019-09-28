@@ -60,10 +60,6 @@ public class ImageCreator {
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g.setColor(BACKGROUND);
         g.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-        g.setFont(TITLE_FONT);
-        g.setColor(TEXT);
-        g.drawString("Top " + max + " Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
-        g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
 
         int barTop = BAR_TOP;
         int nameTop = NAME_TOP;
@@ -75,6 +71,16 @@ public class ImageCreator {
         while (sorted.size() > max) {
             sorted.remove(sorted.size() - 1);
         }
+        max = sorted.size();
+        if (max <= 0) {
+            System.out.println("There are only " + max + " entries for " + socialMedia + " so won't create an image");
+            return null;
+        }
+        g.setFont(TITLE_FONT);
+        g.setColor(TEXT);
+        g.drawString("Top " + max + " Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
+        g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
+
         StatsRange statsRange = theme.getStatsRange(socialMedia, sorted);
         double range = statsRange.getMax() - statsRange.getMin();
         int zero = 0;
