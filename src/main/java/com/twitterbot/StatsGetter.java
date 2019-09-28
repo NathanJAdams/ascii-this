@@ -52,11 +52,14 @@ public class StatsGetter {
         for (Person person : people.getPeople()) {
             Map<SocialMedia, Integer> socialMediaCounts = new HashMap<>();
             for (Map.Entry<SocialMedia, String> entry : person.getAccounts().entrySet()) {
+                System.out.println(entry);
                 SocialMedia socialMedia = entry.getKey();
                 String account = entry.getValue();
                 int latest = socialMedia.getLatest(account);
                 System.out.println(latest);
-                socialMediaCounts.put(socialMedia, latest);
+                if (latest != -1) {
+                    socialMediaCounts.put(socialMedia, latest);
+                }
             }
             accountSocialMediaCounts.put(person.getName(), new SocialMediaCount(socialMediaCounts));
         }
@@ -69,7 +72,7 @@ public class StatsGetter {
         TwitterAPI.dm("who_viral", GSON.toJson(datedRawCounts));
     }
 
-    private static Map<Person, SocialMediaChanges> getPeopleChanges(People people, DatedRawCounts previousDatedRawCounts, DatedRawCounts todaysDatedRawCounts, int days) {
+    public static Map<Person, SocialMediaChanges> getPeopleChanges(People people, DatedRawCounts previousDatedRawCounts, DatedRawCounts todaysDatedRawCounts, int days) {
         System.out.println("Getting people changes");
         Map<Person, SocialMediaChanges> peopleChanges = new HashMap<>();
         for (Map.Entry<String, SocialMediaCount> entry : todaysDatedRawCounts.getAccountSocialMediaCounts().entrySet()) {
