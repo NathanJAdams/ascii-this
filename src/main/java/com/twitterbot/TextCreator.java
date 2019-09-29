@@ -21,7 +21,7 @@ public class TextCreator {
             while (sorted.size() > max) {
                 sorted.remove(sorted.size() - 1);
             }
-            max = sorted.size();
+            max =Math.min(max, sorted.size());
             if(max>0) {
                 sb.append("Top ");
                 sb.append(max);
