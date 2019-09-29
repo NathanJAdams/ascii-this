@@ -43,7 +43,7 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         return null;
     }
 
-    public People getPeople() {
+    private People getPeople() {
         try (InputStream is = TwitterBot.class.getResourceAsStream("/people.json");
              InputStreamReader isr = new InputStreamReader(is)) {
             return GSON.fromJson(isr, People.class);

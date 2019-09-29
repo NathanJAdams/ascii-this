@@ -8,88 +8,67 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SocialMedia {
-    Twitter("Twitter followers") {
+    Twitter("Twitter followers", "title *= *\"([0-9,]+) *Followers *\"") {
         @Override
-        public int getLatestReal(String account) {
-            System.out.println("Getting twitter followers for " + account);
-            String url = "https://twitter.com/" + account;
-            try {
-                Document doc = Jsoup.connect(url).get();
-                Elements list = doc.select("li[class=ProfileNav-item ProfileNav-item--followers]");
-                Elements value = list.select("span[class=ProfileNav-value]");
-                String count = value.attr("data-count");
-                return toInt(count);
-            } catch (IOException e) {
-                return -1;
-            }
+        public String createAccountUrl(String account) {
+            return "https://twitter.com/" + account;
         }
     },
-    Facebook("Facebook likes") {
+    Facebook("Facebook likes", "([0-9,]+) *< *span *class *= *\"_50f8 _50f4 _5kx5\" *> *likes") {
         @Override
-        public int getLatestReal(String account) {
-            System.out.println("Getting facebook likes for " + account);
-            String url = "https://facebook.com/" + account;
-            try {
-                Document doc = Jsoup.connect(url).get();
-                Elements likes = doc.select("span[id=PagesLikesCountDOMID]");
-                Elements value = likes.select("span[class=_52id _50f5 _50f7]");
-                String text = value.text();
-                String count = text.substring(0, text.length() - 6);
-                return toInt(count);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return -1;
-            }
+        public String createAccountUrl(String account) {
+            return "https://facebook.com/" + account;
         }
     },
-    Instagram("Instagram followers") {
-        private final Pattern COUNT_PATTERN = Pattern.compile("\"edge_followed_by\" *: *\\{ *\"count\" *: *(\\d+)}");
-
+    Instagram("Instagram followers", "\"edge_followed_by\" *: *\\{ *\"count\" *: *(\\d+) *}") {
         @Override
-        public int getLatestReal(String account) {
-            System.out.println("Getting instagram followers for " + account);
-            String url = "https://instagram.com/" + account;
-            try {
-                String html = Jsoup.connect(url).get().toString();
-                Matcher matcher = COUNT_PATTERN.matcher(html);
-                if (matcher.find()) {
-                    String count = matcher.group(1);
-                    return toInt(count);
-                } else {
-                    System.out.println("Couldn't find count pattern in instagram page");
-                    return -1;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return -1;
-            }
+        public String createAccountUrl(String account) {
+            return "https://instagram.com/" + account;
         }
     },
-    YouTube("YouTube views") {
+    YouTube("YouTube views", "<span *class *= *\"about-stat\" *>.*< *b *> *([0-9,]+) *< */b *> *views *< */span *>") {
         @Override
-        public int getLatestReal(String account) {
-            System.out.println("Getting youtube views for " + account);
-            String url = "https://youtube.com/" + account + "/about";
-            try {
-                Document doc = Jsoup.connect(url).get();
-                Elements divs = doc.select("div[class=about-metadata-container]");
-                Elements spans = divs.select("span[class=about-stat]");
-                Elements stats = spans.select("b");
-                String text = stats.text();
-                return toInt(text);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return -1;
-            }
+        public String createAccountUrl(String account) {
+            return "https://youtube.com/" + account + "/about";
         }
     };
 
     @Getter
-    private final String accountName;
+    private final String accountDescription;
+    private final Pattern countPattern;
+
+    SocialMedia(String accountDescription, String countRegex) {
+        this.accountDescription = accountDescription;
+        this.countPattern = Pattern.compile(countRegex);
+    }
+
+    public abstract String createAccountUrl(String account);
+
+    public int getLatest(String account) {
+        if (account == null || account.isEmpty()) {
+            return -1;
+        }
+        System.out.println("Getting " + getAccountDescription() + " for " + account);
+        String url = createAccountUrl(account);
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String html = doc.body().html();
+            Matcher matcher = countPattern.matcher(html);
+            if (matcher.find()) {
+                String count = matcher.group(1);
+                return toInt(count);
+            } else {
+                System.out.println("Couldn't find count " + name() + " pattern for account " + account);
+                return -1;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     public int toInt(String count) {
         String noCommas = count.replace(",", "");
@@ -102,14 +81,4 @@ public enum SocialMedia {
             return -1;
         }
     }
-
-    public final int getLatest(String account) {
-        if (account == null || account.isEmpty()) {
-            return -1;
-        } else {
-            return getLatestReal(account);
-        }
-    }
-
-    public abstract int getLatestReal(String account);
 }

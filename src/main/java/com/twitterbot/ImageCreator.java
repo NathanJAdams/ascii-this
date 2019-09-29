@@ -121,7 +121,7 @@ public class ImageCreator {
         LocalDate from = LocalDate.ofEpochDay(today - days);
         LocalDate to = LocalDate.ofEpochDay(today);
         g.setFont(FOOTNOTE_FONT);
-        g.drawString("Percentage increase in daily " + socialMedia.getAccountName(), BAR_LEFT, FOOTNOTE_TOP);
+        g.drawString("Percentage increase in daily " + socialMedia.getAccountDescription(), BAR_LEFT, FOOTNOTE_TOP);
         g.drawString("(averaged between " + from + " 8:00am CST and " + to + " 8:00am CST)", BAR_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
         return bufferedImage;
     }
