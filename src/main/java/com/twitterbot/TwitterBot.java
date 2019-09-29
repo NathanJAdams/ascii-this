@@ -37,9 +37,8 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         long today = LocalDate.now().toEpochDay();
         Map<Person, SocialMediaChanges> peopleChanges =  StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
         if (peopleChanges != null && !peopleChanges.isEmpty()) {
-            int max = 10;
-            tweet(peopleChanges, max, today, SocialMedia.Twitter, SocialMedia.Facebook);
-            tweet(peopleChanges, max, today, SocialMedia.Instagram, SocialMedia.YouTube);
+            tweet(peopleChanges, today, SocialMedia.Twitter, SocialMedia.Facebook);
+            tweet(peopleChanges, today, SocialMedia.Instagram, SocialMedia.YouTube);
         }
         return null;
     }
@@ -54,10 +53,10 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         }
     }
 
-    private void tweet(Map<Person, SocialMediaChanges> peopleChanges, int max, long today, SocialMedia... socialMedias) {
+    private void tweet(Map<Person, SocialMediaChanges> peopleChanges, long today, SocialMedia... socialMedias) {
         Map<SocialMedia, Long> socialMediaIDs = new HashMap<>();
         for (SocialMedia socialMedia : socialMedias) {
-            BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, Theme.Percentage, max, today, DAYS_AVERAGED);
+            BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, Theme.Percentage, 10, today, DAYS_AVERAGED);
             if (image != null) {
                 File file = ImageSaver.toFile(image);
                 long mediaId =TwitterAPI.uploadFile(file);
@@ -76,7 +75,7 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
                     validSocialMedias.add(socialMedia);
                 }
             }
-            String text = TextCreator.createText(peopleChanges, Theme.Percentage, max, validSocialMedias.toArray(new SocialMedia[0]));
+            String text = TextCreator.createText(peopleChanges, Theme.Percentage, 3, validSocialMedias.toArray(new SocialMedia[0]));
             System.out.println(text);
             TwitterAPI.tweet(text, mediaIDs);
         }
