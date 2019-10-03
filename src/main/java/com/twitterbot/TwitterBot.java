@@ -37,7 +37,8 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         long today = LocalDate.now().toEpochDay();
         Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
         if (peopleChanges != null && !peopleChanges.isEmpty()) {
-            tweet(peopleChanges, today, SocialMedia.Twitter, SocialMedia.Facebook);
+            tweet(peopleChanges, today, SocialMedia.Twitter);
+            tweet(peopleChanges, today, SocialMedia.Facebook);
         }
         return null;
     }
@@ -52,29 +53,26 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         }
     }
 
-    private void tweet(Map<Person, SocialMediaChanges> peopleChanges, long today, SocialMedia... socialMedias) {
-        Map<SocialMedia, Long> socialMediaIDs = new HashMap<>();
-        for (SocialMedia socialMedia : socialMedias) {
-            BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, Theme.Percentage, 10, today, DAYS_AVERAGED);
+    private void tweet(Map<Person, SocialMediaChanges> peopleChanges, long today, SocialMedia socialMedia) {
+        Map<Theme, Long> themeIDs = new HashMap<>();
+        for (Theme theme : Theme.values()) {
+            BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, theme, 10, today, DAYS_AVERAGED);
             if (image != null) {
                 File file = ImageSaver.toFile(image);
                 long mediaId = TwitterAPI.uploadFile(file);
-                socialMediaIDs.put(socialMedia, mediaId);
+                themeIDs.put(theme, mediaId);
             }
         }
-        if (!socialMediaIDs.isEmpty()) {
-            List<Long> mediaIDsList = new ArrayList<>(socialMediaIDs.values());
+        if (!themeIDs.isEmpty()) {
+            List<Long> mediaIDsList = new ArrayList<>(themeIDs.values());
             long[] mediaIDs = new long[mediaIDsList.size()];
             for (int i = 0; i < mediaIDsList.size(); i++) {
                 mediaIDs[i] = mediaIDsList.get(i);
             }
-            List<SocialMedia> validSocialMedias = new ArrayList<>();
-            for (SocialMedia socialMedia : socialMedias) {
-                if (socialMediaIDs.containsKey(socialMedia)) {
-                    validSocialMedias.add(socialMedia);
-                }
-            }
-            String text = TextCreator.createText(peopleChanges, Theme.Percentage, 3, validSocialMedias.toArray(new SocialMedia[0]));
+            List<Theme> validThemes = new ArrayList<>();
+            if (themeIDs.containsKey(Theme.Percentage))validThemes.add(Theme.Percentage);
+            if (themeIDs.containsKey(Theme.Raw))validThemes.add(Theme.Raw);
+            String text = TextCreator.createText(peopleChanges, 3, socialMedia, validThemes.toArray(new Theme[0]));
             System.out.println(text);
             TwitterAPI.tweet(text, mediaIDs);
         }

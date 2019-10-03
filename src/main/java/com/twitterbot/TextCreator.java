@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class TextCreator {
-    public static String createText(Map<Person, SocialMediaChanges> peopleChanges, Theme theme, int max, SocialMedia... socialMedias) {
+    public static String createText(Map<Person, SocialMediaChanges> peopleChanges, int max, SocialMedia socialMedia, Theme... themes) {
         StringBuilder sb = new StringBuilder();
-        for (SocialMedia socialMedia : socialMedias) {
+        for (Theme theme : themes) {
             List<Map.Entry<Person, SocialMediaChanges>> sorted = new ArrayList<>(peopleChanges.entrySet());
             sorted.removeIf(entry -> !entry.getValue().getChanges().containsKey(socialMedia));
             sorted.removeIf(entry -> theme.getFunc().applyAsDouble(entry.getValue().getChanges().get(socialMedia)) < 0);
@@ -21,11 +21,13 @@ public class TextCreator {
             while (sorted.size() > max) {
                 sorted.remove(sorted.size() - 1);
             }
-            max =Math.min(max, sorted.size());
-            if(max>0) {
+            max = Math.min(max, sorted.size());
+            if (max > 0) {
                 sb.append("Top ");
                 sb.append(max);
-                sb.append(" Viral ");
+                sb.append(' ');
+                sb.append(theme.getLabel());
+                sb.append(' ');
                 sb.append(StatsGetter.TAG);
                 sb.append(" on ");
                 sb.append(socialMedia);

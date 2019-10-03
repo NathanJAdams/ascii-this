@@ -78,7 +78,7 @@ public class ImageCreator {
         }
         g.setFont(TITLE_FONT);
         g.setColor(TEXT);
-        g.drawString("Top " + max + " Viral " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
+        g.drawString("Top " + max + " " + theme.getLabel() + " " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
         g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
 
         StatsRange statsRange = theme.getStatsRange(socialMedia, sorted);
@@ -121,7 +121,7 @@ public class ImageCreator {
         LocalDate from = LocalDate.ofEpochDay(today - days);
         LocalDate to = LocalDate.ofEpochDay(today);
         g.setFont(FOOTNOTE_FONT);
-        g.drawString("Percentage increase in daily " + socialMedia.getAccountDescription(), BAR_LEFT, FOOTNOTE_TOP);
+        g.drawString(theme.getMetric() + " increase in daily " + socialMedia.getAccountDescription(), BAR_LEFT, FOOTNOTE_TOP);
         g.drawString("(averaged between " + from + " 8:00am CST and " + to + " 8:00am CST)", BAR_LEFT, FOOTNOTE_TOP + FOOTNOTE_HEIGHT);
         return bufferedImage;
     }

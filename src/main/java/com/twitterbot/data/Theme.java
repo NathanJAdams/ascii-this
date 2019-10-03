@@ -14,10 +14,11 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum Theme {
-    Percentage(Change::getRatioChange, getPercentFormat()),
-//    Raw(Change::getRawChange, NumberFormat.getIntegerInstance()),
-    ;
+    Percentage("Viral", "Percentage", Change::getRatioChange, getPercentFormat()),
+    Raw("Popular", "Average", Change::getRawChange, NumberFormat.getIntegerInstance());
 
+    private final String label;
+    private final String metric;
     private final ToDoubleFunction<Change> func;
     private final NumberFormat format;
 
