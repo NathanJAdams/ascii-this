@@ -35,10 +35,9 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
             return null;
         }
         long today = LocalDate.now().toEpochDay();
-        Map<Person, SocialMediaChanges> peopleChanges =  StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
+        Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
         if (peopleChanges != null && !peopleChanges.isEmpty()) {
             tweet(peopleChanges, today, SocialMedia.Twitter, SocialMedia.Facebook);
-            tweet(peopleChanges, today, SocialMedia.Instagram, SocialMedia.YouTube);
         }
         return null;
     }
@@ -59,8 +58,8 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
             BufferedImage image = ImageCreator.createImage(socialMedia, peopleChanges, Theme.Percentage, 10, today, DAYS_AVERAGED);
             if (image != null) {
                 File file = ImageSaver.toFile(image);
-                long mediaId =TwitterAPI.uploadFile(file);
-                socialMediaIDs.put(socialMedia,mediaId);
+                long mediaId = TwitterAPI.uploadFile(file);
+                socialMediaIDs.put(socialMedia, mediaId);
             }
         }
         if (!socialMediaIDs.isEmpty()) {
@@ -69,9 +68,9 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
             for (int i = 0; i < mediaIDsList.size(); i++) {
                 mediaIDs[i] = mediaIDsList.get(i);
             }
-            List<SocialMedia>validSocialMedias = new ArrayList<>();
-            for (SocialMedia socialMedia:socialMedias) {
-                if(socialMediaIDs.containsKey(socialMedia)){
+            List<SocialMedia> validSocialMedias = new ArrayList<>();
+            for (SocialMedia socialMedia : socialMedias) {
+                if (socialMediaIDs.containsKey(socialMedia)) {
                     validSocialMedias.add(socialMedia);
                 }
             }

@@ -62,6 +62,7 @@ public enum SocialMedia {
                 return toInt(count);
             } else {
                 System.out.println("Couldn't find count " + name() + " pattern for account " + account);
+                System.out.println(html);
                 return -1;
             }
         } catch (IOException e) {
