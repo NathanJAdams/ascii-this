@@ -108,7 +108,7 @@ public class StatsGetter {
     }
 
     private static double calculateRatioChange(int start, int end, int days) {
-        if (start == end || end == 0) {
+        if (start == 0 || end == 0 || start == end) {
             return 0;
         } else {
             double multiple = (double) end / start;
