@@ -11,38 +11,42 @@ import org.jsoup.nodes.Document;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SocialMedia {
-    Twitter("Twitter followers", "title *= *\"([0-9,]+) *Followers *\"") {
+    Twitter("Twitter followers", "title *= *\"([0-9,]+) *Followers *\"", "Something went wrong") {
         @Override
         public String createAccountUrl(String account) {
             return "https://twitter.com/" + account;
         }
     },
-    Facebook("Facebook likes", "([0-9,]+) *< *span *class *= *\"_50f8 _50f4 _5kx5\" *> *likes") {
+    Facebook("Facebook likes", "([0-9,]+) *< *span *class *= *\"_50f8 _50f4 _5kx5\" *> *likes", null) {
         @Override
         public String createAccountUrl(String account) {
             return "https://facebook.com/" + account;
         }
     },
-    Instagram("Instagram followers", "\"edge_followed_by\" *: *\\{ *\"count\" *: *(\\d+) *}") {
+    Instagram("Instagram followers", "\"edge_followed_by\" *: *\\{ *\"count\" *: *(\\d+) *}", null) {
         @Override
         public String createAccountUrl(String account) {
             return "https://instagram.com/" + account;
         }
     },
-    YouTube("YouTube views", "<span *class *= *\"about-stat\" *>.*< *b *> *([0-9,]+) *< */b *> *views *< */span *>") {
+    YouTube("YouTube views", "<span *class *= *\"about-stat\" *>.*< *b *> *([0-9,]+) *< */b *> *views *< */span *>", null) {
         @Override
         public String createAccountUrl(String account) {
             return "https://youtube.com/" + account + "/about";
         }
     };
-
+    private static final int RETRIES = 3;
     @Getter
     private final String accountDescription;
     private final Pattern countPattern;
+    private final Pattern errorPattern;
 
-    SocialMedia(String accountDescription, String countRegex) {
+    SocialMedia(String accountDescription, String countRegex, String errorRegex) {
         this.accountDescription = accountDescription;
         this.countPattern = Pattern.compile(countRegex);
+        this.errorPattern = (errorRegex == null)
+                ? null
+                : Pattern.compile(errorRegex);
     }
 
     public abstract String createAccountUrl(String account);
@@ -53,21 +57,58 @@ public enum SocialMedia {
         }
         System.out.println("Getting " + getAccountDescription() + " for " + account);
         String url = createAccountUrl(account);
-        try {
-            Document doc = Jsoup.connect(url).get();
-            String html = doc.body().html();
-            Matcher matcher = countPattern.matcher(html);
-            if (matcher.find()) {
-                String count = matcher.group(1);
-                return toInt(count);
+        for (int i = 0; i < RETRIES; i++) {
+            String content = getContent(url);
+            if (content == null) {
+                if (i != RETRIES - 1) {
+                    sleep();
+                }
             } else {
-                System.out.println("Couldn't find count " + name() + " pattern for account " + account);
-                System.out.println(html);
-                return -1;
+                Matcher matcher = countPattern.matcher(content);
+                if (matcher.find()) {
+                    String count = matcher.group(1);
+                    return toInt(count);
+                } else {
+                    if (hasKnownError(content)) {
+                        System.out.println("Error detected " + name() + " pattern for account " + account);
+                    } else {
+                        System.out.println("Unknown error detected " + name() + " pattern for account " + account + " for content");
+                        System.out.println(content);
+                    }
+                }
             }
-        } catch (IOException e) {
+        }
+        return -1;
+    }
+
+    private String getContent(String url) {
+        for (int i = 0; i < RETRIES; i++) {
+            try {
+                Document doc = Jsoup.connect(url).get();
+                return doc.body().html();
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (i != RETRIES - 1) {
+                    sleep();
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean hasKnownError(String content) {
+        if (errorPattern != null) {
+            Matcher errorMatcher = errorPattern.matcher(content);
+            return errorMatcher.find();
+        }
+        return false;
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            return -1;
         }
     }
 
