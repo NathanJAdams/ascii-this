@@ -39,6 +39,7 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
         if (peopleChanges != null && !peopleChanges.isEmpty()) {
             tweet(peopleChanges, today, SocialMedia.Twitter);
             tweet(peopleChanges, today, SocialMedia.Facebook);
+            tweet(peopleChanges, today, SocialMedia.Instagram);
         }
         return null;
     }
