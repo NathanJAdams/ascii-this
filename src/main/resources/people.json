@@ -1,6 +1,16 @@
 {
   "people": [
     {
+      "name": "Roque De La Fuente",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "JoinRocky",
+        "Facebook": "JoinRocky",
+        "Instagram": "joinrocky",
+        "YouTube": "channel/UCwWkeiS23HBvDgPBqbBzyQA"
+      }
+    },
+    {
       "name": "Mark Sanford",
       "affiliation": "REP",
       "accounts": {
