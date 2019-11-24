@@ -11,6 +11,16 @@
       }
     },
     {
+      "name": "Zoltan Istvan",
+      "affiliation": "REP",
+      "accounts": {
+        "Twitter": "zoltan_istvan",
+        "Facebook": "ZoltanGIstvan",
+        "Instagram": "zoltan_istvan",
+        "YouTube": "user/zoltanistvan"
+      }
+    },
+    {
       "name": "Donald Trump",
       "affiliation": "REP",
       "accounts": {
@@ -58,6 +68,16 @@
         "Facebook": "joebiden",
         "Instagram": "joebiden",
         "YouTube": "channel/UCWNpXitY8eJ-ku6M-v25MKw"
+      }
+    },
+    {
+      "name": "Michael Bloomberg",
+      "affiliation": "DEM",
+      "accounts": {
+        "Twitter": "MikeBloomberg",
+        "Facebook": "mikebloomberg",
+        "Instagram": "mikebloomberg",
+        "YouTube": "channel/UCXUTzh17OtLHQOGeyjbtyAQ"
       }
     },
     {
