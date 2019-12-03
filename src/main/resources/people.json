@@ -11,16 +11,6 @@
       }
     },
     {
-      "name": "Zoltan Istvan",
-      "affiliation": "REP",
-      "accounts": {
-        "Twitter": "zoltan_istvan",
-        "Facebook": "ZoltanGIstvan",
-        "Instagram": "zoltan_istvan",
-        "YouTube": "user/zoltanistvan"
-      }
-    },
-    {
       "name": "Donald Trump",
       "affiliation": "REP",
       "accounts": {
@@ -91,16 +81,6 @@
       }
     },
     {
-      "name": "Steve Bullock",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "GovernorBullock",
-        "Facebook": "GovernorBullock",
-        "Instagram": "governorbullock",
-        "YouTube": ""
-      }
-    },
-    {
       "name": "Pete Buttigieg",
       "affiliation": "DEM",
       "accounts": {
@@ -138,16 +118,6 @@
         "Facebook": "TulsiGabbard",
         "Instagram": "tulsigabbard",
         "YouTube": "user/VoteTulsi"
-      }
-    },
-    {
-      "name": "Kamala Harris",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "KamalaHarris",
-        "Facebook": "KamalaHarris",
-        "Instagram": "kamalaharris",
-        "YouTube": "user/kamalaharrisdotorg"
       }
     },
     {
