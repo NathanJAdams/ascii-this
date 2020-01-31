@@ -93,6 +93,7 @@ public enum SocialMedia {
             System.out.println("Unknown error detected " + name() + " pattern for content");
             System.out.println(content);
         }
+        System.out.println(content);
         return -1;
     }
 
