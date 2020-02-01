@@ -55,7 +55,7 @@ public class StatsGetter {
                 System.out.println(entry);
                 SocialMedia socialMedia = entry.getKey();
                 String account = entry.getValue();
-                int latest = socialMedia.getLatest(account);
+                int latest = socialMedia.getLatestCount(account);
                 System.out.println(latest);
                 if (latest != -1) {
                     socialMediaCounts.put(socialMedia, latest);
