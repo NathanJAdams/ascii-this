@@ -9,6 +9,7 @@ import com.twitterbot.data.Person;
 import com.twitterbot.data.SocialMedia;
 import com.twitterbot.data.SocialMediaChanges;
 import com.twitterbot.data.Theme;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -71,8 +72,8 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
                 mediaIDs[i] = mediaIDsList.get(i);
             }
             List<Theme> validThemes = new ArrayList<>();
-            if (themeIDs.containsKey(Theme.Percentage))validThemes.add(Theme.Percentage);
-            if (themeIDs.containsKey(Theme.Raw))validThemes.add(Theme.Raw);
+            if (themeIDs.containsKey(Theme.Percentage)) validThemes.add(Theme.Percentage);
+            if (themeIDs.containsKey(Theme.Raw)) validThemes.add(Theme.Raw);
             String text = TextCreator.createText(peopleChanges, 3, socialMedia, validThemes.toArray(new Theme[0]));
             System.out.println(text);
             TwitterAPI.tweet(text, mediaIDs);

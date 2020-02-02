@@ -1,17 +1,20 @@
 package com.twitterbot;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Predicate;
 import twitter4j.DirectMessage;
 import twitter4j.DirectMessageList;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 
 public class TwitterAPI {
     public static void tweet(String text, long[] mediaIDs) {
@@ -47,6 +50,15 @@ public class TwitterAPI {
             }
         }
         return dms;
+    }
+
+    public static int getFollowerCount(String account) {
+        AtomicInteger followerCount = new AtomicInteger(-1);
+        doTwitterAction(twitter -> {
+            User user = twitter.showUser(account);
+            followerCount.set(user.getFollowersCount());
+        });
+        return followerCount.get();
     }
 
     private static void doTwitterAction(TwitterAction action) {

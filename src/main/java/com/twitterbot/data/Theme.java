@@ -1,5 +1,9 @@
 package com.twitterbot.data;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +11,6 @@ import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.DoubleStream;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter

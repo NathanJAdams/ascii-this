@@ -8,12 +8,13 @@ import com.twitterbot.data.Person;
 import com.twitterbot.data.SocialMedia;
 import com.twitterbot.data.SocialMediaChanges;
 import com.twitterbot.data.SocialMediaCount;
+import twitter4j.DirectMessage;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import twitter4j.DirectMessage;
 
 public class StatsGetter {
     public static final String TAG = "2020 US Presidential Candidates";

@@ -4,6 +4,7 @@ import com.twitterbot.data.Person;
 import com.twitterbot.data.SocialMedia;
 import com.twitterbot.data.SocialMediaChanges;
 import com.twitterbot.data.Theme;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

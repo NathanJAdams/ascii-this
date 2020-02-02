@@ -1,9 +1,10 @@
 package com.twitterbot.data;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
