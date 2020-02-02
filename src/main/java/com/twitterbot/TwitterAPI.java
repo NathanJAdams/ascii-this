@@ -56,7 +56,11 @@ public class TwitterAPI {
         AtomicInteger followerCount = new AtomicInteger(-1);
         doTwitterAction(twitter -> {
             User user = twitter.showUser(account);
-            followerCount.set(user.getFollowersCount());
+            if (user == null) {
+                System.out.println("No user found for account: " + account);
+            } else {
+                followerCount.set(user.getFollowersCount());
+            }
         });
         return followerCount.get();
     }
