@@ -31,16 +31,6 @@
       }
     },
     {
-      "name": "Michael Bennet",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "MichaelBennet",
-        "Facebook": "michaelbennet",
-        "Instagram": "michaelbennet",
-        "YouTube": ""
-      }
-    },
-    {
       "name": "Joe Biden",
       "affiliation": "DEM",
       "accounts": {
@@ -128,16 +118,6 @@
         "Facebook": "ElizabethWarren",
         "Instagram": "elizabethwarren",
         "YouTube": "channel/UCrj-0FxK19tgUR2EbHkBBGg"
-      }
-    },
-    {
-      "name": "Andrew Yang",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "AndrewYang",
-        "Facebook": "andrewyang2020",
-        "Instagram": "andrewyang2020",
-        "YouTube": "channel/UCriIuQZpMi6gEt_2P7xKCww"
       }
     }
   ]
