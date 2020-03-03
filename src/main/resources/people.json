@@ -51,16 +51,6 @@
       }
     },
     {
-      "name": "Pete Buttigieg",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "PeteButtigieg",
-        "Facebook": "petebuttigieg1",
-        "Instagram": "pete.buttigieg",
-        "YouTube": ""
-      }
-    },
-    {
       "name": "Tulsi Gabbard",
       "affiliation": "DEM",
       "accounts": {
@@ -68,16 +58,6 @@
         "Facebook": "TulsiGabbard",
         "Instagram": "tulsigabbard",
         "YouTube": "user/VoteTulsi"
-      }
-    },
-    {
-      "name": "Amy Klobuchar",
-      "affiliation": "DEM",
-      "accounts": {
-        "Twitter": "AmyKlobuchar",
-        "Facebook": "amyklobuchar",
-        "Instagram": "amyklobuchar",
-        "YouTube": ""
       }
     },
     {
