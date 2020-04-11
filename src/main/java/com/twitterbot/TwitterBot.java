@@ -30,18 +30,18 @@ public class TwitterBot implements RequestHandler<S3Event, Void> {
     }
 
     public Void handleRequest(S3Event event, Context context) {
-        People people = getPeople();
-        if (people == null) {
-            System.out.println("No people found");
-            return null;
-        }
-        long today = LocalDate.now().toEpochDay();
-        Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
-        if (peopleChanges != null && !peopleChanges.isEmpty()) {
-            tweet(peopleChanges, today, SocialMedia.Twitter);
-            tweet(peopleChanges, today, SocialMedia.Facebook);
-            tweet(peopleChanges, today, SocialMedia.Instagram);
-        }
+//        People people = getPeople();
+//        if (people == null) {
+//            System.out.println("No people found");
+//            return null;
+//        }
+//        long today = LocalDate.now().toEpochDay();
+//        Map<Person, SocialMediaChanges> peopleChanges = StatsGetter.getPeopleChanges(people, today, DAYS_AVERAGED);
+//        if (peopleChanges != null && !peopleChanges.isEmpty()) {
+//            tweet(peopleChanges, today, SocialMedia.Twitter);
+//            tweet(peopleChanges, today, SocialMedia.Facebook);
+//            tweet(peopleChanges, today, SocialMedia.Instagram);
+//        }
         return null;
     }
 
