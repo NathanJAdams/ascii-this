@@ -8,6 +8,5 @@ pipelines:
             - maven
           script:
             - git clone https://RepoCleaner:${BB_READ_TOKEN}@bitbucket.org/repocleaner/maven-common.git
-            - mv maven-common/*.sh maven-common/settings.xml -t .
             - chmod +x deploy-lambda.sh
-            - ./deploy-lambda.sh "twitter-bot"
+            - ./deploy-lambda.sh "ascii-me"

@@ -1,10 +1,10 @@
-package com.twitterbot;
+package com.asciime;
 
-import com.twitterbot.data.Person;
-import com.twitterbot.data.SocialMedia;
-import com.twitterbot.data.SocialMediaChanges;
-import com.twitterbot.data.StatsRange;
-import com.twitterbot.data.Theme;
+import com.asciime.data.Person;
+import com.asciime.data.SocialMedia;
+import com.asciime.data.SocialMediaChanges;
+import com.asciime.data.StatsRange;
+import com.asciime.data.Theme;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -80,7 +80,6 @@ public class ImageCreator {
         g.setFont(TITLE_FONT);
         g.setColor(TEXT);
         g.drawString("Top " + max + " " + theme.getLabel() + " " + socialMedia + " Users:", BAR_LEFT, TITLE_TOP);
-        g.drawString(StatsGetter.TAG, BAR_LEFT, TITLE_TOP + 40);
 
         StatsRange statsRange = theme.getStatsRange(socialMedia, sorted);
         double range = statsRange.getMax() - statsRange.getMin();

@@ -1,4 +1,4 @@
-package com.twitterbot;
+package com.asciime;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
