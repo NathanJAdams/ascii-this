@@ -43,6 +43,17 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>s3_repo</id>
+            <url>s3://repository.repocleaner.com/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>s3_repo</id>
+            <url>s3://repository.repocleaner.com/releases</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
