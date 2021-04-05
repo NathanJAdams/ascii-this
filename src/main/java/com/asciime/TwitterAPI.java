@@ -15,7 +15,7 @@ public class TwitterAPI {
     private static final Twitter TWITTER = new TwitterFactory(
             new ConfigurationBuilder()
                     .setOAuthConsumerKey(System.getenv("CONSUMER_KEY"))
-                    .setOAuthConsumerSecret(System.getenv("CONSUMER_SECRET_KEY"))
+                    .setOAuthConsumerSecret(System.getenv("CONSUMER_SECRET"))
                     .setOAuthAccessToken(System.getenv("ACCESS_TOKEN"))
                     .setOAuthAccessTokenSecret(System.getenv("ACCESS_TOKEN_SECRET"))
                     .build())
