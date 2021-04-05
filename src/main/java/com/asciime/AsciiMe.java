@@ -35,10 +35,10 @@ public class AsciiMe implements RequestHandler<S3Event, Void> {
         long requestTweetID = status.getId();
         System.out.println("requestTweetID: " + requestTweetID);
         Status mediaTweet = getMediaTweet(status);
-        Status replyStatus;
+        Status replyStatus = null;
         if (mediaTweet == null) {
             replyStatus = TwitterAPI.tweet(status, "Sorry I couldn't find any photos to convert");
-        } else {
+        } else if (TwitterAPI.USER_ID != mediaTweet.getUser().getId()) {
             replyStatus = reply(status, mediaTweet);
         }
         if (replyStatus != null) {

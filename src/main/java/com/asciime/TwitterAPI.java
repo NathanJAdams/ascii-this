@@ -80,6 +80,7 @@ public class TwitterAPI {
     }
 
     public static void sendDMToSelf(String text) {
+        System.out.println("Sending DM to self: " + text);
         doTwitterAction(t -> t.sendDirectMessage(USER_ID, text));
     }
 
