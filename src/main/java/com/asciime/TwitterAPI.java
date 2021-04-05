@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class TwitterAPI {
-    private static final long USER_ID = 1378896391196512259L;
+    public static final long USER_ID = 1378896391196512259L;
 
     private static final Twitter TWITTER = new TwitterFactory(
             new ConfigurationBuilder()
