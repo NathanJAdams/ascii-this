@@ -52,9 +52,6 @@ public class AsciiMe implements RequestHandler<S3Event, Void> {
         }
         long inReplyToStatusId = status.getInReplyToStatusId();
         Status inReplyToStatus = TwitterAPI.status(inReplyToStatusId);
-        if ((inReplyToStatus != null) && (TwitterAPI.USER_ID == inReplyToStatus.getUser().getId())) {
-            return null;
-        }
         if (canConvert(inReplyToStatus)) {
             return inReplyToStatus;
         }
